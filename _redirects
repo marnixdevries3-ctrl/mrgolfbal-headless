@@ -1,0 +1,44 @@
+# =============================================================================
+# MrGolfbal.nl — Redirectmap (Netlify _redirects)
+# 301 = permanent. Doel: kannibalisatie oplossen, URL-waarde behouden.
+# Regels: geen chains, geen redirect naar irrelevante homepage, best passende doel.
+#
+# STATUS: gebaseerd op de daadwerkelijk waargenomen oude URL's (navigatie, footer,
+# index-search). Rijen met  # VERIFY  bestaan mogelijk wel maar zijn nog niet
+# 1-op-1 bevestigd via de volledige Shopify-sitemap. Vul aan na een volledige
+# sitemap-export (zie docs/consolidatie-en-redirects.md).
+# =============================================================================
+
+# --- Primaire SEO-consolidatie: "golfballen bedrukken" ---
+/pages/golfballen-laten-bedrukken                       /golfballen-bedrukken/                      301
+/pages/golfballen-met-logo-bedrukken                    /golfballen-bedrukken/                      301   # VERIFY
+/collections/golfballen-laten-bedrukken-met-logo        /golfballen-bedrukken/                      301   # VERIFY
+/collections/golfbal-met-logo-bedrukken                 /golfballen-bedrukken/                      301   # VERIFY
+
+# --- Titleist-cluster ---
+/pages/titleist-golfballen-bedrukken                    /titleist-golfballen-bedrukken/             301
+/collections/titleist-golfballen-bedrukken              /titleist-golfballen-bedrukken/             301
+/collections/titleist-pro-v1-bedrukken                  /titleist-golfballen-bedrukken/             301
+/collections/titleist-pro-v1x-bedrukken                 /titleist-golfballen-bedrukken/             301
+
+# --- Pinnacle-cluster ---
+/collections/pinnacle-golfballen-met-bedrukking         /pinnacle-golfballen-bedrukken/             301
+
+# --- Toepassingen (nieuwe hubs) ---
+/pages/golfballen-voor-bedrijven                        /golfballen-bedrukken-voor-bedrijven/       301   # VERIFY
+/pages/golfballen-relatiegeschenk                       /golfballen-bedrukken-voor-bedrijven/       301   # VERIFY
+/pages/golfballen-voor-golfclubs                        /golfballen-bedrukken-voor-golfclubs-en-toernooien/  301  # VERIFY
+/pages/golfballen-voor-toernooien                       /golfballen-bedrukken-voor-golfclubs-en-toernooien/  301  # VERIFY
+
+# --- Personaliseren / naam / tekst ---
+/pages/golfballen-met-naam                              /golfballen-personaliseren/                 301   # VERIFY
+/pages/golfballen-met-tekst                             /golfballen-personaliseren/                 301   # VERIFY
+/pages/gepersonaliseerde-golfballen                     /golfballen-personaliseren/                 301   # VERIFY
+
+# --- Prijzen (geen aparte prijzenpagina meer) ---
+/pages/prijzen-golfballen-bedrukken                     /golfballen-bedrukken/                      301   # VERIFY
+/prijzen-golfballen-bedrukken                           /golfballen-bedrukken/                      301
+
+# LET OP: productpagina's (/products/*), de golfballen-kopen-pagina en
+# golfhandschoen-pagina's blijven bestaan (niet redirecten) tenzij bewust
+# geconsolideerd. Zie docs voor de volledige matrix.

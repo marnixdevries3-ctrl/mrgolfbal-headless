@@ -1,0 +1,11 @@
+import { chromium } from 'playwright-core';
+const exe='/opt/pw-browsers/chromium-1194/chrome-linux/chrome';
+const b=await chromium.launch({executablePath:exe,args:['--no-sandbox']});
+const p=await b.newPage({viewport:{width:1120,height:900},deviceScaleFactor:1});
+await p.goto('file://'+process.cwd()+'/preview/index.html',{waitUntil:'load'});
+await p.waitForTimeout(700);
+const total=await p.evaluate(()=>document.body.scrollHeight);
+const mid=Math.round(total/2);
+await p.screenshot({path:'preview/home-top.jpg',type:'jpeg',quality:80,clip:{x:0,y:0,width:1120,height:mid}});
+await p.screenshot({path:'preview/home-bottom.jpg',type:'jpeg',quality:80,clip:{x:0,y:mid,width:1120,height:total-mid}});
+await b.close();console.log('total',total,'mid',mid);

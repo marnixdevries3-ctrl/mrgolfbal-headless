@@ -1,0 +1,383 @@
+/* =============================================================================
+   MrGolfbal.nl — Design System
+   Premium · sportief · deskundig · marineblauw/lichtblauw
+   ============================================================================= */
+
+:root {
+  /* Merkkleuren (huisstijl MrGolfbal.nl) */
+  --color-navy: #072943;
+  --color-blue: #53c2fe;
+  --color-sky: #f1f7fc;
+  --color-white: #ffffff;
+  --color-ink: #1c1c1c;
+  --color-border: #d9e8f2;
+
+  /* Afgeleide tinten */
+  --navy-900: #041a2c;
+  --navy-800: #072943;
+  --navy-700: #0d3557;
+  --navy-600: #16466e;
+  --blue-600: #2ba6ec;
+  --blue-500: #53c2fe;
+  --blue-100: #d6eefc;
+  --sky-50: #f1f7fc;
+  --muted: #5b7185;
+  --success: #1f9d6b;
+  --warn: #b7791f;
+
+  /* Typografie */
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  --font-display: 'Poppins', 'Inter', system-ui, sans-serif;
+
+  /* Ritme & radii */
+  --radius-sm: 8px;
+  --radius: 14px;
+  --radius-lg: 22px;
+  --radius-pill: 999px;
+  --shadow-sm: 0 1px 2px rgba(7, 41, 67, .06), 0 2px 8px rgba(7, 41, 67, .05);
+  --shadow-md: 0 6px 24px rgba(7, 41, 67, .09);
+  --maxw: 1200px;
+  --gap: clamp(1rem, 2.5vw, 2rem);
+  --section-y: clamp(3rem, 7vw, 6rem);
+}
+
+/* ------------------------------------------------------------------ reset */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--color-ink);
+  background: var(--color-white);
+  line-height: 1.6;
+  font-size: 17px;
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; display: block; }
+a { color: var(--blue-600); text-decoration: none; }
+a:hover { text-decoration: underline; }
+h1, h2, h3, h4 { font-family: var(--font-display); color: var(--color-navy); line-height: 1.15; margin: 0 0 .5em; font-weight: 700; letter-spacing: -.02em; }
+h1 { font-size: clamp(2rem, 4.6vw, 3.4rem); }
+h2 { font-size: clamp(1.6rem, 3.2vw, 2.4rem); }
+h3 { font-size: clamp(1.2rem, 2vw, 1.5rem); }
+p { margin: 0 0 1rem; }
+ul { margin: 0 0 1rem; padding-left: 1.2rem; }
+
+/* --------------------------------------------------------------- layout */
+.container { width: 100%; max-width: var(--maxw); margin-inline: auto; padding-inline: clamp(1rem, 4vw, 2rem); }
+.section { padding-block: var(--section-y); }
+.section--sky { background: var(--sky-50); }
+.section--navy { background: var(--color-navy); color: #cfe4f3; }
+.section--navy h2, .section--navy h3 { color: #fff; }
+.eyebrow { font-family: var(--font-display); text-transform: uppercase; letter-spacing: .14em; font-size: .8rem; font-weight: 600; color: var(--blue-600); margin: 0 0 .6rem; }
+.section--navy .eyebrow { color: var(--color-blue); }
+.lead { font-size: 1.15rem; color: var(--muted); max-width: 60ch; }
+.center { text-align: center; margin-inline: auto; }
+.grid { display: grid; gap: var(--gap); }
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-4 { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 900px){ .grid-3, .grid-4 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px){ .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; } }
+
+/* --------------------------------------------------------------- buttons */
+.btn {
+  display: inline-flex; align-items: center; gap: .55rem;
+  font-family: var(--font-display); font-weight: 600; font-size: 1rem;
+  padding: .85rem 1.5rem; border-radius: var(--radius-pill);
+  border: 1.5px solid transparent; cursor: pointer; transition: .18s ease;
+  text-decoration: none; line-height: 1; white-space: nowrap;
+}
+.btn:hover { text-decoration: none; transform: translateY(-1px); }
+.btn--primary { background: var(--color-blue); color: #fff; box-shadow: 0 6px 18px rgba(83,194,254,.35); }
+.btn--primary:hover { background: #3fb4f5; }
+.btn--navy { background: var(--color-navy); color: #fff; }
+.btn--navy:hover { background: var(--navy-700); }
+.btn--ghost { background: transparent; color: var(--color-navy); border-color: var(--color-border); }
+.btn--ghost:hover { border-color: var(--color-blue); background: var(--sky-50); }
+.btn--light { background: #fff; color: var(--color-navy); }
+.btn--lg { padding: 1.05rem 1.9rem; font-size: 1.08rem; }
+.btn--block { width: 100%; justify-content: center; }
+.btn__arrow { transition: transform .18s ease; }
+.btn:hover .btn__arrow { transform: translateX(3px); }
+
+/* --------------------------------------------------------------- badges */
+.badge { display: inline-flex; align-items: center; gap: .4rem; font-size: .82rem; font-weight: 600;
+  background: var(--blue-100); color: var(--navy-700); padding: .3rem .7rem; border-radius: var(--radius-pill); }
+.badge--navy { background: var(--color-navy); color: var(--color-blue); }
+.badge--warn { background: #fdf3e1; color: var(--warn); }
+.pill-row { display: flex; flex-wrap: wrap; gap: .5rem; }
+
+/* --------------------------------------------------------------- header */
+.site-header { position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,.92);
+  backdrop-filter: saturate(1.4) blur(6px); border-bottom: 1px solid var(--color-border); }
+.header-bar { display: flex; align-items: center; gap: 1.2rem; height: 72px; }
+.logo { display: flex; flex-direction: column; line-height: 1; text-decoration: none; }
+.logo b { font-family: var(--font-display); color: var(--color-navy); font-size: 1.32rem; font-weight: 800; letter-spacing: -.02em; }
+.logo b span { color: var(--color-blue); }
+.logo small { color: var(--muted); font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; margin-top: 2px; }
+.main-nav { display: flex; gap: .3rem; margin-left: 1rem; }
+.main-nav a { color: var(--navy-700); font-weight: 500; font-size: .96rem; padding: .5rem .7rem; border-radius: var(--radius-sm); }
+.main-nav a:hover { background: var(--sky-50); color: var(--color-navy); text-decoration: none; }
+.has-dropdown { position: relative; }
+.dropdown { position: absolute; top: 100%; left: 0; min-width: 260px; background: #fff; border: 1px solid var(--color-border);
+  border-radius: var(--radius); box-shadow: var(--shadow-md); padding: .5rem; opacity: 0; visibility: hidden;
+  transform: translateY(6px); transition: .16s ease; }
+.has-dropdown:hover .dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
+.dropdown a { display: block; padding: .55rem .7rem; border-radius: var(--radius-sm); font-size: .92rem; }
+.header-actions { margin-left: auto; display: flex; align-items: center; gap: .6rem; }
+.icon-btn { display: inline-grid; place-items: center; width: 42px; height: 42px; border-radius: var(--radius-pill);
+  border: 1px solid var(--color-border); background: #fff; color: var(--navy-700); }
+.icon-btn:hover { border-color: var(--color-blue); text-decoration: none; }
+.nav-toggle { display: none; }
+@media (max-width: 1040px){
+  .main-nav { display: none; }
+  .nav-toggle { display: inline-grid; }
+}
+
+/* --------------------------------------------------------------- hero */
+.hero { background: linear-gradient(160deg, var(--navy-900), var(--navy-800) 55%, var(--navy-700)); color: #fff; overflow: hidden; }
+.hero .container { display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(2rem,5vw,4rem); align-items: center; padding-block: clamp(3rem,6vw,5.5rem); }
+.hero h1 { color: #fff; }
+.hero h1 span { color: var(--color-blue); }
+.hero p { color: #bcd6ea; font-size: 1.18rem; max-width: 52ch; }
+.hero-cta { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 1.6rem; }
+.hero-trust { display: flex; flex-wrap: wrap; gap: 1.2rem 1.6rem; margin-top: 2rem; color: #9fc2dc; font-size: .92rem; }
+.hero-trust span { display: inline-flex; align-items: center; gap: .45rem; }
+.hero-visual { position: relative; }
+.hero-card { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.14); border-radius: var(--radius-lg); padding: 1.4rem; }
+@media (max-width: 900px){ .hero .container { grid-template-columns: 1fr; } .hero-visual { order: -1; } }
+
+/* golfbal visual */
+.ballshot { aspect-ratio: 4/3; border-radius: var(--radius); background:
+  radial-gradient(circle at 32% 30%, #fff, #eaf2f8 42%, #cdddea 70%, #a9c4d8);
+  display: grid; place-items: center; position: relative; box-shadow: inset 0 0 60px rgba(7,41,67,.15); }
+.ballshot .ball { width: 58%; aspect-ratio: 1; border-radius: 50%;
+  background: radial-gradient(circle at 35% 28%, #ffffff, #f3f7fb 45%, #d7e5f0 78%, #b7ccdd);
+  box-shadow: 0 18px 40px rgba(7,41,67,.28), inset -14px -18px 40px rgba(7,41,67,.10);
+  position: relative; display: grid; place-items: center; }
+.ballshot .ball::after { content: ''; position: absolute; inset: 0; border-radius: 50%;
+  background-image: radial-gradient(circle, rgba(7,41,67,.055) 1.4px, transparent 1.5px);
+  background-size: 13px 13px; -webkit-mask: radial-gradient(circle at 35% 28%, #000 60%, transparent 85%); mask: radial-gradient(circle at 35% 28%, #000 60%, transparent 85%); }
+.ballshot .logo-print { position: relative; z-index: 2; font-family: var(--font-display); font-weight: 800; color: var(--color-navy); font-size: 1.1rem; letter-spacing: -.02em; }
+.ballshot .logo-print span { color: var(--blue-600); }
+
+/* --------------------------------------------------------------- trust bar */
+.trustbar { background: #fff; border-bottom: 1px solid var(--color-border); }
+.trustbar .container { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; padding-block: 1rem; }
+.trust-item { display: flex; align-items: center; gap: .6rem; font-size: .92rem; color: var(--navy-700); font-weight: 500; }
+.trust-item svg { color: var(--blue-600); flex: none; }
+
+/* --------------------------------------------------------------- cards */
+.card { background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius-lg); overflow: hidden;
+  display: flex; flex-direction: column; transition: .18s ease; }
+.card:hover { border-color: var(--color-blue); box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.card__media { aspect-ratio: 4/3; background: var(--sky-50); position: relative; }
+.card__body { padding: 1.15rem 1.25rem 1.35rem; display: flex; flex-direction: column; gap: .5rem; flex: 1; }
+.card__brand { font-size: .78rem; text-transform: uppercase; letter-spacing: .1em; color: var(--blue-600); font-weight: 600; }
+.card__title { font-family: var(--font-display); font-weight: 700; color: var(--color-navy); font-size: 1.12rem; margin: 0; }
+.card__meta { color: var(--muted); font-size: .9rem; }
+.card__price { margin-top: auto; font-family: var(--font-display); font-weight: 700; color: var(--color-navy); }
+.card__price small { color: var(--muted); font-weight: 500; font-size: .8rem; }
+/* GEEN prijzen op de site: verberg elk prijselement */
+.card__price, [data-shopify-handle] { display: none !important; }
+.card__foot { margin-top: .6rem; }
+
+/* feature / value cards */
+.feature { background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius); padding: 1.5rem; }
+.feature .ico { width: 46px; height: 46px; border-radius: 12px; background: var(--blue-100); color: var(--navy-700); display: grid; place-items: center; margin-bottom: .9rem; }
+.feature h3 { font-size: 1.15rem; margin-bottom: .35rem; }
+.feature p { color: var(--muted); margin: 0; font-size: .96rem; }
+
+/* use-case tiles */
+.usecase { position: relative; border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--color-border);
+  background: var(--color-navy); color: #fff; min-height: 210px; display: flex; flex-direction: column; justify-content: flex-end; padding: 1.4rem; }
+.usecase::before { content:''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(7,41,67,.15), rgba(7,41,67,.85)); }
+.usecase > * { position: relative; z-index: 1; }
+.usecase h3 { color: #fff; margin-bottom: .25rem; font-size: 1.2rem; }
+.usecase p { color: #c9def0; margin: 0 0 .7rem; font-size: .92rem; }
+.usecase a { color: var(--color-blue); font-weight: 600; }
+
+/* --------------------------------------------------------- staffel table */
+.staffel { width: 100%; border-collapse: collapse; background: #fff; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--color-border); }
+.staffel th, .staffel td { padding: .85rem 1rem; text-align: left; border-bottom: 1px solid var(--color-border); font-size: .95rem; }
+.staffel th { background: var(--color-navy); color: #fff; font-family: var(--font-display); font-weight: 600; }
+.staffel tbody tr:hover { background: var(--sky-50); }
+.staffel .save { color: var(--success); font-weight: 600; }
+.staffel tr.active { background: var(--blue-100); }
+
+/* --------------------------------------------------------------- steps */
+.steps { counter-reset: step; display: grid; gap: 1rem; }
+.step { display: flex; gap: 1rem; background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius); padding: 1.15rem 1.25rem; }
+.step .num { counter-increment: step; flex: none; width: 40px; height: 40px; border-radius: 50%; background: var(--color-navy); color: #fff;
+  font-family: var(--font-display); font-weight: 700; display: grid; place-items: center; }
+.step .num::before { content: counter(step); }
+.step h3 { font-size: 1.05rem; margin-bottom: .2rem; }
+.step p { margin: 0; color: var(--muted); font-size: .94rem; }
+
+/* --------------------------------------------------------------- faq */
+.faq { border: 1px solid var(--color-border); border-radius: var(--radius); overflow: hidden; background: #fff; }
+.faq details { border-bottom: 1px solid var(--color-border); }
+.faq details:last-child { border-bottom: 0; }
+.faq summary { cursor: pointer; padding: 1.1rem 1.25rem; font-family: var(--font-display); font-weight: 600; color: var(--color-navy);
+  list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: '+'; font-size: 1.4rem; color: var(--blue-600); line-height: 1; }
+.faq details[open] summary::after { content: '–'; }
+.faq .faq-body { padding: 0 1.25rem 1.15rem; color: var(--muted); }
+
+/* --------------------------------------------------------------- TOC */
+.toc { background: var(--sky-50); border: 1px solid var(--color-border); border-radius: var(--radius); padding: 1.2rem 1.4rem; }
+.toc ol { columns: 2; margin: .4rem 0 0; padding-left: 1.1rem; font-size: .93rem; }
+@media (max-width:600px){ .toc ol { columns: 1; } }
+
+/* --------------------------------------------------------------- notices */
+.notice { border-left: 4px solid var(--warn); background: #fdf7ec; padding: .9rem 1.1rem; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: .92rem; color: #6b5216; }
+.confirm-tag { display: inline-block; font-size: .72rem; font-weight: 600; color: var(--warn); background: #fdf3e1; padding: .12rem .5rem; border-radius: var(--radius-pill); vertical-align: middle; }
+
+/* --------------------------------------------------------------- forms */
+.field { display: flex; flex-direction: column; gap: .35rem; margin-bottom: 1rem; }
+.field label { font-weight: 600; font-size: .9rem; color: var(--navy-700); }
+.field input, .field select, .field textarea { padding: .75rem .9rem; border: 1.5px solid var(--color-border); border-radius: var(--radius-sm);
+  font: inherit; font-size: .95rem; background: #fff; color: var(--color-ink); }
+.field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--color-blue); box-shadow: 0 0 0 3px rgba(83,194,254,.2); }
+.dropzone { border: 2px dashed var(--color-border); border-radius: var(--radius); padding: 1.6rem; text-align: center; color: var(--muted); background: var(--sky-50); cursor: pointer; }
+.dropzone:hover { border-color: var(--color-blue); }
+
+/* --------------------------------------------------------------- footer */
+.site-footer { background: var(--color-navy); color: #a9c4d8; padding-block: clamp(2.5rem,5vw,4rem) 1.5rem; }
+.site-footer a { color: #cfe4f3; font-size: .93rem; }
+.site-footer a:hover { color: #fff; }
+.footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 2rem; }
+@media (max-width: 800px){ .footer-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 500px){ .footer-grid { grid-template-columns: 1fr; } }
+.footer-col h4 { color: #fff; font-size: .95rem; text-transform: uppercase; letter-spacing: .08em; margin-bottom: .9rem; }
+.footer-col ul { list-style: none; padding: 0; margin: 0; display: grid; gap: .5rem; }
+.footer-brand b { color: #fff; font-family: var(--font-display); font-size: 1.3rem; }
+.footer-brand b span { color: var(--color-blue); }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,.12); margin-top: 2.5rem; padding-top: 1.4rem; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; font-size: .84rem; color: #7fa3bd; }
+.pay-badges { display: flex; gap: .5rem; flex-wrap: wrap; }
+.pay-badges span { background: rgba(255,255,255,.1); border-radius: 6px; padding: .25rem .55rem; font-size: .72rem; color: #cfe4f3; }
+
+/* --------------------------------------------------------------- utils */
+.mt-0{margin-top:0}.mb-0{margin-bottom:0}.mt-1{margin-top:1rem}.mt-2{margin-top:2rem}
+.stack{display:flex;flex-direction:column;gap:1rem}
+.row{display:flex;gap:1rem;flex-wrap:wrap;align-items:center}
+.muted{color:var(--muted)}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.section-head{max-width:62ch}
+.section-head--center{margin-inline:auto;text-align:center}
+.divider-cta{background:linear-gradient(120deg,var(--color-navy),var(--navy-600));border-radius:var(--radius-lg);padding:clamp(2rem,4vw,3.2rem);color:#fff;text-align:center}
+.divider-cta h2{color:#fff}
+.divider-cta p{color:#c9def0;max-width:52ch;margin-inline:auto}
+
+/* whatsapp float */
+.wa-float{position:fixed;right:18px;bottom:18px;z-index:75;background:#25D366;color:#fff;width:56px;height:56px;border-radius:50%;display:grid;place-items:center;box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.wa-float:hover{text-decoration:none;transform:scale(1.05)}
+
+/* breadcrumbs */
+.crumbs{font-size:.85rem;color:var(--muted);padding-block:.9rem}
+.crumbs a{color:var(--muted)}.crumbs a:hover{color:var(--blue-600)}
+
+/* =========================================================================
+   WOW-LAAG — animaties, scroll-golfbal, Mark-figuur, extra design
+   ========================================================================= */
+
+/* --- scroll reveal (alleen met JS actief; anders gewoon zichtbaar) --- */
+.js .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+.js .reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion: reduce){.js .reveal{opacity:1;transform:none;transition:none}}
+
+/* --- Header: logo + pijltje naar Mark-figuur (vervangt 'BY MARK REYNOLDS') --- */
+.brand-wrap{display:flex;align-items:center;gap:.5rem}
+.logo b{font-size:1.34rem}
+.logo small{display:none}
+.mark-chip{display:inline-flex;align-items:center;gap:.3rem;text-decoration:none;color:var(--muted);font-size:.72rem;font-weight:600}
+.mark-chip:hover{text-decoration:none;color:var(--blue-600)}
+.mark-chip .arrow{color:var(--color-blue);font-size:1rem;line-height:1;transform:translateY(1px)}
+.mark-chip .avatar{width:30px;height:30px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#eaf3fb,#cfe0ef);border:1.5px solid var(--color-border);display:grid;place-items:center;overflow:hidden}
+.mark-chip .avatar svg{width:26px;height:26px}
+.mark-chip:hover .avatar{border-color:var(--color-blue)}
+
+/* --- primaire CTA opgewaardeerd (shine) --- */
+.btn--primary{position:relative;overflow:hidden}
+.btn--primary::after{content:"";position:absolute;top:0;left:-120%;width:60%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.45),transparent);transform:skewX(-18deg);transition:none}
+.btn--primary:hover::after{animation:shine .9s ease}
+@keyframes shine{to{left:130%}}
+.btn--xl{padding:1.15rem 2.2rem;font-size:1.15rem;border-radius:var(--radius-pill)}
+.cta-hint{display:block;font-size:.82rem;color:var(--muted);margin-top:.5rem}
+
+/* --- hero glow / accenten --- */
+.hero{position:relative}
+.hero::before{content:"";position:absolute;width:520px;height:520px;right:-120px;top:-140px;border-radius:50%;
+  background:radial-gradient(circle,rgba(83,194,254,.35),transparent 70%);filter:blur(10px);pointer-events:none}
+.hero::after{content:"";position:absolute;left:-100px;bottom:-160px;width:360px;height:360px;border-radius:50%;
+  background:radial-gradient(circle,rgba(83,194,254,.14),transparent 70%);pointer-events:none}
+.ballshot .ball{animation:floaty 6s ease-in-out infinite}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@media (prefers-reduced-motion: reduce){.ballshot .ball{animation:none}}
+
+/* --- merken-marquee --- */
+.marquee{overflow:hidden;border-block:1px solid var(--color-border);background:#fff;padding-block:1rem}
+.marquee__row{display:flex;gap:3rem;align-items:center;width:max-content;animation:scrollx 24s linear infinite}
+.marquee__row span{font-family:var(--font-display);font-weight:700;color:var(--navy-600);opacity:.55;font-size:1.25rem;white-space:nowrap}
+@keyframes scrollx{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion: reduce){.marquee__row{animation:none}}
+
+/* --- kaart-polish --- */
+.card{position:relative}
+.card__media .ballshot{transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.card:hover .card__media .ballshot{transform:scale(1.06)}
+.feature{transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
+.feature:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:var(--color-blue)}
+.usecase{transition:transform .25s ease}
+.usecase:hover{transform:translateY(-4px)}
+
+/* accent underline voor h2 */
+.section-head h2, .section-head--center h2{position:relative}
+.accent-line::after{content:"";display:block;width:64px;height:4px;border-radius:4px;margin-top:.7rem;background:linear-gradient(90deg,var(--color-blue),var(--blue-600))}
+.section-head--center .accent-line::after{margin-inline:auto}
+
+/* =========================================================================
+   SCROLL-GOLFBAL — vaste 'fairway' onderin; bal rolt links→rechts,
+   valt in de hole; Mark laat de club vallen (micdrop). Markup via site.js.
+   ========================================================================= */
+/* Lijn ONDER de header (sticky, zoals het vrachtwagentje bij desta) */
+.golf-progress{position:relative;width:100%;height:44px;z-index:5;pointer-events:none;overflow:hidden;
+  background:linear-gradient(180deg,#fff,var(--sky-50));border-top:1px solid var(--color-border);border-bottom:1px solid var(--color-border)}
+.golf-progress .fairway{position:absolute;left:0;right:0;bottom:16px;height:3px;border-radius:3px;
+  background:repeating-linear-gradient(90deg,rgba(83,194,254,.55) 0 10px,transparent 10px 20px)}
+.gp-ball{position:absolute;bottom:13px;left:0;width:16px;height:16px;border-radius:50%;
+  background:radial-gradient(circle at 34% 30%,#fff,#eef4f9 55%,#cadcea);
+  box-shadow:0 3px 8px rgba(7,41,67,.3);transition:left .08s linear;
+  background-image:radial-gradient(circle,rgba(7,41,67,.10) 1px,transparent 1.2px);background-size:5px 5px}
+.gp-ball.sink{animation:sink .5s forwards}
+@keyframes sink{60%{transform:translateY(0) scale(1)}100%{transform:translateY(11px) scale(.35);opacity:0}}
+.gp-hole{position:absolute;right:100px;bottom:14px;width:26px;height:9px;border-radius:50%;
+  background:radial-gradient(ellipse at center,#04121f,#0a2136);box-shadow:inset 0 2px 4px rgba(0,0,0,.6)}
+.gp-flag{position:absolute;right:110px;bottom:19px;width:2px;height:20px;background:var(--navy-700)}
+.gp-flag::after{content:"";position:absolute;top:0;left:2px;width:13px;height:9px;
+  background:var(--color-blue);clip-path:polygon(0 0,100% 50%,0 100%)}
+.gp-flag.wave::after{animation:wave 1.2s ease-in-out infinite}
+@keyframes wave{50%{transform:skewY(-6deg) scaleX(.92)}}
+/* Mark staat LINKS en slaat af met de putter; de bal rolt naar het vlaggetje */
+.gp-mark{position:absolute;left:8px;bottom:9px;width:34px;height:34px}
+.gp-mark .club{transform-origin:30% 42%;transition:transform .1s}
+.gp-mark.swing .club{animation:swing 1.05s cubic-bezier(.3,1,.5,1)}
+@keyframes swing{0%{transform:rotate(-54deg)}42%{transform:rotate(-54deg)}60%{transform:rotate(16deg)}78%{transform:rotate(-4deg)}100%{transform:rotate(0)}}
+.gp-pop{position:absolute;right:44px;bottom:20px;font-family:var(--font-display);font-weight:800;color:var(--color-navy);
+  background:var(--color-blue);padding:.15rem .5rem;border-radius:var(--radius-pill);font-size:.72rem;
+  opacity:0;transform:translateY(6px) scale(.8);pointer-events:none;box-shadow:var(--shadow-sm)}
+.gp-pop.show{animation:pop 1.6s ease forwards}
+@keyframes pop{15%{opacity:1;transform:translateY(0) scale(1)}80%{opacity:1}100%{opacity:0;transform:translateY(-4px)}}
+@media (max-width:640px){.golf-progress{height:38px}.gp-hole{right:70px}.gp-flag{right:80px}.gp-mark{left:4px}.gp-pop{right:30px}}
+@media (prefers-reduced-motion: reduce){.golf-progress{display:none}}
+
+/* strakkere footer */
+.site-footer{padding-block:clamp(2rem,4vw,3rem) 5rem}
+.footer-col ul{gap:.4rem}
+.footer-col h4{font-size:.82rem;letter-spacing:.1em;color:#8fb2cd}
+.footer-brand b{font-size:1.25rem}
+.footer-bottom{margin-top:1.8rem;padding-top:1.1rem}
+.pay-badges span{background:transparent;border:1px solid rgba(255,255,255,.16);color:#a9c4d8}

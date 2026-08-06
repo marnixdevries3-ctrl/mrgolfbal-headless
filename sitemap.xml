@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Content-sitemap voor de headless frontend-pagina's.
+     Product-/collectie-sitemaps blijven door Shopify gegenereerd worden en
+     kunnen via een sitemap-index worden samengevoegd. -->
+<urlset xmlns="http://www.sitemap.org/schemas/sitemap/0.9">
+  <url><loc>https://mrgolfbal.nl/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://mrgolfbal.nl/golfballen-bedrukken/</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://mrgolfbal.nl/titleist-golfballen-bedrukken/</loc><priority>0.8</priority></url>
+  <url><loc>https://mrgolfbal.nl/pinnacle-golfballen-bedrukken/</loc><priority>0.8</priority></url>
+  <url><loc>https://mrgolfbal.nl/golfballen-bedrukken-voor-bedrijven/</loc><priority>0.8</priority></url>
+  <url><loc>https://mrgolfbal.nl/golfballen-bedrukken-voor-golfclubs-en-toernooien/</loc><priority>0.8</priority></url>
+  <url><loc>https://mrgolfbal.nl/golfballen-personaliseren/</loc><priority>0.7</priority></url>
+  <url><loc>https://mrgolfbal.nl/onbedrukte-golfballen/</loc><priority>0.7</priority></url>
+  <url><loc>https://mrgolfbal.nl/golfbalkiezer/</loc><priority>0.6</priority></url>
+  <url><loc>https://mrgolfbal.nl/zo-werkt-het/</loc><priority>0.6</priority></url>
+  <url><loc>https://mrgolfbal.nl/over-mark/</loc><priority>0.6</priority></url>
+  <url><loc>https://mrgolfbal.nl/contact/</loc><priority>0.5</priority></url>
+  <url><loc>https://mrgolfbal.nl/products/titleist-pro-v1/</loc><priority>0.7</priority></url>
+  <url><loc>https://mrgolfbal.nl/products/titleist-pro-v1x/</loc><priority>0.7</priority></url>
+  <url><loc>https://mrgolfbal.nl/products/titleist-trufeel/</loc><priority>0.6</priority></url>
+  <url><loc>https://mrgolfbal.nl/products/titleist-avx/</loc><priority>0.6</priority></url>
+  <url><loc>https://mrgolfbal.nl/products/titleist-velocity/</loc><priority>0.6</priority></url>
+  <url><loc>https://mrgolfbal.nl/products/pinnacle-soft-met-bedrukking/</loc><priority>0.6</priority></url>
+  <url><loc>https://mrgolfbal.nl/products/pinnacle-rush-met-bedrukking/</loc><priority>0.6</priority></url>
+</urlset>
