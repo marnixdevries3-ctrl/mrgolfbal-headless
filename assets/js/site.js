@@ -47,7 +47,7 @@
     '<div class="fairway"></div>' +
     '<div class="gp-pop">Raak! ⛳</div>' +
     '<div class="gp-mark swing">' +
-      '<svg viewBox="0 0 40 34" width="100%" height="100%" preserveAspectRatio="xMinYMax meet">' +
+      '<svg viewBox="0 0 40 34" width="34" height="29" preserveAspectRatio="xMinYMax meet">' +
         '<circle cx="9" cy="6.5" r="3.5" fill="#072943"/>' +
         '<line x1="9" y1="10" x2="10" y2="22" stroke="#072943" stroke-width="3" stroke-linecap="round"/>' +
         '<line x1="10" y1="22" x2="6" y2="32" stroke="#072943" stroke-width="3" stroke-linecap="round"/>' +
