@@ -18,8 +18,8 @@ function walk(dir, acc = []) {
 
 for (const file of walk(root)) {
   let html = readFileSync(file, 'utf8');
-  html = html.replace(/<link rel="stylesheet" href="[^"]*styles\.css">/, `<style>\n${css}\n</style>`);
-  html = html.replace(/<script src="[^"]*site\.js"[^>]*><\/script>/, `<script>\n${siteJs}\n</script>`);
+  html = html.replace(/<link rel="stylesheet" href="[^"]*styles\.css[^"]*">/, `<style>\n${css}\n</style>`);
+  html = html.replace(/<script src="[^"]*site\.js[^"]*"[^>]*><\/script>/, `<script>\n${siteJs}\n</script>`);
   const rel = relative(root, file);
   const out = join(root, 'preview', rel);
   mkdirSync(dirname(out), { recursive: true });

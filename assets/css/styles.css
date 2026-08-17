@@ -109,8 +109,8 @@ ul { margin: 0 0 1rem; padding-left: 1.2rem; }
 .pill-row { display: flex; flex-wrap: wrap; gap: .5rem; }
 
 /* --------------------------------------------------------------- header */
-.site-header { position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,.92);
-  backdrop-filter: saturate(1.4) blur(6px); border-bottom: 1px solid var(--color-border); }
+.site-header { position: sticky; top: 0; z-index: 50; background: #fff;
+  border-bottom: 1px solid var(--color-border); box-shadow: 0 2px 10px rgba(7,41,67,.05); }
 .header-bar { display: flex; align-items: center; gap: 1.2rem; height: 72px; }
 .logo { display: flex; flex-direction: column; line-height: 1; text-decoration: none; }
 .logo b { font-family: var(--font-display); color: var(--color-navy); font-size: 1.32rem; font-weight: 800; letter-spacing: -.02em; }
@@ -279,6 +279,13 @@ ul { margin: 0 0 1rem; padding-left: 1.2rem; }
 .crumbs{font-size:.85rem;color:var(--muted);padding-block:.9rem}
 .crumbs a{color:var(--muted)}.crumbs a:hover{color:var(--blue-600)}
 
+/* kennisbank-artikel */
+.kb-body{font-size:1.06rem;line-height:1.75;color:#243b4d}
+.kb-body h2{margin-top:2rem;font-size:1.5rem}
+.kb-body p{margin:0 0 1.1rem}
+.kb-body a{color:var(--blue-600);font-weight:600}
+.kb-body .lead{color:var(--muted);font-size:1.18rem}
+
 /* =========================================================================
    WOW-LAAG — animaties, scroll-golfbal, Mark-figuur, extra design
    ========================================================================= */
@@ -288,16 +295,10 @@ ul { margin: 0 0 1rem; padding-left: 1.2rem; }
 .js .reveal.in{opacity:1;transform:none}
 @media (prefers-reduced-motion: reduce){.js .reveal{opacity:1;transform:none;transition:none}}
 
-/* --- Header: logo + pijltje naar Mark-figuur (vervangt 'BY MARK REYNOLDS') --- */
-.brand-wrap{display:flex;align-items:center;gap:.5rem}
+/* --- Header: normaal logo met klein 'by Mark Reynolds' eronder --- */
 .logo b{font-size:1.34rem}
-.logo small{display:none}
-.mark-chip{display:inline-flex;align-items:center;gap:.3rem;text-decoration:none;color:var(--muted);font-size:.72rem;font-weight:600}
-.mark-chip:hover{text-decoration:none;color:var(--blue-600)}
-.mark-chip .arrow{color:var(--color-blue);font-size:1rem;line-height:1;transform:translateY(1px)}
-.mark-chip .avatar{width:30px;height:30px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#eaf3fb,#cfe0ef);border:1.5px solid var(--color-border);display:grid;place-items:center;overflow:hidden}
-.mark-chip .avatar svg{width:26px;height:26px}
-.mark-chip:hover .avatar{border-color:var(--color-blue)}
+.logo small{display:block;color:var(--muted);font-size:.7rem;letter-spacing:.06em;margin-top:3px;text-transform:none}
+.logo small b{font-size:inherit;font-weight:600}
 
 /* --- primaire CTA opgewaardeerd (shine) --- */
 .btn--primary{position:relative;overflow:hidden}
@@ -362,7 +363,9 @@ ul { margin: 0 0 1rem; padding-left: 1.2rem; }
 .gp-flag.wave::after{animation:wave 1.2s ease-in-out infinite}
 @keyframes wave{50%{transform:skewY(-6deg) scaleX(.92)}}
 /* Mark staat LINKS en slaat af met de putter; de bal rolt naar het vlaggetje */
-.gp-mark{position:absolute;left:8px;bottom:9px;width:34px;height:34px}
+.gp-mark{position:absolute;left:8px;bottom:9px;width:34px;height:29px}
+.gp-mark svg{display:block;width:34px;height:29px}          /* harde maat: nooit opblazen */
+.mark-chip .avatar svg{display:block;width:26px;height:26px}
 .gp-mark .club{transform-origin:30% 42%;transition:transform .1s}
 .gp-mark.swing .club{animation:swing 1.05s cubic-bezier(.3,1,.5,1)}
 @keyframes swing{0%{transform:rotate(-54deg)}42%{transform:rotate(-54deg)}60%{transform:rotate(16deg)}78%{transform:rotate(-4deg)}100%{transform:rotate(0)}}
@@ -374,10 +377,70 @@ ul { margin: 0 0 1rem; padding-left: 1.2rem; }
 @media (max-width:640px){.golf-progress{height:38px}.gp-hole{right:70px}.gp-flag{right:80px}.gp-mark{left:4px}.gp-pop{right:30px}}
 @media (prefers-reduced-motion: reduce){.golf-progress{display:none}}
 
+/* aantrekkelijke footer-CTA */
+.footer-cta{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1.2rem;
+  background:linear-gradient(120deg,var(--navy-700),var(--navy-600));border:1px solid rgba(255,255,255,.1);
+  border-radius:var(--radius-lg);padding:clamp(1.4rem,3vw,2rem);margin-bottom:2.5rem}
+.footer-cta h3{color:#fff;margin:0 0 .25rem;font-size:1.3rem}
+.footer-cta p{color:#c9def0;margin:0;font-size:.96rem}
+.footer-cta .btn{flex:none}
+
 /* strakkere footer */
-.site-footer{padding-block:clamp(2rem,4vw,3rem) 5rem}
+.site-footer{padding-block:clamp(2rem,4vw,3rem) 3rem}
 .footer-col ul{gap:.4rem}
 .footer-col h4{font-size:.82rem;letter-spacing:.1em;color:#8fb2cd}
 .footer-brand b{font-size:1.25rem}
 .footer-bottom{margin-top:1.8rem;padding-top:1.1rem}
 .pay-badges span{background:transparent;border:1px solid rgba(255,255,255,.16);color:#a9c4d8}
+
+/* =========================================================================
+   DESIGN-POLISH v4 — CTA-icoon, taalswitcher, rijkere dropdown & secties
+   ========================================================================= */
+
+/* --- icoon in knoppen (o.a. "Start met bedrukken") --- */
+.btn__ico{flex:none;display:inline-block;margin-right:.1rem}
+.btn--primary .btn__ico{filter:drop-shadow(0 1px 1px rgba(7,41,67,.25))}
+
+/* --- taalswitcher in de header --- */
+.lang-switch{display:inline-flex;align-items:center;border:1px solid var(--color-border);border-radius:var(--radius-pill);overflow:hidden;background:#fff}
+.lang-switch a{font-family:var(--font-display);font-weight:700;font-size:.78rem;letter-spacing:.03em;color:var(--muted);padding:.32rem .6rem;line-height:1}
+.lang-switch a:hover{text-decoration:none;color:var(--navy-700);background:var(--sky-50)}
+.lang-switch a[aria-current="true"]{background:var(--color-navy);color:#fff}
+@media (max-width:1040px){.lang-switch{margin-left:auto}}
+
+/* --- rijkere dropdown met kop --- */
+.dropdown{padding:.55rem;min-width:284px}
+.dropdown .dd-head{font-family:var(--font-display);font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--blue-600);padding:.35rem .7rem .25rem}
+.dropdown a{font-weight:500;color:var(--navy-700);transition:.14s ease}
+.dropdown a:hover{background:var(--sky-50);color:var(--color-navy);transform:translateX(2px)}
+.has-dropdown>a{display:inline-flex;align-items:center;gap:.25rem}
+.dropdown::before{content:"";position:absolute;top:-6px;left:24px;width:12px;height:12px;background:#fff;border-left:1px solid var(--color-border);border-top:1px solid var(--color-border);transform:rotate(45deg)}
+
+/* --- eyebrow als subtiele chip in lichte secties --- */
+.section .section-head .eyebrow{display:inline-flex;align-items:center;gap:.4rem}
+.section .section-head .eyebrow::before{content:"";width:18px;height:2px;border-radius:2px;background:linear-gradient(90deg,var(--color-blue),var(--blue-600))}
+
+/* --- diepere kaarten & zachte gradient-media --- */
+.card{box-shadow:var(--shadow-sm)}
+.card:hover{box-shadow:0 14px 40px rgba(7,41,67,.14)}
+.card__media{background:linear-gradient(160deg,#fff,var(--sky-50) 70%,#e3eef7)}
+.card__brand{display:inline-flex;align-items:center;gap:.35rem}
+
+/* --- features met accent-hoekje --- */
+.feature{position:relative;overflow:hidden}
+.feature::after{content:"";position:absolute;top:0;right:0;width:0;height:3px;background:linear-gradient(90deg,var(--color-blue),var(--blue-600));transition:width .3s ease}
+.feature:hover::after{width:100%}
+
+/* --- hero: fijnere trust-chips --- */
+.hero-trust span{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);padding:.35rem .7rem;border-radius:var(--radius-pill);color:#cfe4f3;font-weight:500}
+
+/* --- sectie-scheiders met zachte golfbaan-tint --- */
+.section--sky{background:linear-gradient(180deg,var(--sky-50),#eaf3fb)}
+
+/* --- divider-cta met subtiel balpatroon --- */
+.divider-cta{position:relative;overflow:hidden}
+.divider-cta::after{content:"";position:absolute;right:-60px;bottom:-60px;width:220px;height:220px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.14),transparent 60%);pointer-events:none}
+
+/* --- footer-CTA icoon-knop --- */
+.footer-cta .btn__ico{margin-right:.15rem}
