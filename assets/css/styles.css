@@ -444,3 +444,117 @@ ul { margin: 0 0 1rem; padding-left: 1.2rem; }
 
 /* --- footer-CTA icoon-knop --- */
 .footer-cta .btn__ico{margin-right:.15rem}
+
+/* =========================================================================
+   V5 — topbar, iconen, herbruikbare blokken, toepassingen, quiz
+   ========================================================================= */
+
+/* --- topbar --- */
+.topbar{background:var(--color-navy);color:#cfe4f3;font-size:.82rem}
+.topbar-in{display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:38px;padding-block:.35rem}
+.topbar-usps{display:flex;gap:1.4rem;list-style:none;margin:0;padding:0;flex-wrap:wrap}
+.topbar-usps li{display:inline-flex;align-items:center;gap:.4rem;font-weight:500}
+.topbar-right{display:flex;align-items:center;gap:1.2rem}
+.topbar-proof{display:inline-flex;align-items:center;gap:.4rem;color:#fff}
+.topbar-proof strong{color:var(--color-blue);font-weight:700}
+.topbar-phone{display:inline-flex;align-items:center;gap:.4rem;color:#fff;font-weight:600}
+.topbar-phone:hover{color:var(--color-blue);text-decoration:none}
+.topbar-phone span{color:#9fc2dc;font-weight:500}
+.tb-ico{width:15px;height:15px;color:var(--color-blue);flex:none}
+@media (max-width:900px){ .topbar-usps li:nth-child(2),.topbar-usps li:nth-child(3){display:none} .topbar-proof{display:none} }
+@media (max-width:560px){ .topbar-usps{display:none} .topbar-in{justify-content:center} }
+
+/* --- icoon in features/blokken --- */
+.ico-svg{width:22px;height:22px}
+.feature--ico .ico{width:52px;height:52px;border-radius:14px;background:linear-gradient(140deg,var(--blue-100),#eaf5fe);
+  color:var(--blue-600);display:grid;place-items:center;margin-bottom:1rem;box-shadow:inset 0 0 0 1px rgba(83,194,254,.25)}
+.feature--ico .ico .ico-svg{width:26px;height:26px}
+.feature--ico h3{font-size:1.12rem;margin-bottom:.4rem}
+
+/* --- stap-kaarten (Hoe werkt het) --- */
+.step--card{flex-direction:column;gap:.8rem;background:#fff;border-radius:var(--radius-lg);padding:1.4rem}
+.step--card .num{width:44px;height:44px;font-size:1.05rem}
+.step--card h3{font-size:1.05rem;margin-bottom:.3rem}
+@media (max-width:900px){ .grid-4 .step--card{flex-direction:row} }
+
+/* --- USP-strip / stat-rij --- */
+.statrow{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:1.6rem}
+.stat{background:#fff;border:1px solid var(--color-border);border-radius:var(--radius);padding:1.2rem;text-align:center}
+.stat b{display:block;font-family:var(--font-display);font-size:1.9rem;color:var(--color-navy);line-height:1}
+.stat span{color:var(--muted);font-size:.9rem;margin-top:.3rem;display:block}
+@media (max-width:700px){ .statrow{grid-template-columns:repeat(2,1fr)} }
+
+/* --- toepassingen-grid --- */
+.toep-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;margin-top:1.6rem}
+@media (max-width:900px){ .toep-grid{grid-template-columns:repeat(2,1fr)} }
+@media (max-width:600px){ .toep-grid{grid-template-columns:1fr} }
+.toep-card{display:flex;gap:.9rem;align-items:flex-start;background:#fff;border:1px solid var(--color-border);
+  border-radius:var(--radius);padding:1.1rem 1.2rem;text-decoration:none;transition:.18s ease}
+.toep-card:hover{border-color:var(--color-blue);box-shadow:var(--shadow-md);transform:translateY(-2px);text-decoration:none}
+.toep-card .ico{width:44px;height:44px;border-radius:12px;background:var(--blue-100);color:var(--blue-600);display:grid;place-items:center;flex:none}
+.toep-card h3{font-size:1.02rem;margin:0 0 .2rem;color:var(--color-navy)}
+.toep-card p{margin:0;color:var(--muted);font-size:.88rem}
+.toep-card .go{color:var(--blue-600);font-weight:600;font-size:.85rem;margin-top:.35rem;display:inline-block}
+
+/* --- content-secties (SEO-prose in kolommen) --- */
+.prose{font-size:1.05rem;line-height:1.75;color:#243b4d;max-width:74ch}
+.prose h2{margin-top:2rem;font-size:1.55rem}
+.prose h3{margin-top:1.4rem;font-size:1.2rem}
+.prose p{margin:0 0 1.05rem}
+.prose ul{margin:0 0 1.1rem;padding-left:1.2rem}
+.prose li{margin-bottom:.4rem}
+.prose a{color:var(--blue-600);font-weight:600}
+.prose .lead{font-size:1.2rem;color:var(--muted)}
+
+/* --- interne-link chips --- */
+.linkchips{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem}
+.linkchips a{display:inline-flex;align-items:center;gap:.35rem;background:var(--sky-50);border:1px solid var(--color-border);
+  border-radius:var(--radius-pill);padding:.4rem .85rem;font-size:.9rem;font-weight:500;color:var(--navy-700)}
+.linkchips a:hover{border-color:var(--color-blue);background:#fff;text-decoration:none;color:var(--color-navy)}
+
+/* --- quiz (stap-voor-stap) --- */
+.quiz{max-width:720px;margin-inline:auto}
+.quiz-progress{height:8px;border-radius:8px;background:var(--color-border);overflow:hidden;margin-bottom:1.6rem}
+.quiz-progress b{display:block;height:100%;width:10%;border-radius:8px;background:linear-gradient(90deg,var(--color-blue),var(--blue-600));transition:width .35s cubic-bezier(.2,.7,.2,1)}
+.quiz-step{display:none;animation:qin .35s ease}
+.quiz-step.active{display:block}
+@keyframes qin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.quiz-count{color:var(--blue-600);font-weight:700;font-family:var(--font-display);letter-spacing:.05em;font-size:.85rem;text-transform:uppercase}
+.quiz-q{font-family:var(--font-display);font-size:clamp(1.4rem,3vw,2rem);color:var(--color-navy);margin:.4rem 0 1.4rem;font-weight:700;letter-spacing:-.01em}
+.quiz-opts{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+@media (max-width:560px){ .quiz-opts{grid-template-columns:1fr} }
+.quiz-opt{display:flex;align-items:center;gap:.7rem;text-align:left;background:#fff;border:1.5px solid var(--color-border);
+  border-radius:var(--radius);padding:1rem 1.1rem;font:inherit;font-weight:600;color:var(--navy-700);cursor:pointer;transition:.15s ease}
+.quiz-opt:hover{border-color:var(--color-blue);background:var(--sky-50);transform:translateY(-1px)}
+.quiz-opt .dot{width:20px;height:20px;border-radius:50%;border:2px solid var(--color-border);flex:none}
+.quiz-opt.sel{border-color:var(--color-blue);background:var(--sky-50)}
+.quiz-opt.sel .dot{border-color:var(--color-blue);background:var(--color-blue);box-shadow:inset 0 0 0 3px #fff}
+.quiz-nav{display:flex;justify-content:space-between;align-items:center;margin-top:1.6rem}
+.quiz-back{background:none;border:0;color:var(--muted);font:inherit;font-weight:600;cursor:pointer;padding:.6rem}
+.quiz-back:hover{color:var(--color-navy)}
+.quiz-back[disabled]{opacity:0;pointer-events:none}
+
+/* --- betere upload / geen overlap --- */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 1.2rem}
+@media (max-width:640px){ .form-grid{grid-template-columns:1fr} }
+.form-grid .full{grid-column:1/-1}
+.upload-field{grid-column:1/-1;margin-bottom:1rem}
+.dropzone{display:flex;flex-direction:column;align-items:center;gap:.3rem;min-height:96px;justify-content:center}
+.dropzone input[type=file]{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden}
+.dropzone .dz-ico{width:30px;height:30px;color:var(--blue-600)}
+
+/* --- header dichter (voorkomt afbreken nu er meer nav-items zijn) --- */
+.header-bar{gap:.8rem}
+.main-nav{gap:.05rem;margin-left:.6rem}
+.main-nav a{white-space:nowrap;padding:.5rem .58rem;font-size:.92rem}
+.header-actions{gap:.5rem}
+.header-actions .btn--primary{padding:.7rem 1.05rem;font-size:.95rem}
+@media (max-width:1180px){ .main-nav a{padding:.5rem .45rem;font-size:.88rem} .logo small{display:none} }
+
+/* --- pillar hero (golfshows/golftrips) --- */
+.pillar-hero{background:linear-gradient(160deg,var(--navy-900),var(--navy-700) 60%,var(--navy-600));color:#fff;position:relative;overflow:hidden}
+.pillar-hero .container{position:relative;z-index:1}
+.pillar-hero .eyebrow{color:var(--color-blue)}
+.pillar-hero h1{color:#fff}
+.pillar-hero h1 span{color:var(--color-blue)}
+.pillar-hero p{color:#cfe4f3;max-width:60ch;font-size:1.15rem}

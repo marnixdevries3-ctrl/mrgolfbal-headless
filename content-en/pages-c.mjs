@@ -1,25 +1,27 @@
 export const PAGES_C = {
   'over-mark': {
-    title: "About Mark Reynolds — PGA Professional &amp; Founder | MrGolfbal.nl",
-    desc: "Meet Mark Reynolds, PGA golf professional and founder of MrGolfbal.nl. Personal advice on golf balls, printing and choosing the right ball for every audience.",
-    crumb: "About Mark",
-    he: "About the founder",
-    hh1: "Mark Reynolds — <span>PGA Professional</span> &amp; Founder",
-    hsub: "MrGolfbal.nl combines original branded balls with the advice of a golf professional. Mark helps you choose the right ball and the right printing.",
+    title: "About us — Mark Reynolds, PGA professional &amp; founder | MrGolfbal.nl",
+    desc: "Meet Mark Reynolds: PGA golf professional, multiple winner of the Dutch PGA Order of Merit and founder of MrGolfbal.nl. Advice from a genuine pro.",
+    crumb: "About us",
+    he: "About us",
+    hh1: "Mark Reynolds — <span>PGA professional</span> &amp; founder",
+    hsub: "Behind MrGolfbal.nl stands a genuine golf professional. Mark combines original branded balls with advice that goes beyond printing: which ball suits which player, and what makes an impression on your guests.",
     hcta: "Get in touch with Mark",
     hhref: "/contact/",
     main: `
-<section class="section"><div class="container" style="max-width:920px">
-  <p class="lead">Mark Reynolds is a golf professional and the founder of MrGolfbal.nl. Drawing on years of experience on and around the course, he knows which ball suits which golfer — and how to get a logo onto that ball crisply and recognisably.</p>
-  <p>That combination makes all the difference: you don't just buy printed golf balls, you get advice from someone who knows the game inside out. From the choice between a Pro V1 and Pro V1x to the best printing for your audience.</p>
-  <div class="notice">The details below are taken from the existing website and are <strong>confirmed by the client</strong> before publication. <span class="confirm-tag">verify claims</span></div>
-  <div class="grid grid-2 mt-2" style="gap:1.5rem">
-    <div class="feature"><h3>Background</h3><p>PGA Golf Professional since 1995, with several professional victories.</p></div>
-    <div class="feature"><h3>Achievements (to be confirmed)</h3><p>Dutch PGA Order of Merit (2005, 2009, 2018), leading Dutchman at the KLM Open 2018, European PGA Team Championship 2019, PGA Cup 2005.</p></div>
-    <div class="feature"><h3>Why MrGolfbal.nl</h3><p>Combining original branded balls with personal, expert advice — for golfers, businesses and clubs.</p></div>
-    <div class="feature"><h3>Personal contact</h3><p>Questions about ball choice or your logo? Mark is available by phone and WhatsApp.</p></div>
-  </div>
-</div></section>`
+<section class="section"><div class="container"><div class="prose">
+  <p class="lead">Mark Reynolds is a PGA golf professional and the founder of MrGolfbal.nl. With decades of experience on and around the course — both as a player and as a teacher — he knows better than anyone which golf ball suits which player, and how to get a logo onto that ball crisply and recognisably.</p>
+  <h2>From Yorkshire to the Dutch fairways</h2>
+  <p>Mark was born in 1978 in Maltby, Rotherham (England), and held a golf club for the first time at the age of five. He began his PGA training at sixteen under Simon Thornhill at Rotherham Golf Club and has been a PGA Golf Professional since 1995. In 2000 he moved from England to the Netherlands to teach, and in 2001 he started his own golf school. Since 2014 he has been attached to The International in Badhoevedorp near Amsterdam, where he still teaches and plays.</p>
+  <h2>Achievements &amp; recognition</h2>
+  <p>Mark won the Dutch PGA Order of Merit in 2005, 2009 and 2018, and became European champion with the European PGA Team Championship in 2019. In 2005 he won the PGA Cup with Great Britain &amp; Ireland against the United States. He played several editions of the KLM Open and was the best-placed Dutch player there in 2018. In total he has more than ten professional wins to his name.</p>
+  <h2>Why a PGA pro behind your golf balls?</h2>
+  <p>Because it makes all the difference. You don't just buy printed golf balls — you get advice from someone who knows the game inside out. From the choice between a <a href="/products/titleist-pro-v1/">Pro V1</a> and a <a href="/products/titleist-pro-v1x/">Pro V1x</a> to the right ball for a <a href="/toepassingen/golfballen-bedrijfsgolfdag/">company golf day</a>, Mark helps you make the right choice. Not sure? The <a href="/golfbalkiezer/">golf ball finder</a> points you in the right direction.</p>
+  <h2>More than printing: golf shows &amp; golf trips</h2>
+  <p>Mark is also a celebrated <a href="/golfshows/">golf show and trick-show performer</a> and accompanies <a href="/golftrips/">golf trips</a> as a PGA pro. He is bookable in the Netherlands, across Europe and beyond.</p>
+  <h2>Personal contact</h2>
+  <p>Questions about ball choice or your logo? Mark is reachable via <a href="/contact/">contact</a>, by phone (<a href="tel:+31627411925">+31 6 27 41 19 25</a>) and on <a href="https://wa.me/31627411925">WhatsApp</a>.</p>
+</div></div></section>`
   },
   'contact': {
     title: "Contact — personal advice from Mark | MrGolfbal.nl",

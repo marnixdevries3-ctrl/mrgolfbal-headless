@@ -3,6 +3,9 @@
 import { writeFileSync, mkdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { EN_PAGES, EN_PRODUCTS, EN_KB, EN_KB_CATS } from './content-en.mjs';
+import { TOEPASSINGEN } from './content-toepassingen/index.mjs';
+import { PILLARS } from './content-pillars/index.mjs';
+import { EXTRA, EXTRA_PRODUCTS } from './content-extra/index.mjs';
 const root = new URL('.', import.meta.url).pathname.replace(/\/$/, '');
 const writeFileSync2 = (out, html) => { mkdirSync(dirname(out), { recursive: true }); writeFileSync(out, html); };
 
@@ -39,7 +42,9 @@ const UI = {
     heroAdvice:'Vraag advies aan Mark', jouw:'JOUW', logo:'LOGO',
     ctaEye:'Klaar om te starten?', ctaH:'Bedruk je golfballen met logo, tekst of ontwerp',
     ctaP:'Kies je model, upload je logo en ontvang eerst een digitale drukproef.',
-    ctaConfig:'Start de configurator →', waLabel:'WhatsApp Mark'
+    ctaConfig:'Start de configurator →', waLabel:'WhatsApp Mark',
+    overons:'Over ons', alleToep:'Alle toepassingen', toepHub:'Toepassingen', klanten:'500+ tevreden klanten',
+    topUsp1:'Gratis digitale drukproef vooraf', topUsp2:'Originele Titleist &amp; Pinnacle', topUsp3:'Advies van PGA-professional', belLabel:'Bel direct'
   },
   en: {
     htmlLang:'en', ogLocale:'en_GB', menu:'Main menu', home:'Home',
@@ -57,9 +62,34 @@ const UI = {
     heroAdvice:'Ask Mark for advice', jouw:'YOUR', logo:'LOGO',
     ctaEye:'Ready to start?', ctaH:'Print your golf balls with a logo, text or design',
     ctaP:'Choose your model, upload your logo and receive a digital proof first.',
-    ctaConfig:'Open the configurator →', waLabel:'WhatsApp Mark'
+    ctaConfig:'Open the configurator →', waLabel:'WhatsApp Mark',
+    overons:'About us', alleToep:'All applications', toepHub:'Applications', klanten:'500+ satisfied customers',
+    topUsp1:'Free digital proof first', topUsp2:'Original Titleist &amp; Pinnacle', topUsp3:'Advice from a PGA professional', belLabel:'Call now'
   }
 };
+
+// ---- Icoon-set (inline SVG, currentColor) — voor USP's, features en secties ----
+const ICONS = {
+  check:'<path d="M20 6 9 17l-5-5"/>',
+  phone:'<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.7a2 2 0 0 1-.5 2.1L7.6 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.8.5 2.7.6a2 2 0 0 1 1.7 2Z"/>',
+  star:'<path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/>',
+  shield:'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
+  proof:'<path d="M9 12l2 2 4-4"/><rect x="3" y="4" width="18" height="16" rx="2"/>',
+  palette:'<circle cx="12" cy="12" r="9"/><circle cx="8.5" cy="10.5" r="1"/><circle cx="12" cy="8" r="1"/><circle cx="15.5" cy="10.5" r="1"/><path d="M12 21a3 3 0 0 0 0-6 2 2 0 0 1 0-4"/>',
+  truck:'<rect x="1" y="6" width="13" height="10" rx="1"/><path d="M14 9h4l3 3v4h-7z"/><circle cx="6" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/>',
+  gift:'<rect x="3" y="9" width="18" height="12" rx="1"/><path d="M12 9v12M3 13h18M12 9S9 3 6.5 4.5 9 9 12 9Zm0 0s3-6 5.5-4.5S15 9 12 9Z"/>',
+  users:'<circle cx="9" cy="8" r="3.2"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M17 5.2a3.2 3.2 0 0 1 0 6.1M18 14.5a6.5 6.5 0 0 1 3.5 5.5"/>',
+  trophy:'<path d="M8 21h8M12 17v4M7 4h10v4a5 5 0 0 1-10 0zM7 6H4v2a3 3 0 0 0 3 3M17 6h3v2a3 3 0 0 0-3 3"/>',
+  flag:'<path d="M5 21V4M5 4h11l-2 4 2 4H5"/>',
+  target:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/>',
+  spark:'<path d="M12 2v6m0 8v6M4.9 4.9l4.2 4.2m5.8 5.8 4.2 4.2M2 12h6m8 0h6M4.9 19.1l4.2-4.2m5.8-5.8 4.2-4.2"/>',
+  ball:'<circle cx="12" cy="12" r="9"/><circle cx="9" cy="9" r=".8"/><circle cx="13" cy="8" r=".8"/><circle cx="16" cy="11" r=".8"/><circle cx="11" cy="12" r=".8"/><circle cx="15" cy="15" r=".8"/><circle cx="9" cy="14" r=".8"/>',
+  chat:'<path d="M21 11.5a8.5 8.5 0 0 1-12.3 7.6L3 21l1.9-5.7A8.5 8.5 0 1 1 21 11.5z"/>',
+  clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  euro:'<path d="M16 5a7 7 0 1 0 0 14M5 10h7M5 14h7"/>',
+  building:'<rect x="5" y="3" width="14" height="18" rx="1"/><path d="M9 7h1M14 7h1M9 11h1M14 11h1M9 15h1M14 15h1M10 21v-3h4v3"/>',
+};
+const ico = (name, cls='ico-svg') => `<svg class="${cls}" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[name]||ICONS.check}</svg>`;
 
 // Sitewide organisatie-schema (merk-entiteit). Alleen bekende feiten.
 const siteLD = (lang) => `<script type="application/ld+json">${JSON.stringify({
@@ -101,7 +131,7 @@ const HEAD = (t, d, nlCanon, lang='nl', extra='') => {
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${t}"><meta name="twitter:description" content="${d}"><meta name="twitter:image" content="https://mrgolfbal.nl/assets/img/og-home.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/css/styles.css?v=4">
+<link rel="stylesheet" href="/assets/css/styles.css?v=5">
 ${siteLD(lang)}${extra}</head><body>`;
 };
 
@@ -111,9 +141,25 @@ const langSwitch = (nlCanon, lang) => `<div class="lang-switch">
   <a href="${enHref(nlCanon)}"${lang==='en'?' aria-current="true"':''} hreflang="en" lang="en">EN</a>
 </div>`;
 
+// Topbar met USP's, social proof en belknop.
+const TOPBAR = (lang='nl') => {
+  const u = UI[lang];
+  return `<div class="topbar"><div class="container topbar-in">
+    <ul class="topbar-usps">
+      <li>${ico('check','tb-ico')}${u.topUsp1}</li>
+      <li>${ico('shield','tb-ico')}${u.topUsp2}</li>
+      <li>${ico('star','tb-ico')}${u.topUsp3}</li>
+    </ul>
+    <div class="topbar-right">
+      <span class="topbar-proof">${ico('users','tb-ico')}<strong>${u.klanten}</strong></span>
+      <a class="topbar-phone" href="tel:+31627411925">${ico('phone','tb-ico')}<span>${u.belLabel}:</span> +31 6 27 41 19 25</a>
+    </div>
+  </div></div>`;
+};
+
 const HEADER = (lang='nl', nlCanon='/') => {
   const u = UI[lang], p = pfx(lang);
-  return `
+  return `${TOPBAR(lang)}
 <header class="site-header"><div class="container header-bar">
   <a class="logo" href="${p}/"><b>Mr<span>Golfbal</span>.nl</b><small>by Mark Reynolds</small></a>
   <nav class="main-nav" aria-label="${u.menu}">
@@ -125,14 +171,16 @@ const HEADER = (lang='nl', nlCanon='/') => {
       <a href="${p}/onbedrukte-golfballen/">${u.onbedrukt}</a>
       <a href="${p}/golfballen-personaliseren/">${u.personaliseren}</a>
     </div></div>
-    <div class="has-dropdown"><a href="${p}/golfballen-bedrukken-voor-bedrijven/">${u.toepassingen} ▾</a><div class="dropdown">
+    <div class="has-dropdown"><a href="${p}/toepassingen/">${u.toepassingen} ▾</a><div class="dropdown">
       <div class="dd-head">${u.ddToep}</div>
+      <a href="${p}/toepassingen/">${u.alleToep}</a>
       <a href="${p}/golfballen-bedrukken-voor-bedrijven/">${u.voorBedrijven}</a>
       <a href="${p}/golfballen-bedrukken-voor-golfclubs-en-toernooien/">${u.voorClubs}</a>
-      <a href="${p}/kennisbank/bedrukte-golfballen-als-relatiegeschenk/">${u.relatiegeschenk}</a>
-      <a href="${p}/kennisbank/golfballen-voor-je-bedrijfsgolfdag/">${u.bedrijfsgolfdag}</a>
+      <a href="${p}/toepassingen/golfballen-relatiegeschenk/">${u.relatiegeschenk}</a>
+      <a href="${p}/toepassingen/golfballen-bedrijfsgolfdag/">${u.bedrijfsgolfdag}</a>
     </div></div>
     <a href="${p}/golfbalkiezer/">${u.welke}</a>
+    <a href="${p}/over-mark/">${u.overons}</a>
     <a href="${p}/contact/">${u.contact}</a>
   </nav>
   <div class="header-actions">
@@ -141,6 +189,70 @@ const HEADER = (lang='nl', nlCanon='/') => {
     <a class="btn btn--primary" href="${p}/golfballen-bedrukken/#configurator">${CTA_ICO}${u.startCta}</a>
   </div>
 </div></header>`;
+};
+
+// ---- Herbruikbare blokken (lang-aware) ----
+// Hoe werkt het (4 stappen)
+const howItWorks = (lang='nl') => {
+  const p = pfx(lang);
+  const T = lang==='en'
+    ? {eye:'How it works',h:'From logo to printed golf balls in 4 steps',steps:[['Choose your golf ball','Pick a brand and model that suits your audience and budget — or use the golf ball finder.'],['Upload your logo or text','Supply your design (EPS, AI or PDF preferred) or type a name in the configurator.'],['Approve the digital proof','You receive a digital proof of the logo on the ball. Production only starts after your approval.'],['Receive your golf balls','Delivery in 5–15 working days after you approve the proof.']]}
+    : {eye:'Hoe werkt het',h:'Van logo tot bedrukte golfballen in 4 stappen',steps:[['Kies je golfbal','Selecteer een merk en model dat past bij je doelgroep en budget — of gebruik de golfbalkiezer.'],['Upload je logo of tekst','Lever je ontwerp aan (bij voorkeur EPS, AI of PDF) of typ een naam in de configurator.'],['Keur de digitale drukproef goed','Je ontvangt een digitale proef van het logo op de bal. Productie start pas na jouw akkoord.'],['Ontvang je golfballen','Levering in 5–15 werkdagen na goedkeuring van de drukproef.']]};
+  return `<section class="section section--sky"><div class="container"><div class="section-head accent-line"><p class="eyebrow">${T.eye}</p><h2>${T.h}</h2></div>
+    <div class="steps grid grid-4" style="margin-top:1.6rem">
+    ${T.steps.map(([h,pp])=>`<div class="step step--card"><div class="num"></div><div><h3>${h}</h3><p>${pp}</p></div></div>`).join('')}
+    </div>
+    <div class="row" style="margin-top:1.6rem"><a class="btn btn--primary btn--lg" href="${p}/golfballen-bedrukken/#configurator">${CTA_ICO}${lang==='en'?'Start now':'Start nu'} →</a><a class="btn btn--ghost btn--lg" href="${p}/zo-werkt-het/">${lang==='en'?'Read the full process':'Lees het hele proces'} →</a></div>
+  </div></section>`;
+};
+// Waarom MrGolfbal (6 redenen met iconen)
+const whyUs = (lang='nl') => {
+  const T = lang==='en'
+    ? {eye:'Why MrGolfbal.nl',h:'Why choose MrGolfbal for your printed golf balls',items:[['shield','Only original brands','We print exclusively on genuine Titleist and Pinnacle balls — never imitations.'],['proof','Always a proof first','You approve a digital proof before we print a single ball. No surprises.'],['star','Advice from a PGA pro','Founder Mark Reynolds is a PGA professional who helps you pick the right ball.'],['palette','Sharp, durable print','Professional print in up to 5 spot colours that keeps looking good on the course.'],['euro','Tiered pricing','From 144 balls, with better prices per ball as your quantity grows.'],['users','500+ satisfied customers','Businesses, golf clubs and event organisers across the Netherlands trust us.']]}
+    : {eye:'Waarom MrGolfbal.nl',h:'Waarom kiezen voor MrGolfbal voor je bedrukte golfballen',items:[['shield','Alleen originele merken','We bedrukken uitsluitend échte Titleist- en Pinnacle-ballen — nooit imitaties.'],['proof','Altijd eerst een drukproef','Je keurt een digitale drukproef goed vóór we ook maar één bal bedrukken. Geen verrassingen.'],['star','Advies van een PGA-pro','Oprichter Mark Reynolds is PGA-professional en helpt je de juiste bal kiezen.'],['palette','Scherpe, duurzame opdruk','Professionele bedrukking in tot 5 spotkleuren die er op de baan goed uit blijft zien.'],['euro','Staffelprijzen','Vanaf 144 ballen, met een gunstigere prijs per bal naarmate je aantal groeit.'],['users','500+ tevreden klanten','Bedrijven, golfclubs en eventorganisatoren door heel Nederland gingen je voor.']]};
+  return `<section class="section"><div class="container"><div class="section-head accent-line"><p class="eyebrow">${T.eye}</p><h2>${T.h}</h2></div>
+    <div class="grid grid-3" style="margin-top:1.6rem">
+    ${T.items.map(([ic,h,pp])=>`<div class="feature feature--ico"><div class="ico">${ico(ic)}</div><h3>${h}</h3><p>${pp}</p></div>`).join('')}
+    </div>
+  </div></section>`;
+};
+// FAQ-blok met FAQPage-schema. items = [[vraag, antwoord], ...]
+const faqBlock = (items, lang='nl') => {
+  const eye = lang==='en' ? 'FAQ' : 'Veelgestelde vragen';
+  const h = lang==='en' ? 'Frequently asked questions' : 'Veelgestelde vragen';
+  const ld = `<script type="application/ld+json">${JSON.stringify({
+    '@context':'https://schema.org','@type':'FAQPage',
+    mainEntity: items.map(([q,a])=>({'@type':'Question',name:q.replace(/<[^>]+>/g,''),acceptedAnswer:{'@type':'Answer',text:a.replace(/<[^>]+>/g,'')}}))
+  })}</script>`;
+  return `<section class="section section--sky"><div class="container" style="max-width:860px"><div class="section-head accent-line"><p class="eyebrow">${eye}</p><h2>${h}</h2></div>
+    <div class="faq" style="margin-top:1.4rem">
+    ${items.map(([q,a],i)=>`<details${i===0?' open':''}><summary>${q}</summary><div class="faq-body">${a}</div></details>`).join('')}
+    </div>${ld}
+  </div></section>`;
+};
+
+// Gedeelde FAQ over bedrukken (met FAQPage-schema) — voor elke bedruk-pagina.
+const printingFaq = (lang='nl') => faqBlock(lang==='en' ? [
+  ['What is the minimum order?','The minimum order is 144 golf balls, for example 6 boxes of 24 or 12 dozen. Larger quantities earn tiered discounts.'],
+  ['Do I get a digital proof first?','Yes, always. You receive a digital proof of your logo on the ball and production only starts after your approval.'],
+  ['How long does delivery take?','Allow 5 to 15 working days after you approve the digital proof.'],
+  ['How many colours can I print?','Golf balls are printed in 1 to 5 spot colours. Provide your brand colours as PMS/Pantone values for the best match.'],
+  ['How do I supply my logo?','Preferably as a vector file (EPS, AI or PDF) so the logo comes out perfectly crisp. A high-resolution PNG can work for simple logos.'],
+  ['Can I play with printed golf balls?','Yes. They are original branded balls with a professional print, so they play exactly like unprinted balls.'],
+] : [
+  ['Wat is de minimale afname?','De minimale afname is 144 golfballen, bijvoorbeeld 6 dozen van 24 of 12 dozijn. Bij grotere aantallen geldt staffelkorting.'],
+  ['Krijg ik eerst een digitale drukproef?','Ja, altijd. Je ontvangt een digitale drukproef van je logo op de bal en de productie start pas na jouw akkoord.'],
+  ['Hoe lang duurt de levering?','Reken op 5 tot 15 werkdagen nadat je de digitale drukproef hebt goedgekeurd.'],
+  ['Hoeveel kleuren kan ik bedrukken?','Golfballen bedrukken we in 1 tot 5 spotkleuren. Geef je huisstijlkleuren door als PMS/Pantone-waarden voor de beste match.'],
+  ['Hoe lever ik mijn logo aan?','Bij voorkeur als vectorbestand (EPS, AI of PDF) voor een haarscherp resultaat. Voor eenvoudige logo\\u2019s kan een PNG in hoge resolutie ook.'],
+  ['Kan ik met bedrukte golfballen spelen?','Ja. Het zijn originele merkballen met een professionele opdruk, dus ze spelen precies als onbedrukte ballen.'],
+], lang);
+
+// Extra SEO-secties per pagina (uit content-extra) — vult pagina's aan richting 2500+ woorden.
+const extraSections = (slug, lang, store=EXTRA) => {
+  const e = slug && store[slug] && store[slug][lang];
+  if (!e || !e.length) return '';
+  return `<section class="section"><div class="container"><div class="prose">${localize(e.map(s=>`<h2>${s.h}</h2>${s.html}`).join(''), lang)}</div></div></section>`;
 };
 
 const crumbs = (name, lang='nl') => `<div class="container"><nav class="crumbs"><a href="${pfx(lang)}/">${UI[lang].home}</a> › <span>${name}</span></nav></div>`;
@@ -187,14 +299,17 @@ const FOOTER = (lang='nl') => {
   <div class="footer-bottom"><span>© 2026 MrGolfbal.nl · KVK 27326866</span><span class="pay-badges"><span>${u.badge1}</span><span>${u.badge2}</span></span></div>
 </div></footer>
 <a class="wa-float" href="https://wa.me/31627411925" aria-label="WhatsApp"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2Zm5.3 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.5-4-4.7-4.2-.1-.2-1-1.4-1-2.6s.6-1.8.9-2.1c.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5c-.2.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.2.1.4.1.6-.1l.7-.9c.2-.2.4-.2.6-.1l2 .9c.2.1.4.2.4.3.1.2.1.9-.1 1.5Z"/></svg></a>
-<script src="/assets/js/site.js?v=4" defer></script>
+<script src="/assets/js/site.js?v=5" defer></script>
 </body></html>`;
 };
 
 // o = { title, desc, canon(NL-pad), crumb, hero(HTML), main(HTML), extra? }
 const page = (o, lang='nl') => HEAD(o.title, o.desc, o.canon, lang,
   breadcrumbLD([{name:UI[lang].home,url:'/'},{name:o.crumb,url:o.canon}], lang) + (o.extra||'')
-) + HEADER(lang, o.canon) + crumbs(o.crumb, lang) + localize(o.hero, lang) + localize(o.main, lang) + ctaBlock(lang) + FOOTER(lang);
+) + HEADER(lang, o.canon) + crumbs(o.crumb, lang) + localize(o.hero, lang) + localize(o.main, lang)
+  + extraSections(o.slug, lang)
+  + (o.noBlocks ? '' : howItWorks(lang) + whyUs(lang) + printingFaq(lang))
+  + ctaBlock(lang) + FOOTER(lang);
 
 // ---- modelvergelijkingstabel (herbruikbaar, per taal) ----
 const compareTable = (lang='nl') => lang==='en' ? `
@@ -232,8 +347,8 @@ PAGES.push({
   <div class="grid grid-4" style="margin-top:1.5rem">
     <article class="card"><div class="card__media"><div class="ballshot" style="border-radius:0"><div class="ball" style="width:52%"><span class="logo-print" style="font-size:.8rem">LOGO</span></div></div></div><div class="card__body"><span class="card__brand">Titleist</span><h3 class="card__title">Pro V1 — bedrukt</h3><p class="card__meta">Toursniveau, zacht gevoel, hoge green-spin.</p><div class="card__price" data-shopify-handle="titleist-pro-v1">Prijs op aanvraag</div><a class="btn btn--primary btn--block" href="/products/titleist-pro-v1">Bekijk &amp; bedruk</a></div></article>
     <article class="card"><div class="card__media"><div class="ballshot" style="border-radius:0"><div class="ball" style="width:52%"><span class="logo-print" style="font-size:.8rem">LOGO</span></div></div></div><div class="card__body"><span class="card__brand">Titleist</span><h3 class="card__title">Pro V1x — bedrukt</h3><p class="card__meta">Hogere vlucht, steviger, extra spin.</p><div class="card__price" data-shopify-handle="titleist-pro-v1x">Prijs op aanvraag</div><a class="btn btn--primary btn--block" href="/products/titleist-pro-v1x">Bekijk &amp; bedruk</a></div></article>
-    <article class="card"><div class="card__media"><div class="ballshot" style="border-radius:0"><div class="ball" style="width:52%"><span class="logo-print" style="font-size:.8rem">LOGO</span></div></div></div><div class="card__body"><span class="card__brand">Titleist</span><h3 class="card__title">TruFeel — bedrukt</h3><p class="card__meta">Extra zacht en scherp geprijsd.</p><div class="card__price" data-shopify-handle="titleist-trufeel-met-bedrukking">Prijs op aanvraag</div><a class="btn btn--primary btn--block" href="/products/titleist-trufeel-met-bedrukking">Bekijk &amp; bedruk</a></div></article>
-    <article class="card"><div class="card__media"><div class="ballshot" style="border-radius:0"><div class="ball" style="width:52%"><span class="logo-print" style="font-size:.8rem">LOGO</span></div></div></div><div class="card__body"><span class="card__brand">Titleist</span><h3 class="card__title">AVX — bedrukt</h3><p class="card__meta">Zacht gevoel, lage vlucht en spin.</p><div class="card__price" data-shopify-handle="titleist-avx-met-bedrukking">Prijs op aanvraag</div><a class="btn btn--primary btn--block" href="/products/titleist-avx-met-bedrukking">Bekijk &amp; bedruk</a></div></article>
+    <article class="card"><div class="card__media"><div class="ballshot" style="border-radius:0"><div class="ball" style="width:52%"><span class="logo-print" style="font-size:.8rem">LOGO</span></div></div></div><div class="card__body"><span class="card__brand">Titleist</span><h3 class="card__title">TruFeel — bedrukt</h3><p class="card__meta">Extra zacht en scherp geprijsd.</p><div class="card__price" data-shopify-handle="titleist-trufeel-met-bedrukking">Prijs op aanvraag</div><a class="btn btn--primary btn--block" href="/products/titleist-trufeel">Bekijk &amp; bedruk</a></div></article>
+    <article class="card"><div class="card__media"><div class="ballshot" style="border-radius:0"><div class="ball" style="width:52%"><span class="logo-print" style="font-size:.8rem">LOGO</span></div></div></div><div class="card__body"><span class="card__brand">Titleist</span><h3 class="card__title">AVX — bedrukt</h3><p class="card__meta">Zacht gevoel, lage vlucht en spin.</p><div class="card__price" data-shopify-handle="titleist-avx-met-bedrukking">Prijs op aanvraag</div><a class="btn btn--primary btn--block" href="/products/titleist-avx">Bekijk &amp; bedruk</a></div></article>
   </div></div></section>
 <section class="section"><div class="container"><div class="section-head"><p class="eyebrow">Vergelijking</p><h2>Titleist-modellen vergelijken</h2><p class="lead">Kies op basis van speelgevoel en doelgroep. Twijfel je? Mark adviseert je graag.</p></div>${compareTable('nl')}
   <p class="muted" style="font-size:.85rem;margin-top:.8rem">Baleigenschappen op basis van fabrikantinformatie en praktijkervaring.</p></div></section>
@@ -283,18 +398,33 @@ PAGES.push({
     <div class="feature"><h3>Grote oplage</h3><p>Staffelkorting bij grotere aantallen; herhaalbestellingen eenvoudig geregeld.</p></div>
     <div class="feature"><h3>Offerte &amp; planning</h3><p>Zakelijke afhandeling met offerte en levering op een afgesproken datum. <span class="confirm-tag">voorwaarden bevestigen</span></p></div>
   </div></div></section>
-<section class="section section--sky" id="offerte"><div class="container" style="max-width:820px">
-  <div class="section-head"><p class="eyebrow">Offerte op maat</p><h2>Vraag een zakelijke offerte aan</h2><p class="lead">Vul je gegevens in — Mark reageert doorgaans binnen 24 uur met een voorstel en drukproefplanning.</p></div>
-  <form class="mt-1" onsubmit="event.preventDefault();this.querySelector('.ok').style.display='block';">
-    <div class="grid grid-2"><div class="field"><label>Bedrijfsnaam</label><input required></div><div class="field"><label>Naam</label><input required></div></div>
-    <div class="grid grid-2"><div class="field"><label>E-mailadres</label><input type="email" required></div><div class="field"><label>Telefoon</label><input></div></div>
-    <div class="grid grid-2"><div class="field"><label>Gewenst merk</label><select><option>Titleist</option><option>Pinnacle</option><option>Weet ik nog niet</option></select></div><div class="field"><label>Gewenst model</label><input placeholder="Bijv. Pro V1"></div></div>
-    <div class="grid grid-2"><div class="field"><label>Aantal (dozen of ballen)</label><input placeholder="Bijv. 288"></div><div class="field"><label>Gewenste leverdatum</label><input type="date"></div></div>
-    <div class="field"><label>Logo uploaden</label><input type="file" accept=".eps,.ai,.pdf,.png,.jpg"></div>
-    <div class="field"><label>Bedrukking &amp; toelichting</label><textarea rows="3" placeholder="1–2 of 3–5 kleuren, één/twee zijden, bijzonderheden"></textarea></div>
-    <button class="btn btn--primary btn--lg" type="submit">Verstuur offerteaanvraag →</button>
-    <p class="ok" style="display:none;color:var(--success);margin-top:1rem">Bedankt! Je aanvraag is verstuurd (demo). Koppel dit formulier aan je e-mail/CRM in productie.</p>
-  </form>
+<section class="section section--sky" id="offerte"><div class="container" style="max-width:1000px">
+  <div class="section-head accent-line"><p class="eyebrow">Offerte op maat</p><h2>Vraag een zakelijke offerte aan</h2><p class="lead">Vul je gegevens in — Mark reageert doorgaans binnen 24 uur met een voorstel, staffelprijs en drukproefplanning. Geen online afrekenen: alles netjes op factuur.</p></div>
+  <div class="grid grid-2" style="margin-top:1.4rem;align-items:start;gap:1.6rem">
+    <form class="feature" style="padding:1.6rem" onsubmit="event.preventDefault();var ok=this.querySelector('.ok');ok.style.display='block';ok.scrollIntoView({behavior:'smooth',block:'center'});">
+      <div class="form-grid">
+        <div class="field"><label>Bedrijfsnaam *</label><input required></div>
+        <div class="field"><label>Naam *</label><input required></div>
+        <div class="field"><label>E-mailadres *</label><input type="email" required></div>
+        <div class="field"><label>Telefoon</label><input type="tel"></div>
+        <div class="field"><label>Gewenst merk</label><select><option>Titleist</option><option>Pinnacle</option><option>Weet ik nog niet</option></select></div>
+        <div class="field"><label>Gewenst model</label><input placeholder="Bijv. Pro V1"></div>
+        <div class="field"><label>Aantal (ballen of dozen)</label><input placeholder="Bijv. 288"></div>
+        <div class="field"><label>Gewenste leverdatum</label><input type="date"></div>
+        <div class="field full"><label>Bedrukking &amp; toelichting</label><textarea rows="3" placeholder="1–2 of 3–5 kleuren, één of twee zijden, bijzonderheden"></textarea></div>
+      </div>
+      <div class="upload-field"><label class="dropzone" for="offerteLogo"><svg class="dz-ico" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5M5 20h14"/></svg><strong>Logo uploaden (optioneel)</strong><span class="muted">EPS, AI of PDF · of stuur je logo later na</span><input type="file" id="offerteLogo" accept=".eps,.ai,.pdf,.svg,.png,.jpg,.jpeg"></label></div>
+      <button class="btn btn--primary btn--lg btn--block" type="submit">${CTA_ICO}Verstuur offerteaanvraag →</button>
+      <p class="muted" style="font-size:.82rem;margin:.7rem 0 0;text-align:center">We reageren doorgaans binnen 24 uur. Je gegevens gebruiken we uitsluitend voor je aanvraag.</p>
+      <p class="ok" style="display:none;color:var(--success);margin-top:1rem;font-weight:600">Bedankt! Je aanvraag is verstuurd (demo). Koppel dit formulier in productie aan je e-mail/CRM.</p>
+    </form>
+    <aside class="stack">
+      <div class="feature feature--ico"><div class="ico">${ico('proof')}</div><h3>Altijd eerst een drukproef</h3><p>Je ziet je logo op de bal vóór productie. Pas na jouw akkoord gaan we drukken.</p></div>
+      <div class="feature feature--ico"><div class="ico">${ico('clock')}</div><h3>Reactie binnen 24 uur</h3><p>Meestal nog dezelfde werkdag een voorstel met staffelprijs en planning.</p></div>
+      <div class="feature feature--ico"><div class="ico">${ico('star')}</div><h3>Advies van een PGA-pro</h3><p>Mark denkt mee over de juiste bal voor jouw doelgroep en budget.</p></div>
+      <div class="feature feature--ico"><div class="ico">${ico('chat')}</div><h3>Liever direct overleg?</h3><p><a href="https://wa.me/31627411925">WhatsApp Mark</a> of bel <a href="tel:+31627411925">+31 6 27 41 19 25</a>.</p></div>
+    </aside>
+  </div>
 </div></section>`
 });
 
@@ -387,22 +517,30 @@ PAGES.push({
 /* ---------------- OVER MARK ---------------- */
 PAGES.push({
   slug:'over-mark',
-  title:'Over Mark Reynolds — PGA-professional &amp; oprichter | MrGolfbal.nl',
-  desc:'Maak kennis met Mark Reynolds, PGA-golfprofessional en oprichter van MrGolfbal.nl. Persoonlijk advies over golfballen, bedrukking en de juiste keuze per doelgroep.',
-  canon:'/over-mark/', crumb:'Over Mark',
-  hero:heroBlock('Over de oprichter','Mark Reynolds — <span>PGA-professional</span> &amp; oprichter','MrGolfbal.nl combineert originele merkballen met het advies van een golfprofessional. Mark helpt je de juiste bal én de juiste bedrukking te kiezen.','Neem contact op met Mark','/contact/'),
+  title:'Over ons — Mark Reynolds, PGA-professional &amp; oprichter | MrGolfbal.nl',
+  desc:'Maak kennis met Mark Reynolds: PGA-golfprofessional, meervoudig winnaar van de Dutch PGA Order of Merit en oprichter van MrGolfbal.nl. Advies van een echte pro.',
+  canon:'/over-mark/', crumb:'Over ons', noBlocks:true,
+  extra:`<script type="application/ld+json">${JSON.stringify({
+    '@context':'https://schema.org','@type':'Person',name:'Mark Reynolds',jobTitle:'PGA-golfprofessional',
+    worksFor:{'@id':'https://mrgolfbal.nl/#org'}, nationality:'British', birthPlace:'Maltby, Rotherham, Engeland',
+    award:['Dutch PGA Order of Merit 2005','Dutch PGA Order of Merit 2009','Dutch PGA Order of Merit 2018','European PGA Team Championship 2019','PGA Cup 2005'],
+    description:'PGA-golfprofessional sinds 1995, gevestigd op The International (Badhoevedorp), en oprichter van MrGolfbal.nl.'
+  })}</script>`,
+  hero:heroBlock('Over ons','Mark Reynolds — <span>PGA-professional</span> &amp; oprichter','Achter MrGolfbal.nl staat een echte golfprofessional. Mark combineert originele merkballen met advies dat verder gaat dan bedrukken: welke bal past bij welke speler, en wat maakt indruk op je gasten.','Neem contact op met Mark','/contact/'),
   main:`
-<section class="section"><div class="container" style="max-width:920px">
-  <p class="lead">Mark Reynolds is golfprofessional en de oprichter van MrGolfbal.nl. Vanuit jarenlange ervaring op en rond de baan weet hij welke bal bij welke golfer past — en hoe je een logo strak en herkenbaar op die bal krijgt.</p>
-  <p>Die combinatie maakt het verschil: je koopt niet zomaar bedrukte golfballen, maar krijgt advies van iemand die het spel door en door kent. Van de keuze tussen een Pro V1 en Pro V1x tot de beste bedrukking voor jouw doelgroep.</p>
-  <div class="notice">De onderstaande gegevens komen van de bestaande website en worden <strong>door de klant bevestigd</strong> vóór publicatie. <span class="confirm-tag">claims verifiëren</span></div>
-  <div class="grid grid-2 mt-2" style="gap:1.5rem">
-    <div class="feature"><h3>Achtergrond</h3><p>PGA Golf Professional sinds 1995, met meerdere professionele overwinningen.</p></div>
-    <div class="feature"><h3>Prestaties (te bevestigen)</h3><p>Dutch PGA Order of Merit (2005, 2009, 2018), beste Nederlander KLM Open 2018, European PGA Team Championship 2019, PGA Cup 2005.</p></div>
-    <div class="feature"><h3>Waarom MrGolfbal.nl</h3><p>Originele merkballen combineren met persoonlijk, deskundig advies — voor golfers, bedrijven en clubs.</p></div>
-    <div class="feature"><h3>Persoonlijk contact</h3><p>Vragen over balkeuze of je logo? Mark is bereikbaar via telefoon en WhatsApp.</p></div>
-  </div>
-</div></section>`
+<section class="section"><div class="container"><div class="prose">
+  <p class="lead">Mark Reynolds is PGA-golfprofessional en de oprichter van MrGolfbal.nl. Met tientallen jaren ervaring op en rond de baan — als speler én als leraar — weet hij als geen ander welke golfbal bij welke speler past, en hoe je een logo strak en herkenbaar op die bal krijgt.</p>
+  <h2>Van Yorkshire naar de Nederlandse fairways</h2>
+  <p>Mark werd in 1978 geboren in Maltby, in het Engelse Rotherham, en stond al op zijn vijfde met een golfclub in zijn handen. Op zijn zestiende begon hij zijn PGA-opleiding onder Simon Thornhill op Rotherham Golf Club, en sinds 1995 is hij <strong>PGA Golf Professional</strong>. In 2000 verruilde hij Engeland voor Nederland om les te geven, en in 2001 begon hij zijn eigen golfschool. Sinds 2014 is Mark verbonden aan <strong>The International</strong> in Badhoevedorp bij Amsterdam, waar hij nog altijd lesgeeft en speelt.</p>
+  <h2>Prestaties &amp; erkenning</h2>
+  <p>Mark is geen coach die alleen aan de kant staat — hij presteert zelf op hoog niveau. Hij won de <strong>Dutch PGA Order of Merit</strong> in 2005, 2009 én 2018, werd Europees kampioen met het <strong>European PGA Team Championship in 2019</strong> en won in 2005 de <strong>PGA Cup</strong> met Groot-Brittannië &amp; Ierland tegen de Verenigde Staten. Hij speelde meerdere edities van het <strong>KLM Open</strong> en was daar in 2018 de best geklasseerde Nederlander. In totaal boekte hij meer dan tien professionele overwinningen.</p>
+  <h2>Waarom een PGA-pro achter je golfballen?</h2>
+  <p>Die achtergrond maakt het verschil. Bij MrGolfbal.nl koop je niet zomaar bedrukte golfballen — je krijgt advies van iemand die het spel door en door kent. Van de keuze tussen een <a href="/products/titleist-pro-v1/">Pro V1</a> en <a href="/products/titleist-pro-v1x/">Pro V1x</a> tot de beste bal voor een gemengd deelnemersveld op een <a href="/toepassingen/golfballen-bedrijfsgolfdag/">bedrijfsgolfdag</a>: Mark denkt met je mee. Twijfel je? Doe de <a href="/golfbalkiezer/">golfbalkiezer</a> of leg je vraag rechtstreeks aan hem voor.</p>
+  <h2>Meer dan bedrukken: golfshows &amp; golftrips</h2>
+  <p>Mark is ook een gevierd <a href="/golfshows/">golfshow- en trickshow-artist</a> en begeleidt <a href="/golftrips/">golftrips</a> als PGA-pro. Zo kun je hem niet alleen inschakelen voor bedrukte golfballen, maar ook boeken voor entertainment op je golfdag of een onvergetelijke golfreis — in Nederland, Europa en daarbuiten.</p>
+  <h2>Persoonlijk contact</h2>
+  <p>Vragen over balkeuze, je logo of een bestelling? Mark is direct bereikbaar via <a href="/contact/">contact</a>, telefoon (<a href="tel:+31627411925">+31 6 27 41 19 25</a>) en <a href="https://wa.me/31627411925">WhatsApp</a>. Persoonlijk, deskundig en zonder omwegen.</p>
+</div></div></section>`
 });
 
 /* ---------------- CONTACT ---------------- */
@@ -410,7 +548,7 @@ PAGES.push({
   slug:'contact',
   title:'Contact — persoonlijk advies van Mark | MrGolfbal.nl',
   desc:'Neem contact op met MrGolfbal.nl. Persoonlijk advies over golfballen bedrukken, je logo of een spoedbestelling — via e-mail, telefoon of WhatsApp.',
-  canon:'/contact/', crumb:'Contact',
+  canon:'/contact/', crumb:'Contact', noBlocks:true,
   hero:heroBlock('Contact','Persoonlijk advies? <span>Mark helpt je</span>','Vragen over golfballen bedrukken, je logo-opmaak of een spoedbestelling? Neem gerust contact op — we reageren doorgaans binnen 24 uur.','Stuur een WhatsApp','https://wa.me/31627411925'),
   main:`
 <section class="section"><div class="container"><div class="grid grid-2" style="gap:2.5rem;align-items:start">
@@ -437,71 +575,7 @@ PAGES.push({
 </div></div></section>`
 });
 
-/* ---------------- GOLFBALKIEZER (keuzehulp) ---------------- */
-PAGES.push({
-  slug:'golfbalkiezer',
-  title:'Golfbalkiezer — welke golfbal past bij jou? | MrGolfbal.nl',
-  desc:'Doe de golfbalkiezer en ontvang in enkele vragen maximaal 3 persoonlijke aanbevelingen voor de juiste (bedrukte) golfbal, op basis van doel, niveau en budget.',
-  canon:'/golfbalkiezer/', crumb:'Golfbalkiezer',
-  hero:heroBlock('Keuzehulp','Golfbalkiezer — <span>welke bal past bij jou?</span>','Beantwoord een paar korte vragen. Je krijgt maximaal drie aanbevelingen met uitleg, gebaseerd op doel, niveau en budget. Twijfel je? Mark denkt met je mee.','Start de kiezer','#kiezer'),
-  main:`
-<section class="section" id="kiezer"><div class="container" style="max-width:820px">
-  <form id="quiz" class="stack">
-    ${[
-      ['q1','Voor wie zijn de golfballen?',['Mijn bedrijf','Een golfclub','Een toernooi/golfdag','Mezelf of als cadeau']],
-      ['q2','Waarvoor worden ze gebruikt?',['Relatiegeschenk','Bedrijfsgolfdag','Toernooi/wedstrijd','Eigen spel','Persoonlijk cadeau']],
-      ['q3','Wat is het niveau van de golfers?',['Beginnend','Recreatief','Gevorderd','Laag handicap / (bijna) pro']],
-      ['q4','Wat is het budget per bal?',['Scherp geprijsd','Gemiddeld','Premium — kwaliteit voorop']],
-      ['q5','Welke uitstraling is gewenst?',['Zo premium mogelijk','Neutraal / goede middenweg','Vooral scherp geprijsd']],
-      ['q6','Hoeveel golfballen heb je nodig?',['144–288','288–576','576 of meer']],
-      ['q7','Is bedrukking nodig?',['Ja, met logo/tekst','Nee, onbedrukt']],
-      ['q8','Wat is de gewenste levertijd?',['Ruim de tijd','Normaal','Spoed']],
-    ].map(([id,q,opts])=>`
-    <div class="feature"><h3>${q}</h3><div class="pill-row">
-      ${opts.map((o,i)=>`<label class="badge" style="cursor:pointer"><input type="radio" name="${id}" value="${o}" ${i===0?'checked':''} style="margin-right:.4rem">${o}</label>`).join('')}
-    </div></div>`).join('')}
-    <button class="btn btn--primary btn--lg" type="submit">Toon mijn aanbevelingen →</button>
-  </form>
-  <div id="result" style="margin-top:2rem"></div>
-</div></section>
-<script>
-(function(){
-  var P = {
-    'Titleist Pro V1':{brand:'Titleist',href:'/products/titleist-pro-v1',blurb:'Toursbal: zacht gevoel, penetrerende vlucht, hoge green-spin.',tags:{premium:3,laag:3,controle:3,cadeau:2}},
-    'Titleist Pro V1x':{brand:'Titleist',href:'/products/titleist-pro-v1x',blurb:'Hogere vlucht en meer spin, iets steviger gevoel.',tags:{premium:3,laag:3,controle:2,hoogte:3}},
-    'Titleist AVX':{brand:'Titleist',href:'/products/titleist-avx',blurb:'Zacht gevoel met lagere vlucht en spin.',tags:{premium:2,controle:2,laag:2}},
-    'Titleist TruFeel':{brand:'Titleist',href:'/products/titleist-trufeel',blurb:'Extra zacht en scherper geprijsd; fijne allround merkbal.',tags:{recreatief:3,scherp:2,cadeau:2}},
-    'Titleist Velocity':{brand:'Titleist',href:'/products/titleist-velocity',blurb:'Snel en lang, hoge vlucht, lage spin.',tags:{afstand:3,recreatief:2}},
-    'Pinnacle Soft':{brand:'Pinnacle',href:'/products/pinnacle-soft-met-bedrukking',blurb:'Zacht en scherp geprijsd; groot bedrukoppervlak.',tags:{scherp:3,recreatief:3,oplage:3,cadeau:2}},
-    'Pinnacle Rush':{brand:'Pinnacle',href:'/products/pinnacle-rush-met-bedrukking',blurb:'Stevige kern gericht op afstand; prettige toernooibal.',tags:{afstand:3,scherp:2,oplage:2}}
-  };
-  var MAP = {
-    'Laag handicap / (bijna) pro':{laag:3,controle:2,premium:2}, 'Gevorderd':{controle:2,premium:1,hoogte:1},
-    'Recreatief':{recreatief:2,scherp:1}, 'Beginnend':{recreatief:2,scherp:2,afstand:1},
-    'Scherp geprijsd':{scherp:3,oplage:1}, 'Gemiddeld':{recreatief:1}, 'Premium — kwaliteit voorop':{premium:3,controle:1},
-    'Zo premium mogelijk':{premium:3}, 'Neutraal / goede middenweg':{recreatief:1}, 'Vooral scherp geprijsd':{scherp:3},
-    '144–288':{}, '288–576':{oplage:1}, '576 of meer':{oplage:3,scherp:1},
-    'Relatiegeschenk':{premium:2,cadeau:2}, 'Bedrijfsgolfdag':{oplage:2,scherp:1}, 'Toernooi/wedstrijd':{afstand:1,oplage:1},
-    'Eigen spel':{controle:1}, 'Persoonlijk cadeau':{cadeau:3,premium:1}
-  };
-  document.getElementById('quiz').addEventListener('submit',function(e){
-    e.preventDefault();
-    var fd=new FormData(e.target), boost={};
-    for(var v of fd.values()){ var m=MAP[v]||{}; for(var k in m){ boost[k]=(boost[k]||0)+m[k]; } }
-    var scores=Object.keys(P).map(function(name){
-      var s=0,t=P[name].tags; for(var k in t){ s += (boost[k]||0)*t[k]; } return {name:name,score:s};
-    }).sort(function(a,b){return b.score-a.score;});
-    var top=scores.slice(0,3);
-    var html='<div class="section-head"><p class="eyebrow">Onze aanbeveling</p><h2>Deze golfballen passen bij jou</h2></div><div class="grid grid-3" style="margin-top:1rem">';
-    top.forEach(function(r,i){ var p=P[r.name];
-      html+='<article class="card"><div class="card__body"><span class="card__brand">'+p.brand+(i===0?' · beste match':'')+'</span><h3 class="card__title">'+r.name+'</h3><p class="card__meta">'+p.blurb+'</p><a class="btn btn--primary btn--block" href="'+p.href+'">Bekijk dit model</a></div></article>';
-    });
-    html+='</div><p class="muted" style="margin-top:1rem">Advies indicatief, op basis van je antwoorden en algemene baleigenschappen. Voor maatwerk: <a href="/contact/">vraag Mark</a>.</p>';
-    var el=document.getElementById('result'); el.innerHTML=html; el.scrollIntoView({behavior:'smooth'});
-  });
-})();
-</script>`
-});
+/* GOLFBALKIEZER wordt apart gegenereerd via quizPage() (stap-voor-stap quiz). */
 
 // ---- schrijf pagina's (NL op root, EN onder /en/) ----
 for (const p of PAGES) {
@@ -509,7 +583,7 @@ for (const p of PAGES) {
   console.log('generated /' + p.slug + '/');
   const e = EN_PAGES[p.slug];
   if (e) {
-    const eo = { title:e.title, desc:e.desc, canon:p.canon, crumb:e.crumb,
+    const eo = { slug:p.slug, noBlocks:p.noBlocks, title:e.title, desc:e.desc, canon:p.canon, crumb:e.crumb,
       hero: e.hero || heroBlock(e.he, e.hh1, e.hsub, e.hcta, e.hhref || '/golfballen-bedrukken/#configurator', 'en'),
       main: e.main };
     writeFileSync2(join(root, 'en', p.slug, 'index.html'), page(eo, 'en'));
@@ -641,7 +715,10 @@ const productPage = (p, lang='nl') => {
   <div class="grid grid-3" style="margin-top:1.5rem">
     ${PRODUCTS.filter(x=>x.handle!==p.handle && x.brand===p.brand).slice(0,3).map(x=>`
     <article class="card"><div class="card__body"><span class="card__brand">${x.brand}</span><h3 class="card__title">${x.name}</h3><p class="card__meta">${pf(x,lang,'feel')} · ${pf(x,lang,'flight')}</p><a class="btn btn--primary btn--block" href="${pre}/products/${x.handle}/">${t.viewModel}</a></div></article>`).join('')}
-  </div></div></section>` + ctaBlock(lang) + FOOTER(lang);
+  </div></div></section>`
+  + extraSections(p.handle, lang, EXTRA_PRODUCTS)
+  + howItWorks(lang) + whyUs(lang) + printingFaq(lang)
+  + ctaBlock(lang) + FOOTER(lang);
 };
 
 for (const p of PRODUCTS) {
@@ -941,15 +1018,241 @@ for (const lang of LANGS) {
 }
 console.log('TOTAL', KB.length, 'kennisbank articles + hub (NL+EN)');
 
+/* =================== TOEPASSINGEN (data-driven landingspagina's) =================== */
+const toepBallCards = (handles, lang) => {
+  const p = pfx(lang);
+  const cards = (handles||[]).map(h => PRODUCTS.find(x=>x.handle===h)).filter(Boolean).slice(0,3);
+  if (!cards.length) return '';
+  const head = lang==='en' ? 'Recommended golf balls for this' : 'Aanbevolen golfballen hiervoor';
+  const view = lang==='en' ? 'View &amp; print' : 'Bekijk &amp; bedruk';
+  return `<section class="section"><div class="container"><div class="section-head accent-line"><p class="eyebrow">${lang==='en'?'Ball advice':'Baladvies'}</p><h2>${head}</h2></div>
+    <div class="grid grid-3" style="margin-top:1.4rem">
+    ${cards.map(x=>`<article class="card"><div class="card__body"><span class="card__brand">${x.brand}</span><h3 class="card__title">${x.name}</h3><p class="card__meta">${pf(x,lang,'feel')} · ${pf(x,lang,'flight')} · ${pf(x,lang,'target')}</p><a class="btn btn--primary btn--block" href="${p}/products/${x.handle}/">${view}</a></div></article>`).join('')}
+    </div></div></section>`;
+};
+const toepRelated = (related, lang) => {
+  const p = pfx(lang);
+  const items = (related||[]).map(s => TOEPASSINGEN.find(t=>t.slug===s)).filter(Boolean);
+  if (!items.length) return '';
+  const head = lang==='en' ? 'Related applications' : 'Gerelateerde toepassingen';
+  return `<section class="section section--sky"><div class="container"><div class="section-head accent-line"><p class="eyebrow">${lang==='en'?'Keep exploring':'Verder kijken'}</p><h2>${head}</h2></div>
+    <div class="linkchips" style="margin-top:1rem">
+    ${items.map(t=>`<a href="${p}/toepassingen/${t.slug}/">${ico(t.ico,'ico-svg')} ${t[lang].name}</a>`).join('')}
+    <a href="${p}/toepassingen/">${lang==='en'?'All applications':'Alle toepassingen'} →</a>
+    </div></div></section>`;
+};
+const toepassingPage = (t, lang='nl') => {
+  const c = t[lang], u = UI[lang], p = pfx(lang);
+  const sectionsHtml = (c.sections||[]).map(s=>`<h2>${s.h}</h2>${s.html}`).join('');
+  return HEAD(c.metaTitle, c.metaDesc, `/toepassingen/${t.slug}/`, lang,
+    breadcrumbLD([{name:u.home,url:'/'},{name:u.toepHub,url:'/toepassingen/'},{name:c.crumb||c.name,url:`/toepassingen/${t.slug}/`}], lang)
+  ) + HEADER(lang, `/toepassingen/${t.slug}/`) +
+  `<div class="container"><nav class="crumbs"><a href="${p}/">${u.home}</a> › <a href="${p}/toepassingen/">${u.toepHub}</a> › <span>${c.crumb||c.name}</span></nav></div>
+  <section class="pillar-hero"><div class="container" style="padding-block:clamp(2.4rem,5vw,4rem)">
+    <p class="eyebrow">${c.eyebrow}</p><h1>${c.h1}</h1><p>${c.lead}</p>
+    <div class="hero-cta" style="margin-top:1.4rem"><a class="btn btn--primary btn--lg" href="${p}/golfballen-bedrukken/#configurator">${CTA_ICO}${u.startCta} <span class="btn__arrow">→</span></a>
+    <a class="btn btn--light btn--lg" href="${p}/contact/">${u.heroAdvice}</a></div>
+  </div></section>
+  <section class="section"><div class="container"><div class="prose">${localize(c.intro||'', lang)}${localize(sectionsHtml, lang)}</div></div></section>
+  ${extraSections(t.slug, lang)}
+  ${toepBallCards(t.balls, lang)}
+  ${howItWorks(lang)}
+  ${whyUs(lang)}
+  ${faqBlock((c.faq||[]).map(([q,a])=>[q, localize(a, lang)]), lang)}
+  ${toepRelated(t.related, lang)}` + ctaBlock(lang) + FOOTER(lang);
+};
+const toepHubPage = (lang='nl') => {
+  const u = UI[lang], p = pfx(lang), en = lang==='en';
+  const metaTitle = en ? 'Applications — printed golf balls for every occasion | MrGolfbal.nl' : 'Toepassingen — bedrukte golfballen voor elke gelegenheid | MrGolfbal.nl';
+  const metaDesc = en ? 'Printed golf balls for company golf days, events, corporate gifts, goodie bags, tournaments and more. Discover the ideal application for your logo golf balls.' : 'Bedrukte golfballen voor bedrijfsgolfdagen, events, relatiegeschenken, goodiebags, toernooien en meer. Ontdek de ideale toepassing voor jouw golfballen met logo.';
+  const eyebrow = en ? 'Applications' : 'Toepassingen';
+  const h1 = en ? 'Printed golf balls for <span>every occasion</span>' : 'Bedrukte golfballen voor <span>elke gelegenheid</span>';
+  const lead = en ? 'From company golf days to events, corporate gifts and tournaments — find the application that fits your goal and see which golf ball works best.' : 'Van bedrijfsgolfdagen tot events, relatiegeschenken en toernooien — vind de toepassing die bij jouw doel past en zie welke golfbal het beste werkt.';
+  const cards = TOEPASSINGEN.map(t=>`<a class="toep-card" href="${p}/toepassingen/${t.slug}/"><div class="ico">${ico(t.ico)}</div><div><h3>${t[lang].name}</h3><p>${(t[lang].metaDesc||'').split('.')[0]}.</p><span class="go">${en?'Read more':'Lees meer'} →</span></div></a>`).join('');
+  return HEAD(metaTitle, metaDesc, '/toepassingen/', lang,
+    breadcrumbLD([{name:u.home,url:'/'},{name:u.toepHub,url:'/toepassingen/'}], lang)
+  ) + HEADER(lang, '/toepassingen/') +
+  `<div class="container"><nav class="crumbs"><a href="${p}/">${u.home}</a> › <span>${u.toepHub}</span></nav></div>
+  <section class="pillar-hero"><div class="container" style="padding-block:clamp(2.4rem,5vw,4rem)">
+    <p class="eyebrow">${eyebrow}</p><h1>${h1}</h1><p>${lead}</p></div></section>
+  <section class="section"><div class="container"><div class="toep-grid">${cards}</div></div></section>
+  ${whyUs(lang)}${howItWorks(lang)}` + ctaBlock(lang) + FOOTER(lang);
+};
+for (const lang of LANGS) {
+  const base = lang==='en' ? join(root,'en','toepassingen') : join(root,'toepassingen');
+  writeFileSync2(join(base,'index.html'), toepHubPage(lang));
+  for (const t of TOEPASSINGEN){ writeFileSync2(join(base,t.slug,'index.html'), toepassingPage(t, lang)); }
+  console.log('generated '+(lang==='en'?'/en':'')+'/toepassingen/ + '+TOEPASSINGEN.length+' pages');
+}
+console.log('TOTAL', TOEPASSINGEN.length, 'toepassingen + hub (NL+EN)');
+
+/* =================== PILLARS (golfshows, golftrips — Mark Reynolds diensten) =================== */
+// t = { slug, ico, related:[slug], nl:{metaTitle,metaDesc,eyebrow,h1,lead,intro,sections:[{h,html}],faq,bookH,bookP}, en:{...} }
+const pillarPage = (t, lang='nl') => {
+  const c = t[lang], u = UI[lang], p = pfx(lang);
+  const sectionsHtml = (c.sections||[]).map(s=>`<h2>${s.h}</h2>${s.html}`).join('');
+  const bookH = c.bookH || (lang==='en' ? 'Book Mark Reynolds' : 'Boek Mark Reynolds');
+  const bookP = c.bookP || (lang==='en' ? 'Get in touch for availability and a tailored proposal.' : 'Neem contact op voor beschikbaarheid en een voorstel op maat.');
+  const relItems = (t.related||[]).map(s => PILLARS.find(x=>x.slug===s) || TOEPASSINGEN.find(x=>x.slug===s)).filter(Boolean);
+  const relBase = (s) => PILLARS.find(x=>x.slug===s.slug) ? '/' : '/toepassingen/';
+  return HEAD(c.metaTitle, c.metaDesc, `/${t.slug}/`, lang,
+    breadcrumbLD([{name:u.home,url:'/'},{name:c.crumb||c.name,url:`/${t.slug}/`}], lang)
+  ) + HEADER(lang, `/${t.slug}/`) +
+  `<div class="container"><nav class="crumbs"><a href="${p}/">${u.home}</a> › <span>${c.crumb||c.name}</span></nav></div>
+  <section class="pillar-hero"><div class="container" style="padding-block:clamp(2.6rem,6vw,4.5rem)">
+    <p class="eyebrow">${c.eyebrow}</p><h1>${c.h1}</h1><p>${c.lead}</p>
+    <div class="hero-cta" style="margin-top:1.4rem"><a class="btn btn--primary btn--lg" href="${p}/contact/">${ico('chat','btn__ico')}${lang==='en'?'Request availability':'Vraag beschikbaarheid aan'} <span class="btn__arrow">→</span></a>
+    <a class="btn btn--light btn--lg" href="https://wa.me/31627411925">${lang==='en'?'WhatsApp Mark':'WhatsApp Mark'}</a></div>
+  </div></section>
+  <section class="section"><div class="container"><div class="prose">${localize(c.intro||'', lang)}${localize(sectionsHtml, lang)}</div></div></section>
+  ${extraSections(t.slug, lang)}
+  ${faqBlock((c.faq||[]).map(([q,a])=>[q, localize(a, lang)]), lang)}
+  <section class="section"><div class="container"><div class="divider-cta">
+    <p class="eyebrow" style="color:var(--color-blue)">${lang==='en'?'Book now':'Boek nu'}</p><h2>${bookH}</h2><p>${bookP}</p>
+    <div class="row" style="justify-content:center;margin-top:1.4rem"><a class="btn btn--primary btn--lg" href="${p}/contact/">${lang==='en'?'Get in touch':'Neem contact op'} →</a><a class="btn btn--light btn--lg" href="tel:+31627411925">${lang==='en'?'Call':'Bel'} +31 6 27 41 19 25</a></div>
+  </div></div></section>
+  ${relItems.length ? `<section class="section section--sky"><div class="container"><div class="section-head accent-line"><p class="eyebrow">${lang==='en'?'Also interesting':'Ook interessant'}</p><h2>${lang==='en'?'Explore more':'Ontdek meer'}</h2></div>
+    <div class="linkchips" style="margin-top:1rem">${relItems.map(x=>`<a href="${p}${relBase(x)}${x.slug}${relBase(x)==='/'?'/':'/'}">${ico(x.ico,'ico-svg')} ${x[lang].name}</a>`).join('')}</div></div></section>` : ''}`
+  + FOOTER(lang);
+};
+for (const lang of LANGS) {
+  const base = lang==='en' ? join(root,'en') : root;
+  for (const t of PILLARS){ writeFileSync2(join(base, t.slug, 'index.html'), pillarPage(t, lang)); }
+  console.log('generated '+(lang==='en'?'/en':'')+' pillars: '+PILLARS.map(x=>x.slug).join(', '));
+}
+console.log('TOTAL', PILLARS.length, 'pillar pages (NL+EN)');
+
+/* =================== GOLFBALKIEZER (stap-voor-stap quiz, 10 vragen) =================== */
+const QUIZ_PRODUCTS = [
+  { name:'Titleist Pro V1', brand:'Titleist', handle:'titleist-pro-v1', tags:{premium:3,laag:3,controle:3,cadeau:2}, blurb:{nl:'Toursbal: zacht gevoel, penetrerende vlucht en veel controle rond de green.', en:'Tour ball: soft feel, penetrating flight and plenty of greenside control.'} },
+  { name:'Titleist Pro V1x', brand:'Titleist', handle:'titleist-pro-v1x', tags:{premium:3,laag:3,controle:2,hoogte:3}, blurb:{nl:'Hogere vlucht en meer spin, iets steviger gevoel.', en:'Higher flight and more spin, a slightly firmer feel.'} },
+  { name:'Titleist AVX', brand:'Titleist', handle:'titleist-avx', tags:{premium:2,controle:2,laag:2}, blurb:{nl:'Zeer zacht gevoel met een lagere vlucht en spin.', en:'Very soft feel with a lower flight and spin.'} },
+  { name:'Titleist TruFeel', brand:'Titleist', handle:'titleist-trufeel', tags:{recreatief:3,scherp:2,cadeau:2}, blurb:{nl:'Extra zacht en scherper geprijsd; fijne allround merkbal.', en:'Extra soft and keenly priced; a fine all-round brand ball.'} },
+  { name:'Titleist Velocity', brand:'Titleist', handle:'titleist-velocity', tags:{afstand:3,recreatief:2}, blurb:{nl:'Snel en lang, hoge vlucht en lage spin.', en:'Fast and long, high flight and low spin.'} },
+  { name:'Pinnacle Soft', brand:'Pinnacle', handle:'pinnacle-soft-met-bedrukking', tags:{scherp:3,recreatief:3,oplage:3,cadeau:2}, blurb:{nl:'Zacht en scherp geprijsd; groot bedrukoppervlak voor je logo.', en:'Soft and keenly priced; a large surface for your logo.'} },
+  { name:'Pinnacle Rush', brand:'Pinnacle', handle:'pinnacle-rush-met-bedrukking', tags:{afstand:3,scherp:2,oplage:2}, blurb:{nl:'Stevige kern gericht op afstand; prettige toernooibal.', en:'Firm core aimed at distance; a pleasant tournament ball.'} },
+];
+const QUIZ_Q = (lang) => lang==='en' ? [
+  ['Who are the golf balls for?', [['My company',{oplage:1}],['A golf club',{oplage:2}],['A tournament / golf day',{afstand:1,oplage:1}],['Myself or as a gift',{cadeau:2,controle:1}]]],
+  ['What will they mainly be used for?', [['Corporate gift',{premium:2,cadeau:2}],['Company golf day',{oplage:2,scherp:1}],['Tournament / competition',{afstand:1,oplage:1}],['My own game',{controle:1}],['A personal gift',{cadeau:3,premium:1}]]],
+  ['What level are the golfers?', [['Beginner',{recreatief:2,scherp:2,afstand:1}],['Recreational',{recreatief:2,scherp:1}],['Advanced',{controle:2,premium:1,hoogte:1}],['Low handicap / (almost) pro',{laag:3,controle:2,premium:2}]]],
+  ['What is the budget per ball?', [['Keenly priced',{scherp:3,oplage:1}],['Mid-range',{recreatief:1}],['Premium — quality first',{premium:3,controle:1}]]],
+  ['What look do you want?', [['As premium as possible',{premium:3}],['Neutral / a good middle ground',{recreatief:1}],['Mainly keenly priced',{scherp:3}]]],
+  ['How many golf balls do you need?', [['144–288',{}],['288–576',{oplage:1}],['576 or more',{oplage:3,scherp:1}]]],
+  ['What matters most in play?', [['Distance',{afstand:3}],['Control around the green',{controle:3,laag:1}],['A soft feel',{premium:1,controle:1}],['A straight, high flight',{hoogte:2,afstand:1}]]],
+  ['Do the balls need printing?', [['Yes, with a logo/text',{}],['No, blank',{scherp:1}]]],
+  ['Which brand do you prefer?', [['Titleist (premium)',{premium:2,controle:1}],['Pinnacle (sharp price)',{scherp:2,oplage:1}],['No preference',{}]]],
+  ['What delivery time do you need?', [['Plenty of time',{}],['Normal',{}],['Rush',{scherp:1}]]],
+] : [
+  ['Voor wie zijn de golfballen?', [['Mijn bedrijf',{oplage:1}],['Een golfclub',{oplage:2}],['Een toernooi / golfdag',{afstand:1,oplage:1}],['Mezelf of als cadeau',{cadeau:2,controle:1}]]],
+  ['Waarvoor worden ze vooral gebruikt?', [['Relatiegeschenk',{premium:2,cadeau:2}],['Bedrijfsgolfdag',{oplage:2,scherp:1}],['Toernooi / wedstrijd',{afstand:1,oplage:1}],['Eigen spel',{controle:1}],['Persoonlijk cadeau',{cadeau:3,premium:1}]]],
+  ['Wat is het niveau van de golfers?', [['Beginnend',{recreatief:2,scherp:2,afstand:1}],['Recreatief',{recreatief:2,scherp:1}],['Gevorderd',{controle:2,premium:1,hoogte:1}],['Laag handicap / (bijna) pro',{laag:3,controle:2,premium:2}]]],
+  ['Wat is het budget per bal?', [['Scherp geprijsd',{scherp:3,oplage:1}],['Gemiddeld',{recreatief:1}],['Premium — kwaliteit voorop',{premium:3,controle:1}]]],
+  ['Welke uitstraling wil je?', [['Zo premium mogelijk',{premium:3}],['Neutraal / goede middenweg',{recreatief:1}],['Vooral scherp geprijsd',{scherp:3}]]],
+  ['Hoeveel golfballen heb je nodig?', [['144–288',{}],['288–576',{oplage:1}],['576 of meer',{oplage:3,scherp:1}]]],
+  ['Wat vind je het belangrijkst in het spel?', [['Afstand',{afstand:3}],['Controle rond de green',{controle:3,laag:1}],['Een zacht gevoel',{premium:1,controle:1}],['Een rechte, hoge vlucht',{hoogte:2,afstand:1}]]],
+  ['Moeten de ballen bedrukt worden?', [['Ja, met logo/tekst',{}],['Nee, onbedrukt',{scherp:1}]]],
+  ['Welk merk heeft je voorkeur?', [['Titleist (premium)',{premium:2,controle:1}],['Pinnacle (scherpe prijs)',{scherp:2,oplage:1}],['Geen voorkeur',{}]]],
+  ['Welke levertijd heb je nodig?', [['Ruim de tijd',{}],['Normaal',{}],['Spoed',{scherp:1}]]],
+];
+const quizPage = (lang='nl') => {
+  const u = UI[lang], p = pfx(lang), en = lang==='en';
+  const qs = QUIZ_Q(lang);
+  const prods = QUIZ_PRODUCTS.map(x=>({ name:x.name, brand:x.brand, href:`${p}/products/${x.handle}/`, tags:x.tags, blurb:x.blurb[lang] }));
+  const title = en ? 'Golf ball finder — which golf ball suits you? | MrGolfbal.nl' : 'Golfbalkiezer — welke golfbal past bij jou? | MrGolfbal.nl';
+  const desc = en ? 'Take the golf ball finder quiz: answer 10 quick questions and get up to 3 personal recommendations for the right (printed) golf ball — by goal, level and budget.' : 'Doe de golfbalkiezer-quiz: beantwoord 10 korte vragen en krijg tot 3 persoonlijke aanbevelingen voor de juiste (bedrukte) golfbal — op doel, niveau en budget.';
+  const steps = qs.map((qq,qi)=>{
+    const [q,opts] = qq;
+    return `<div class="quiz-step${qi===0?' active':''}" data-step="${qi}">
+      <span class="quiz-count">${en?'Question':'Vraag'} ${qi+1} / ${qs.length}</span>
+      <div class="quiz-q">${q}</div>
+      <div class="quiz-opts">
+      ${opts.map(([l,b])=>`<button type="button" class="quiz-opt" data-boost='${JSON.stringify(b)}'><span class="dot"></span>${l}</button>`).join('')}
+      </div>
+      <div class="quiz-nav"><button type="button" class="quiz-back"${qi===0?' disabled':''}>← ${en?'Back':'Terug'}</button><span class="muted" style="font-size:.85rem">${en?'Tap an answer to continue':'Tik een antwoord om verder te gaan'}</span></div>
+    </div>`;
+  }).join('');
+  return HEAD(title, desc, '/golfbalkiezer/', lang,
+    breadcrumbLD([{name:u.home,url:'/'},{name:en?'Golf ball finder':'Golfbalkiezer',url:'/golfbalkiezer/'}], lang)
+  ) + HEADER(lang, '/golfbalkiezer/') +
+  `<div class="container"><nav class="crumbs"><a href="${p}/">${u.home}</a> › <span>${en?'Golf ball finder':'Golfbalkiezer'}</span></nav></div>
+  <section class="pillar-hero"><div class="container" style="padding-block:clamp(2rem,4vw,3.2rem)">
+    <p class="eyebrow">${en?'Quiz':'Keuzehulp'}</p><h1>${en?'Which golf ball <span>suits you?</span>':'Welke golfbal <span>past bij jou?</span>'}</h1>
+    <p>${en?'Answer 10 quick questions — one at a time — and get up to three personal recommendations with a short explanation. Not sure? Mark is happy to help.':'Beantwoord 10 korte vragen — één voor één — en krijg tot drie persoonlijke aanbevelingen met uitleg. Twijfel je? Mark denkt met je mee.'}</p>
+  </div></section>
+  <section class="section"><div class="container"><div class="quiz" id="quiz">
+    <div class="quiz-progress"><b id="qbar"></b></div>
+    <div id="qsteps">${steps}</div>
+    <div id="qresult" style="display:none"></div>
+  </div></div></section>
+  <script>
+  (function(){
+    var PRODUCTS = ${JSON.stringify(prods)};
+    var TXT = ${JSON.stringify(en ? {eye:'Our recommendation',h:'These golf balls suit you',best:' · best match',view:'View this model',again:'Start again',note:'Indicative advice based on your answers and general ball characteristics. For tailored advice, ',ask:'ask Mark',contact:p+'/contact/'} : {eye:'Onze aanbeveling',h:'Deze golfballen passen bij jou',best:' · beste match',view:'Bekijk dit model',again:'Opnieuw beginnen',note:'Indicatief advies op basis van je antwoorden en algemene baleigenschappen. Voor maatwerk: ',ask:'vraag Mark',contact:p+'/contact/'})};
+    var steps = Array.prototype.slice.call(document.querySelectorAll('.quiz-step'));
+    var bar = document.getElementById('qbar'), result = document.getElementById('qresult'), stepsWrap = document.getElementById('qsteps');
+    var cur = 0, answers = [];
+    function show(i){ steps.forEach(function(s,n){ s.classList.toggle('active', n===i); }); bar.style.width = Math.round(((i)/steps.length)*100)+'%'; cur=i; }
+    function finish(){
+      bar.style.width='100%';
+      var boost={}; answers.forEach(function(b){ for(var k in b){ boost[k]=(boost[k]||0)+b[k]; } });
+      var scores = PRODUCTS.map(function(pr){ var s=0; for(var k in pr.tags){ s+=(boost[k]||0)*pr.tags[k]; } return {p:pr,score:s}; }).sort(function(a,b){return b.score-a.score;});
+      var top = scores.slice(0,3);
+      var html='<div class="section-head accent-line"><p class="eyebrow">'+TXT.eye+'</p><h2>'+TXT.h+'</h2></div><div class="grid grid-3" style="margin-top:1.2rem">';
+      top.forEach(function(r,i){ var pr=r.p;
+        html+='<article class="card"><div class="card__body"><span class="card__brand">'+pr.brand+(i===0?TXT.best:'')+'</span><h3 class="card__title">'+pr.name+'</h3><p class="card__meta">'+pr.blurb+'</p><a class="btn btn--primary btn--block" href="'+pr.href+'">'+TXT.view+'</a></div></article>';
+      });
+      html+='</div><p class="muted" style="margin-top:1.2rem">'+TXT.note+'<a href="'+TXT.contact+'">'+TXT.ask+'</a>.</p><button type="button" class="btn btn--ghost" id="qrestart" style="margin-top:.6rem">↺ '+TXT.again+'</button>';
+      stepsWrap.style.display='none'; result.style.display='block'; result.innerHTML=html;
+      result.scrollIntoView({behavior:'smooth',block:'center'});
+      document.getElementById('qrestart').addEventListener('click',function(){ answers=[]; result.style.display='none'; stepsWrap.style.display='block'; show(0); window.scrollTo({top:document.getElementById('quiz').offsetTop-120,behavior:'smooth'}); });
+    }
+    steps.forEach(function(step,i){
+      step.querySelectorAll('.quiz-opt').forEach(function(btn){
+        btn.addEventListener('click',function(){
+          step.querySelectorAll('.quiz-opt').forEach(function(b){ b.classList.remove('sel'); });
+          btn.classList.add('sel');
+          answers[i] = JSON.parse(btn.getAttribute('data-boost')||'{}');
+          setTimeout(function(){ if(i+1<steps.length){ show(i+1); } else { finish(); } }, 220);
+        });
+      });
+      var back = step.querySelector('.quiz-back');
+      if(back) back.addEventListener('click',function(){ if(i>0) show(i-1); });
+    });
+    show(0);
+  })();
+  </script>
+  ${faqBlock(en ? [
+    ['How does the golf ball finder work?','You answer 10 short questions about your goal, level, budget and preferences. Based on your answers we score every ball and show the three best matches.'],
+    ['Is the advice binding?','No, it is indicative. The finder points you in the right direction; for a tailored recommendation you can always ask Mark, a PGA professional.'],
+    ['Can I have the recommended ball printed?','Yes. Every recommended model can be printed with your logo or text. Open the configurator to start.'],
+    ['What if I am not sure about my answers?','Just pick what fits best. You can go back a step at any time, or start again at the end.'],
+  ] : [
+    ['Hoe werkt de golfbalkiezer?','Je beantwoordt 10 korte vragen over je doel, niveau, budget en voorkeuren. Op basis daarvan scoren we elke bal en tonen we de drie beste matches.'],
+    ['Is het advies bindend?','Nee, het is indicatief. De kiezer wijst je de goede richting; voor maatwerk kun je altijd Mark vragen, een PGA-professional.'],
+    ['Kan ik de aanbevolen bal laten bedrukken?','Ja. Elk aanbevolen model kun je met je logo of tekst laten bedrukken. Open de configurator om te starten.'],
+    ['Wat als ik twijfel bij een antwoord?','Kies wat het beste past. Je kunt altijd een stap terug, of aan het eind opnieuw beginnen.'],
+  ], lang)}` + ctaBlock(lang) + FOOTER(lang);
+};
+for (const lang of LANGS) {
+  const out = lang==='en' ? join(root,'en','golfbalkiezer','index.html') : join(root,'golfbalkiezer','index.html');
+  writeFileSync2(out, quizPage(lang));
+}
+console.log('generated /golfbalkiezer/ + /en/golfbalkiezer/ (stap-voor-stap quiz)');
+
 /* =================== SITEMAP (NL + EN met hreflang-alternatieven) =================== */
 {
   // Alle NL root-paden met prioriteit. EN = /en + pad. Homepage/hub zijn handgebouwd.
   const urls = [
     ['/', '1.0'], ['/golfballen-bedrukken/', '0.9'],
-    ...PAGES.map(p => [p.canon, p.slug==='golfbalkiezer'?'0.6':'0.8']),
+    ['/golfbalkiezer/', '0.7'],
+    ...PAGES.map(p => [p.canon, '0.8']),
     ...PRODUCTS.map(p => [`/products/${p.handle}/`, '0.7']),
     ['/kennisbank/', '0.7'],
     ...KB.map(a => [`/kennisbank/${a.slug}/`, '0.6']),
+    ['/toepassingen/', '0.8'],
+    ...TOEPASSINGEN.map(t => [`/toepassingen/${t.slug}/`, '0.7']),
+    ...PILLARS.map(t => [`/${t.slug}/`, '0.8']),
   ];
   const entry = (path, prio) => {
     const nl = SITE + path, en = SITE + enHref(path);
