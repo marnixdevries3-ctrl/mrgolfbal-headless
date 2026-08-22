@@ -3,8 +3,19 @@
 export default {
   slug: 'golfshows',
   ico: 'target',
+  videoId: 'uA4HTbv6gYU',
   related: ['golftrips', 'golfballen-bedrijfsgolfdag'],
   nl: {
+    video: {
+      sub: 'Op zoek naar een onvergetelijke golfbeleving? De golf trickshow van Mark Reynolds combineert skill, precisie en entertainment die elk publiek versteld doet staan — van verbluffende trickshots tot precisieslagen die je niet gelooft tot je ze ziet.',
+      videoTitle: 'All golfers MUST watch — Golf Trick Show | Mark Reynolds',
+      feats: [
+        { ico: 'target', t: 'Ongelofelijke trickshots', s: 'Slagen die de zwaartekracht lijken te tarten.' },
+        { ico: 'users', t: 'Perfect voor events', s: 'Bedrijfsevents, relatiedagen en golfdagen.' },
+        { ico: 'chat', t: 'Skill, humor & interactie', s: 'Mark betrekt het publiek er volop bij.' },
+        { ico: 'check', t: 'Op maat voor jouw event', s: 'De show wordt afgestemd op de gelegenheid.' },
+      ],
+    },
     name: 'Golfshows',
     crumb: 'Golfshows',
     metaTitle: 'Golfshow boeken met PGA-pro Mark Reynolds | MrGolfbal.nl',
@@ -43,6 +54,16 @@ export default {
     bookP: 'Zet je golfdag, bedrijfsevent of clubjubileum kracht bij met een golfshow van PGA-professional Mark Reynolds. Laat je datum, locatie en wensen weten via de contactpagina en ontvang een voorstel op maat.',
   },
   en: {
+    video: {
+      sub: 'Looking for an unforgettable golf experience? Mark Reynolds’ golf trick show combines skill, precision and entertainment that amazes any audience — from jaw-dropping trick shots to precision strikes you won’t believe until you see them.',
+      videoTitle: 'All golfers MUST watch — Golf Trick Show | Mark Reynolds',
+      feats: [
+        { ico: 'target', t: 'Incredible trick shots', s: 'Shots that seem to defy gravity.' },
+        { ico: 'users', t: 'Perfect for events', s: 'Corporate events, client days and golf days.' },
+        { ico: 'chat', t: 'Skill, humour & interaction', s: 'Mark draws the whole audience in.' },
+        { ico: 'check', t: 'Tailored to your event', s: 'The show is shaped around the occasion.' },
+      ],
+    },
     name: 'Golf shows',
     crumb: 'Golf shows',
     metaTitle: 'Book a golf show with PGA pro Mark Reynolds | MrGolfbal.nl',

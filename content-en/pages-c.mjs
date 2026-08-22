@@ -153,4 +153,95 @@ export const PAGES_C = {
 })();
 </script>`
   },
+  'golfles': {
+    title: "Golf Lessons Amsterdam with a PGA Pro | MrGolfbal.nl",
+    desc: "Golf lessons with PGA professional Mark Reynolds at The International in Badhoevedorp, near Amsterdam. For beginners, improvers, juniors and corporate clinics.",
+    crumb: "Golf lessons",
+    he: "Golf lessons",
+    hh1: "Golf lessons with a <span>true PGA professional</span>",
+    hsub: "Learn to play or sharpen your swing with Mark Reynolds at The International in Badhoevedorp, just minutes from Amsterdam and Schiphol. For every level, from first swing to low handicap.",
+    hcta: "Book your lesson",
+    hhref: "/contact/",
+    main: `
+<section class="section"><div class="container"><div class="prose">
+<h2>Golf lessons at The International in Badhoevedorp</h2>
+<p>Fancy learning to play golf, or have you been playing for years but still can't shake that frustrating slice? At MrGolfbal.nl you'll take golf lessons with Mark Reynolds, a PGA golf professional since 1995. Since 2014 he has taught at The International golf club in Badhoevedorp, perfectly placed between Amsterdam, Amstelveen, Haarlem and Schiphol. Whether you're picking up a club for the very first time or looking to take your game to the next level, here you'll find a certified professional who knows exactly how to help you improve.</p>
+<p>Golf is a wonderful game, but it can feel needlessly complicated. Well-meaning tips from playing partners, a grip that isn't quite right, or a posture that quietly works against your swing. During a golf lesson, Mark watches your movement with a trained eye and turns real expertise into clear, practical guidance. No baffling jargon, just simple steps that see you striking better shots and enjoying your time on the course straight away.</p>
+<h2>Who are the golf lessons for?</h2>
+<p>Everyone is welcome, whatever your age or ability. Are you a complete beginner searching for golf lessons for beginners near Amsterdam? Then you'll start with the basics: the right grip, a solid posture and a swing that gives you confidence. Already playing and keen to lower your handicap? Then you'll work on the parts of your game that genuinely move the needle, from your short game around the green to your consistency on the driving range.</p>
+<p>Mark coaches, among others:</p>
+<ul>
+<li>Beginners who want to learn to play or earn their handicap certificate</li>
+<li>Improvers and low handicappers looking to get sharper</li>
+<li>Juniors picking up the game in a fun, relaxed way</li>
+<li>Companies and groups after a clinic or team day out</li>
+</ul>
+<p>For the corporate world, Mark regularly runs golf clinics: a fun, low-threshold way to introduce colleagues or clients to the game. Want to add something truly memorable to the day? Take a look at his spectacular <a href="/golfshows/">golf shows</a>, in which he performs as a trick-shot artist and reveals just what's possible with a golf ball.</p>
+</div></div></section>
+<section class="section section--sky"><div class="container"><div class="prose">
+<h2>Private golf lessons or learning together</h2>
+<p>A private golf lesson is the fastest way to make progress. Every bit of attention goes to you, your swing and your personal goals. Mark tailors each lesson to where you are right now, so you never waste time on things you've already mastered. Prefer to learn alongside someone? Lessons in a pair or a small group are sociable and rewarding, and often a lovely way to keep the same pace as your partner, friend or colleague.</p>
+<p>Because the lessons take place at The International in Badhoevedorp, you have every facility within easy reach: an excellent driving range, practice greens and a beautiful course where you can put what you've learned straight into play. Its location close to Amsterdam and Schiphol makes golf lessons here easy to get to, whether you're coming from the city or the wider Haarlemmermeer region.</p>
+<h2>Why take golf lessons with Mark Reynolds?</h2>
+<p>Experience makes all the difference, and Mark has it in abundance. He grew up in Maltby near Rotherham in England and began his PGA training at sixteen under Simon Thornhill at Rotherham Golf Club. In 2000 he moved to the Netherlands to teach, and in 2001 he founded his own golf school. Since then he has helped hundreds of golfers of every level get better.</p>
+<p>Alongside teaching, Mark plays at a high level himself. He won the Dutch PGA Order of Merit in 2005, 2009 and 2018, claimed the European PGA Team Championship in 2019, won the PGA Cup in 2005 and played in several KLM Opens, where in 2018 he was the best-placed Dutch player. With more than ten professional wins to his name, he understands better than most what it takes to play well under pressure, and he brings that straight into his lessons. Curious about his story? Read the page <a href="/over-mark/">about Mark</a>.</p>
+<p>More important than his record, though, is the way he teaches: warm, patient and clear. Mark believes golf should be enjoyable, and that you learn fastest when you step onto the course with confidence and a smile.</p>
+</div></div></section>
+<section class="section"><div class="container"><div class="prose">
+<h2>More than golf lessons alone</h2>
+<p>MrGolfbal.nl is about more than teaching. The heart of the brand is <a href="/golfballen-bedrukken/">printing golf balls</a>, ideal as a corporate gift, for a tournament, or simply to make your own balls easy to spot on the course. Not sure which ball suits your game? Take the handy <a href="/golfbalkiezer/">golf ball selector</a> and discover which golf ball best matches your swing and level. It ties in nicely with your lessons: the right technique and the right equipment together make the difference.</p>
+<p>Is your equipment holding you back? Mark can also <a href="/golf-repairs/">repair and fit your clubs</a>, so technique and gear work together perfectly. Want to combine golf with an unforgettable trip? Mark also guides <a href="/golftrips/">golf trips</a> to stunning destinations, where coaching, play and relaxation come together. It's a brilliant way to give your game a real boost in a short space of time under professional guidance.</p>
+<h2>Book your golf lesson in Badhoevedorp</h2>
+<p>Ready to get started, or to take that next step in your game? Golf lessons with Mark Reynolds at The International in Badhoevedorp suit every level and every age. Do get in touch to talk through your options and find a time that works for you.</p>
+<p>You can reach Mark by phone on <a href="tel:+31627411925">+31 6 27 41 19 25</a>, via <a href="https://wa.me/31627411925">WhatsApp</a>, or by email at <a href="mailto:info@mrgolfbal.nl">info@mrgolfbal.nl</a>. You'll also find all the details on the <a href="/contact/">contact page</a>. See you on the course soon, where together we'll make golf a joy again.</p>
+</div></div></section>`
+  },
+  'golf-repairs': {
+    title: "Golf club repairs &amp; fitting | MrGolfbal.nl",
+    desc: "Have your golf clubs repaired by PGA professional Mark Reynolds at The International: regripping, reshafting, loft and lie adjustment and custom fitting. Ask about the options.",
+    crumb: "Golf repairs",
+    he: "Golf repairs",
+    hh1: "Golf club repairs by a <span>PGA professional</span>",
+    hsub: "From fresh grips to a brand-new shaft: have your golf clubs expertly repaired and fitted by Mark Reynolds at The International in Badhoevedorp, near Amsterdam and Schiphol. Personal advice, honest craftsmanship.",
+    hcta: "Ask about the options",
+    hhref: "/contact/",
+    main: `
+<section class="section"><div class="container"><div class="prose">
+<h2>Golf club repairs: craftsmanship you feel in your swing</h2>
+<p>A golf club is a precision instrument. A worn grip, a poorly adjusted lie angle or a shaft that just doesn't match your swing can quietly cost you distance and accuracy. Good clubs rarely need to be thrown away; more often than not they can be repaired and re-tuned to fit you again. At MrGolfbal.nl you can have your golf clubs repaired by Mark Reynolds, a PGA Golf Professional since 1995 and a fixture at The International golf club in Badhoevedorp, close to Amsterdam and Schiphol.</p>
+<p>Because Mark both teaches and repairs clubs, he looks beyond the repair itself. He sees how you strike the ball, which tells him exactly what your equipment needs. Repair and fitting flow naturally into one another, so your clubs are not only whole again but genuinely suited to your game. Want to know what's possible for your set? <a href="/contact/">Get in touch</a> and ask about the options.</p>
+</div></div></section>
+<section class="section section--sky"><div class="container"><div class="prose">
+<h2>Regripping your golf clubs</h2>
+<p>The grip is your only point of contact with the club, and also the part that wears out fastest. A slick, hardened or twisted grip subtly forces you to hold on too tightly and adds tension to your forearms; exactly what you don't want in a smooth swing. Regripping is therefore one of the most valuable and affordable jobs you can have done to a set of clubs.</p>
+<p>Mark helps you choose the right size and thickness, because a grip that's too thin or too thick directly affects where your clubface points at impact. Whether you want your whole set regripped or just your most-used irons, it can all be arranged. Fitting new grips is also a good moment to check that the rest of the club is still in top condition. Feel free to ask about the options and the grip choices that suit your game.</p>
+</div></div></section>
+<section class="section"><div class="container"><div class="prose">
+<h2>Reshafting: a new shaft in your club</h2>
+<p>The shaft is the engine of your club. If your shaft is cracked, bent, or the stiffness (flex) simply no longer matches your swing speed, reshafting is the answer. When replacing a shaft, Mark looks at more than just swapping a broken part: the right flex, weight and kick point can noticeably improve your ball flight, your distance and your feel.</p>
+<p>Shortening or extending shafts falls under this too. If you're taller or shorter than average, or bend more over the ball, the correct club length gives you a better posture and more consistent contact. The wrong length works its way through your entire swing. Not sure whether your shafts still fit you? That's exactly the kind of thing to review with a pro, ideally alongside a <a href="/golfles/">golf lesson</a> in which both your swing and your equipment are examined.</p>
+</div></div></section>
+<section class="section section--sky"><div class="container"><div class="prose">
+<h2>Adjusting loft and lie</h2>
+<p>Two clubs that look identical can play completely differently thanks to small differences in loft and lie. The lie angle determines whether your clubface sits flat on the ground at impact; if the toe or heel is too high, you'll unconsciously pull or push the ball off target. Adjusting loft and lie is one of the most underrated ways to start aiming more accurately.</p>
+<p>Mark measures and adjusts loft and lie based on how you actually swing, not on standard values from the factory. That gives your irons consistent distance gaps and closes that odd hole between two clubs. Notice you consistently miss left or right with certain irons? A loft and lie check is often the very first thing you should have done.</p>
+</div></div></section>
+<section class="section"><div class="container"><div class="prose">
+<h2>Ferrule replacement and swingweight adjustment</h2>
+<p>It's the details that make the difference. A cracked or missing ferrule, the small black ring between the clubhead and the shaft, not only looks untidy but can eventually let moisture in. Replacing a ferrule is a small, tidy job that makes your clubs look like new again.</p>
+<p>More important for your game is the swingweight: the felt balance of your club through the swing. Two clubs with exactly the same total weight can feel completely different if the weight distribution differs. By adjusting the swingweight, all your clubs feel consistent, which brings calm and rhythm to your swing. Especially after new grips, shafts or tape have been fitted, it's wise to have the swingweight checked again.</p>
+</div></div></section>
+<section class="section section--sky"><div class="container"><div class="prose">
+<h2>Golf club fitting: repair and bespoke tuning in one</h2>
+<p>Repair is about restoring what's broken; fitting is about matching your clubs to who you are as a player. At MrGolfbal.nl the two deliberately overlap. During a custom fitting Mark looks at your height, your posture, your swing speed and your ball contact, and translates that into concrete advice on grips, shafts, length, loft and lie. You'll often get far more out of your existing set than you'd expect, without having to buy a whole new bag of clubs.</p>
+<p>As a PGA professional with more than ten professional wins and several titles in the Dutch PGA Order of Merit (2005, 2009 and 2018), Mark knows from experience just how much the right equipment matters. Want to know more about his background and approach? Read his story on the <a href="/over-mark/">about Mark</a> page.</p>
+</div></div></section>
+<section class="section"><div class="container"><div class="prose">
+<h2>More than just repairs</h2>
+<p>MrGolfbal.nl is about the complete enjoyment of the game, not only your clubs. Curious which ball best suits your play? Take the <a href="/golfbalkiezer/">golf ball quiz</a> and find your ideal ball in just a few steps. And if you're after an original gift for a golfing friend, a corporate day out or your own club, explore the possibilities for <a href="/golfballen-bedrukken/">printed golf balls</a> with your own name, logo or message. Or book a <a href="/golfles/">golf lesson</a> to improve technique and equipment together.</p>
+<p>That way MrGolfbal.nl brings everything under one roof: expert repair and fitting of your clubs, personal golf lessons and enjoyable extras that make the game even better. Always backed by the knowledge and experience of a genuine PGA professional.</p>
+<h2>Ready to have your golf clubs repaired?</h2>
+<p>Want to have your golf clubs repaired or properly fitted? Get in touch with Mark and we'll discuss together what your set needs and what's possible. Because every repair is bespoke, we'll always look at your clubs and your wishes first. Call or message <a href="tel:+31627411925">+31 6 27 41 19 25</a>, email <a href="mailto:info@mrgolfbal.nl">info@mrgolfbal.nl</a> or visit the <a href="/contact/">contact page</a>. You'll find Mark at The International golf club in Badhoevedorp, between Amsterdam and Schiphol.</p>
+</div></div></section>`
+  },
 };

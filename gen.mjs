@@ -1,6 +1,6 @@
 /* Eenvoudige statische generator: gedeelde header/footer + per-pagina content.
    Genereert /<slug>/index.html. Nav & footer staan HIER één keer (single source). */
-import { writeFileSync, mkdirSync } from 'node:fs';
+import { writeFileSync, mkdirSync, readdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { EN_PAGES, EN_PRODUCTS, EN_KB, EN_KB_CATS } from './content-en.mjs';
 import { TOEPASSINGEN } from './content-toepassingen/index.mjs';
@@ -22,7 +22,7 @@ const localize = (html, lang) => lang === 'en'
   : html;
 
 // Icoon in de "Start met bedrukken"-knop (golfbal op tee).
-const CTA_ICO = '<svg class="btn__ico" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a6.5 6.5 0 0 0-2.9 12.32V16a1 1 0 0 0 1 1h3.8a1 1 0 0 0 1-1v-1.68A6.5 6.5 0 0 0 12 2Zm-1.8 7.2a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm2.3 2a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm.5-3.3a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"/><path d="M9.6 18h4.8l-.4 2.2a1 1 0 0 1-1 .8h-2a1 1 0 0 1-1-.8L9.6 18Z"/></svg>';
+const CTA_ICO = '<svg class="btn__ico" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" fill-rule="evenodd" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20ZM8.4 8a1 1 0 1 0 0 2 1 1 0 0 0 0-2Zm3.6-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2Zm3.6 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2Zm-5.4 3.3a1 1 0 1 0 0 2 1 1 0 0 0 0-2Zm3.6 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2ZM12 14.6a1 1 0 1 0 0 2 1 1 0 0 0 0-2Z"/></svg>';
 
 // ---- UI-teksten per taal (chrome: nav, footer, knoppen) ----
 const UI = {
@@ -43,7 +43,8 @@ const UI = {
     ctaEye:'Klaar om te starten?', ctaH:'Bedruk je golfballen met logo, tekst of ontwerp',
     ctaP:'Kies je model, upload je logo en ontvang eerst een digitale drukproef.',
     ctaConfig:'Start de configurator →', waLabel:'WhatsApp Mark',
-    overons:'Over ons', alleToep:'Alle toepassingen', toepHub:'Toepassingen', klanten:'500+ tevreden klanten',
+    golfshows:'Golfshows', golftrips:'Golftrips', overons:'Over ons', alleToep:'Alle toepassingen', toepHub:'Toepassingen', klanten:'500+ tevreden klanten',
+    golfballenNav:'Golfballen', golfles:'Golfles', trickshow:'Trickshow', golfrepairs:'Golf repairs', belBtn:'Bel Mark', waBtn:'WhatsApp', qrHint:'Scan met je telefoon om te appen',
     topUsp1:'Gratis digitale drukproef vooraf', topUsp2:'Originele Titleist &amp; Pinnacle', topUsp3:'Advies van PGA-professional', belLabel:'Bel direct'
   },
   en: {
@@ -63,7 +64,8 @@ const UI = {
     ctaEye:'Ready to start?', ctaH:'Print your golf balls with a logo, text or design',
     ctaP:'Choose your model, upload your logo and receive a digital proof first.',
     ctaConfig:'Open the configurator →', waLabel:'WhatsApp Mark',
-    overons:'About us', alleToep:'All applications', toepHub:'Applications', klanten:'500+ satisfied customers',
+    golfshows:'Golf shows', golftrips:'Golf trips', overons:'About us', alleToep:'All applications', toepHub:'Applications', klanten:'500+ satisfied customers',
+    golfballenNav:'Golf balls', golfles:'Golf lessons', trickshow:'Trick show', golfrepairs:'Golf repairs', belBtn:'Call Mark', waBtn:'WhatsApp', qrHint:'Scan with your phone to chat',
     topUsp1:'Free digital proof first', topUsp2:'Original Titleist &amp; Pinnacle', topUsp3:'Advice from a PGA professional', belLabel:'Call now'
   }
 };
@@ -88,7 +90,23 @@ const ICONS = {
   clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
   euro:'<path d="M16 5a7 7 0 1 0 0 14M5 10h7M5 14h7"/>',
   building:'<rect x="5" y="3" width="14" height="18" rx="1"/><path d="M9 7h1M14 7h1M9 11h1M14 11h1M9 15h1M14 15h1M10 21v-3h4v3"/>',
+  instagram:'<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6" fill="currentColor"/>',
+  youtube:'<rect x="2.5" y="5.5" width="19" height="13" rx="3.5"/><path d="M10.5 9.2v5.6l4.6-2.8z" fill="currentColor" stroke="none"/>',
+  linkedin:'<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 10v7M7 7v.01M11 17v-4a2 2 0 0 1 4 0v4M11 17v-7"/>',
+  twitter:'<path d="M4 4l7 9M4 20l7-8M13 11l7-7M13 13l7 7" /><path d="M4 4h3l13 16h-3z" fill="currentColor" stroke="none"/>',
+  facebook:'<path d="M14 8h2V5h-2a3 3 0 0 0-3 3v2H9v3h2v6h3v-6h2.2l.8-3H14V8.5c0-.4.3-.5.6-.5z" fill="currentColor" stroke="none"/>',
+  mail:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/>',
+  pin:'<path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/>',
 };
+// Alle socials/contactkanalen (echt, aangeleverd door de klant).
+const SOCIALS = [
+  { ic:'instagram', label:'Instagram · @MrGolfbal', href:'https://www.instagram.com/mrgolfbal/' },
+  { ic:'instagram', label:'Instagram · @MarkReynoldsPGA', href:'https://www.instagram.com/markreynoldspga/' },
+  { ic:'youtube', label:'YouTube · @watchmark', href:'https://www.youtube.com/@watchmark/videos' },
+  { ic:'linkedin', label:'LinkedIn · Mark Reynolds', href:'https://www.linkedin.com/in/mark-reynolds-1a12756/' },
+  { ic:'twitter', label:'X · @markreynoldspga', href:'https://twitter.com/markreynoldspga' },
+  { ic:'facebook', label:'Facebook · Mark Reynolds', href:'https://www.facebook.com/mark.reynolds.7399' },
+];
 const ico = (name, cls='ico-svg') => `<svg class="${cls}" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[name]||ICONS.check}</svg>`;
 
 // Sitewide organisatie-schema (merk-entiteit). Alleen bekende feiten.
@@ -130,8 +148,12 @@ const HEAD = (t, d, nlCanon, lang='nl', extra='') => {
 <meta property="og:url" content="${canon}"><meta property="og:image" content="https://mrgolfbal.nl/assets/img/og-home.jpg">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${t}"><meta name="twitter:description" content="${d}"><meta name="twitter:image" content="https://mrgolfbal.nl/assets/img/og-home.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/css/styles.css?v=5">
+<link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="icon" href="/assets/img/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png">
+<link rel="stylesheet" href="/assets/css/styles.css?v=9">
 ${siteLD(lang)}${extra}</head><body>`;
 };
 
@@ -140,6 +162,16 @@ const langSwitch = (nlCanon, lang) => `<div class="lang-switch">
   <a href="${nlCanon}"${lang==='nl'?' aria-current="true"':''} hreflang="nl" lang="nl">NL</a>
   <a href="${enHref(nlCanon)}"${lang==='en'?' aria-current="true"':''} hreflang="en" lang="en">EN</a>
 </div>`;
+
+// WhatsApp-icoon + contactknoppen (bellen + WhatsApp met desktop-QR).
+const WA_ICON = '<svg viewBox="0 0 24 24" fill="currentColor" width="17" height="17" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2Zm5.3 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.5-4-4.7-4.2-.1-.2-1-1.4-1-2.6s.6-1.8.9-2.1c.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5c-.2.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.2.1.4.1.6-.1l.7-.9c.2-.2.4-.2.6-.1l2 .9c.2.1.4.2.4.3.1.2.1.9-.1 1.5Z"/></svg>';
+const contactBtns = (lang='nl') => { const u = UI[lang]; return `<div class="contact-btns">
+    <a class="cbtn cbtn--call" href="tel:+31627411925">${ico('phone','')}<span>${u.belBtn}</span></a>
+    <div class="wa-wrap">
+      <a class="cbtn cbtn--wa" href="https://wa.me/31627411925" data-wa aria-haspopup="dialog">${WA_ICON}<span>${u.waBtn}</span></a>
+      <div class="wa-qr" role="dialog" aria-label="WhatsApp QR" hidden><img src="/assets/img/wa-qr.png" width="150" height="150" alt="QR-code — WhatsApp MrGolfbal" loading="lazy"><p>${u.qrHint}</p></div>
+    </div>
+  </div>`; };
 
 // Topbar met USP's, social proof en belknop.
 const TOPBAR = (lang='nl') => {
@@ -152,43 +184,41 @@ const TOPBAR = (lang='nl') => {
     </ul>
     <div class="topbar-right">
       <span class="topbar-proof">${ico('users','tb-ico')}<strong>${u.klanten}</strong></span>
-      <a class="topbar-phone" href="tel:+31627411925">${ico('phone','tb-ico')}<span>${u.belLabel}:</span> +31 6 27 41 19 25</a>
+      ${contactBtns(lang)}
     </div>
   </div></div>`;
 };
 
 const HEADER = (lang='nl', nlCanon='/') => {
   const u = UI[lang], p = pfx(lang);
-  return `${TOPBAR(lang)}
+  return `<div class="site-top">${TOPBAR(lang)}
 <header class="site-header"><div class="container header-bar">
   <a class="logo" href="${p}/"><b>Mr<span>Golfbal</span>.nl</b><small>by Mark Reynolds</small></a>
   <nav class="main-nav" aria-label="${u.menu}">
-    <div class="has-dropdown"><a href="${p}/golfballen-bedrukken/">${u.kopen} ▾</a><div class="dropdown">
+    <a href="${p}/">${u.home}</a>
+    <div class="has-dropdown"><a href="${p}/golfballen-bedrukken/">${u.golfballenNav} ▾</a><div class="dropdown">
       <div class="dd-head">${u.ddKopen}</div>
       <a href="${p}/golfballen-bedrukken/">${u.bedrukte}</a>
       <a href="${p}/titleist-golfballen-bedrukken/">${u.titleist}</a>
       <a href="${p}/pinnacle-golfballen-bedrukken/">${u.pinnacle}</a>
       <a href="${p}/onbedrukte-golfballen/">${u.onbedrukt}</a>
       <a href="${p}/golfballen-personaliseren/">${u.personaliseren}</a>
-    </div></div>
-    <div class="has-dropdown"><a href="${p}/toepassingen/">${u.toepassingen} ▾</a><div class="dropdown">
-      <div class="dd-head">${u.ddToep}</div>
+      <div class="dd-head">${lang==='en'?'More':'Meer'}</div>
       <a href="${p}/toepassingen/">${u.alleToep}</a>
-      <a href="${p}/golfballen-bedrukken-voor-bedrijven/">${u.voorBedrijven}</a>
-      <a href="${p}/golfballen-bedrukken-voor-golfclubs-en-toernooien/">${u.voorClubs}</a>
-      <a href="${p}/toepassingen/golfballen-relatiegeschenk/">${u.relatiegeschenk}</a>
-      <a href="${p}/toepassingen/golfballen-bedrijfsgolfdag/">${u.bedrijfsgolfdag}</a>
+      <a href="${p}/golfbalkiezer/">${u.welke}</a>
+      <a href="${p}/golf-repairs/">${u.golfrepairs}</a>
+      <a href="${p}/over-mark/">${u.overons}</a>
     </div></div>
-    <a href="${p}/golfbalkiezer/">${u.welke}</a>
-    <a href="${p}/over-mark/">${u.overons}</a>
+    <a href="${p}/golfles/">${u.golfles}</a>
+    <a href="${p}/golfshows/">${u.trickshow}</a>
+    <a href="${p}/golftrips/">${u.golftrips}</a>
     <a href="${p}/contact/">${u.contact}</a>
   </nav>
   <div class="header-actions">
     ${langSwitch(nlCanon, lang)}
-    <a class="icon-btn" href="https://wa.me/31627411925" aria-label="${u.waLabel}"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2Zm5.3 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.5-4-4.7-4.2-.1-.2-1-1.4-1-2.6s.6-1.8.9-2.1c.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5c-.2.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.2.1.4.1.6-.1l.7-.9c.2-.2.4-.2.6-.1l2 .9c.2.1.4.2.4.3.1.2.1.9-.1 1.5Z"/></svg></a>
     <a class="btn btn--primary" href="${p}/golfballen-bedrukken/#configurator">${CTA_ICO}${u.startCta}</a>
   </div>
-</div></header>`;
+</div></header></div>`;
 };
 
 // ---- Herbruikbare blokken (lang-aware) ----
@@ -255,6 +285,92 @@ const extraSections = (slug, lang, store=EXTRA) => {
   return `<section class="section"><div class="container"><div class="prose">${localize(e.map(s=>`<h2>${s.h}</h2>${s.html}`).join(''), lang)}</div></div></section>`;
 };
 
+/* ---- Klantreviews: ALLEEN echte, door de klant aangeleverde en te bevestigen reviews.
+   Leeg = geen review-sectie (geen verzonnen reviews). Vul met geverifieerde voorbeelden. ---- */
+const REVIEWS = []; // { stars, nl:{t,q}, en:{t,q}, by, city }  ← alleen echte, met toestemming
+const reviewsBlock = (lang='nl') => {
+  if (!REVIEWS.length) return ''; // geen sectie tot er echte reviews zijn aangeleverd
+  const en = lang==='en';
+  return `<section class="section"><div class="container"><div class="section-head section-head--center accent-line" style="margin-inline:auto"><p class="eyebrow">${en?'Reviews':'Klantbeoordelingen'}</p><h2>${en?'What our customers say':'Wat onze klanten zeggen'}</h2></div>
+    <div class="reviews-rail">
+    ${REVIEWS.map(r=>`<article class="review"><div class="stars" aria-label="${r.stars} ${en?'out of 5 stars':'van de 5 sterren'}">${'★'.repeat(r.stars)}</div><h3>${r[lang].t}</h3><p>“${r[lang].q}”</p><div class="rev-by"><b>${r.by}</b><span>${r.city}</span></div></article>`).join('')}
+    </div></div></section>`;
+};
+const socialsBlock = (lang='nl') => {
+  const en = lang==='en';
+  // Live, automatisch bijgewerkte social-feed via Elfsight (door klant aangeleverd).
+  const feed = `<div class="elfsight-app-07f44f44-5464-46c5-b3a4-1815ba74bc6f" data-elfsight-app-lazy></div>`;
+  return `<section class="section"><div class="container"><div class="socials">
+    <p class="eyebrow" style="color:var(--color-blue)">${en?'Follow us':'Volg ons'}</p>
+    <h2>${en?'The latest and best from our socials!':'Het nieuwste en beste van onze socials!'}</h2>
+    <p>${en?'Follow us on Instagram, YouTube, LinkedIn, X and Facebook for printed golf balls, golf shows and behind the scenes.':'Volg ons op Instagram, YouTube, LinkedIn, X en Facebook voor bedrukte golfballen, golfshows en behind the scenes.'}</p>
+    <div class="ig-feed">${feed}</div>
+    <div class="social-links">
+      ${SOCIALS.map(s=>`<a href="${s.href}" rel="noopener" target="_blank">${ico(s.ic,'ico-svg')} ${s.label}</a>`).join('')}
+    </div>
+    <p style="margin-top:1rem;font-size:.9rem;color:#cfe4f3">${en?'Or reach us directly:':'Of bereik ons direct:'} <a href="mailto:info@mrgolfbal.nl" style="color:#fff;font-weight:600">info@mrgolfbal.nl</a> · <a href="tel:+31627411925" style="color:#fff;font-weight:600">+31 6 27 41 19 25</a> · KVK 27326866</p>
+  </div></div></section>`;
+};
+const statBand = (lang='nl') => {
+  const en = lang==='en';
+  const stats = en
+    ? [['500+','satisfied customers'],['144','minimum order'],['5–15','working days delivery'],['PGA','professional advice']]
+    : [['500+','tevreden klanten'],['144','minimale afname'],['5–15','werkdagen levering'],['PGA','advies van een pro']];
+  return `<section class="section"><div class="container"><div class="statband"><div class="statrow">
+    ${stats.map(([b,s])=>`<div class="stat"><b>${b}</b><span>${s}</span></div>`).join('')}
+  </div></div></div></section>`;
+};
+
+/* ---- Foto-galerij (echte bedrukte-bal foto's). IMAGES_READY schakelt van
+   placeholder-mockups naar echte <img>. Elke pagina krijgt via een seed een
+   unieke, niet-herhalende set. Bestanden komen in /assets/img/balls/. ---- */
+/* Auto-detectie: alles wat in assets/img/balls/ staat wordt automatisch
+   opgepakt (jpg/jpeg/png/webp). Alt-teksten komen uit ALT_MAP wanneer de
+   bestandsnaam bekend is; anders wordt de bestandsnaam netjes omgezet naar
+   een beschrijvende alt-tekst. Geen bestanden = geen galerij. */
+const ALT_MAP = {
+  'tmi': { nl:'Bedrukte Titleist golfbal met TMI-logo in het gras', en:'Printed Titleist golf ball with the TMI logo on grass' },
+  'damvast': { nl:'Bedrukte golfbal met DAMVAST-logo', en:'Printed golf ball with the DAMVAST logo' },
+  'reen-vastgoed': { nl:'Bedrukte golfbal met REEN Vastgoed-logo', en:'Printed golf ball with the REEN Vastgoed logo' },
+  'verwelius-bouwen': { nl:'Bedrukte golfbal met Verwelius Bouwen-logo', en:'Printed golf ball with the Verwelius Bouwen logo' },
+  'mark-reynolds-mr': { nl:'Golfbal met het MR-logo van Mark Reynolds', en:'Golf ball with the MR logo of Mark Reynolds' },
+  'bucket-logoballen': { nl:'Emmer vol bedrukte golfballen met bedrijfslogo\u2019s', en:'A bucket full of printed golf balls with company logos' },
+  'hand-logoballen': { nl:'Hand met bedrukte golfballen met verschillende bedrijfslogo\u2019s', en:'A hand holding printed golf balls with different company logos' },
+  'gezicht-golfbal': { nl:'Golfbal gepersonaliseerd met een gezicht erop', en:'Golf ball personalised with a face printed on it' },
+};
+const BALLS_DIR = join(root, 'assets', 'img', 'balls');
+const titleize = (b) => b.replace(/[-_]+/g, ' ').replace(/\b\w/g, m => m.toUpperCase());
+const BALL_IMAGES = (() => {
+  let files = [];
+  try { files = readdirSync(BALLS_DIR); } catch { return []; }
+  return files
+    .filter(f => /\.(jpe?g|png|webp)$/i.test(f))
+    .sort()
+    .map(f => {
+      const base = f.replace(/\.[^.]+$/, '');
+      const alt = ALT_MAP[base];
+      return {
+        src: f,
+        nl: alt ? alt.nl : `Bedrukte golfbal — ${titleize(base)} | MrGolfbal.nl`,
+        en: alt ? alt.en : `Printed golf ball — ${titleize(base)} | MrGolfbal.nl`,
+      };
+    });
+})();
+console.log(`foto's gevonden in assets/img/balls/: ${BALL_IMAGES.length}`);
+const ballGallery = (seed=0, lang='nl', n=5) => {
+  if (!BALL_IMAGES.length) return ''; // geen foto's aanwezig = geen galerij
+  const en = lang==='en';
+  const picks = Array.from({length:Math.min(n, BALL_IMAGES.length)}, (_,i)=> BALL_IMAGES[(seed+i)%BALL_IMAGES.length]);
+  const head = en ? 'Companies and customers who print their logo golf balls at MrGolfbal.nl' : 'Bedrijven en klanten die hun golfballen met logo bij MrGolfbal.nl laten bedrukken';
+  const cells = picks.map(img => `<figure><img src="/assets/img/balls/${img.src}" width="500" height="500" loading="lazy" decoding="async" alt="${img[lang]}"></figure>`).join('');
+  return `<section class="section section--sky"><div class="container"><div class="section-head section-head--center accent-line" style="margin-inline:auto"><p class="eyebrow">${en?'Real customers':'Echte klanten'}</p><h2>${head}</h2></div>
+    <div class="ballgallery">${cells}</div>
+  </div></div></section>`;
+};
+
+// Deterministische seed per pagina, zodat elke pagina een andere (niet-herhalende) fotoset krijgt.
+const seedOf = (s='') => Array.from(String(s)).reduce((a,c)=>a + c.charCodeAt(0), 0);
+
 const crumbs = (name, lang='nl') => `<div class="container"><nav class="crumbs"><a href="${pfx(lang)}/">${UI[lang].home}</a> › <span>${name}</span></nav></div>`;
 
 const heroBlock = (eyebrow, h1, sub, cta1, cta1href='/golfballen-bedrukken/#configurator', lang='nl') => {
@@ -282,6 +398,15 @@ const ctaBlock = (lang='nl') => {
 </div></div></section>`;
 };
 
+const PAY_ICONS = `
+<span class="pay-ico" title="iDEAL"><svg viewBox="0 0 46 16" role="img" aria-label="iDEAL"><text x="0" y="13" font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="700" font-style="italic" fill="currentColor">iDEAL</text></svg></span>
+<span class="pay-ico" title="Bancontact"><svg viewBox="0 0 33 16" role="img" aria-label="Bancontact"><path d="M1 13 l7 -10 h8 l-7 10 z" fill="currentColor"/><path d="M15 13 l7 -10 h8 l-7 10 z" fill="currentColor" opacity=".55"/></svg></span>
+<span class="pay-ico" title="Visa"><svg viewBox="0 0 44 16" role="img" aria-label="Visa"><text x="0" y="13" font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="800" font-style="italic" fill="currentColor">VISA</text></svg></span>
+<span class="pay-ico" title="Mastercard"><svg viewBox="0 0 22 16" role="img" aria-label="Mastercard"><circle cx="7" cy="8" r="6.4" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="15" cy="8" r="6.4" fill="none" stroke="currentColor" stroke-width="1.6" opacity=".7"/></svg></span>
+<span class="pay-ico" title="Maestro"><svg viewBox="0 0 22 16" role="img" aria-label="Maestro"><circle cx="7" cy="8" r="6.4" fill="currentColor" opacity=".45"/><circle cx="15" cy="8" r="6.4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></span>
+<span class="pay-ico" title="PayPal"><svg viewBox="0 0 58 16" role="img" aria-label="PayPal"><text x="0" y="13" font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="800" font-style="italic" fill="currentColor">PayPal</text></svg></span>
+<span class="pay-ico" title="Apple Pay"><svg viewBox="0 0 44 16" role="img" aria-label="Apple Pay"><g transform="translate(-5.2,-2.6) scale(1.35)" fill="currentColor"><path d="M9.4 5.4c-.3.4-.8.7-1.3.6-.1-.5.2-1 .4-1.3.3-.4.8-.6 1.2-.7.1.5-.1 1-.3 1.4Zm.3.7c-.7 0-1.3.4-1.6.4-.3 0-.8-.4-1.4-.4-.7 0-1.4.4-1.7 1.1-.7 1.3-.2 3.1.5 4.1.4.5.8 1 1.3 1 .5 0 .7-.3 1.4-.3.6 0 .8.3 1.4.3.6 0 .9-.5 1.3-1 .3-.4.4-.7.6-1.1-1.5-.6-1.3-2.7.1-3.2-.4-.5-1-.8-1.4-.8Z"/></g><text x="11.5" y="13" font-family="Arial,Helvetica,sans-serif" font-size="14" font-weight="600" fill="currentColor">Pay</text></svg></span>`;
+
 const FOOTER = (lang='nl') => {
   const u = UI[lang], p = pfx(lang);
   return `
@@ -294,12 +419,14 @@ const FOOTER = (lang='nl') => {
     <div class="footer-col footer-brand"><b>Mr<span>Golfbal</span>.nl</b><p style="margin-top:.7rem;max-width:32ch">${u.footBrandP}</p><p style="margin-top:.6rem"><a href="tel:+31627411925">+31 6 27 41 19 25</a><br><a href="mailto:info@mrgolfbal.nl">info@mrgolfbal.nl</a><br><a href="https://wa.me/31627411925">WhatsApp Mark</a></p></div>
     <div class="footer-col"><h4>${u.footGolf}</h4><ul><li><a href="${p}/golfballen-bedrukken/">${u.fGolfBedrukken}</a></li><li><a href="${p}/onbedrukte-golfballen/">${u.fOnbedrukt}</a></li><li><a href="${p}/titleist-golfballen-bedrukken/">Titleist</a></li><li><a href="${p}/pinnacle-golfballen-bedrukken/">Pinnacle</a></li><li><a href="${p}/golfballen-personaliseren/">${u.fPerson}</a></li></ul></div>
     <div class="footer-col"><h4>${u.footWie}</h4><ul><li><a href="${p}/golfballen-bedrukken-voor-bedrijven/">${u.voorBedrijven}</a></li><li><a href="${p}/golfballen-bedrukken-voor-golfclubs-en-toernooien/">${u.voorClubs}</a></li><li><a href="${p}/golfbalkiezer/">${u.fKiezer}</a></li><li><a href="${p}/kennisbank/">${u.fKennisbank}</a></li><li><a href="${p}/zo-werkt-het/">${u.fZoWerkt}</a></li></ul></div>
-    <div class="footer-col"><h4>${u.footService}</h4><ul><li><a href="${p}/over-mark/">${u.fOverMark}</a></li><li><a href="${p}/contact/">${u.contact}</a></li><li><a href="/policies/shipping-policy">${u.fVerzending}</a></li><li><a href="/policies/refund-policy">${u.fRetour}</a></li><li><a href="/policies/privacy-policy">${u.fPrivacy}</a></li></ul></div>
+    <div class="footer-col"><h4>${lang==='en'?'Services':'Diensten'}</h4><ul><li><a href="${p}/golfles/">${u.golfles}</a></li><li><a href="${p}/golfshows/">${u.trickshow}</a></li><li><a href="${p}/golftrips/">${u.golftrips}</a></li><li><a href="${p}/golf-repairs/">${u.golfrepairs}</a></li></ul></div>
+    <div class="footer-col"><h4>${u.footService}</h4><ul><li><a href="${p}/over-mark/">${u.fOverMark}</a></li><li><a href="${p}/contact/">${u.contact}</a></li><li><a href="${p}/kennisbank/">${u.fKennisbank}</a></li><li><a href="/policies/shipping-policy">${u.fVerzending}</a></li><li><a href="/policies/privacy-policy">${u.fPrivacy}</a></li></ul></div>
   </div>
+  <div class="footer-pay"><span class="footer-pay__lbl">${lang==='en'?'Secure payment':'Veilig betalen'}</span><span class="pay-row">${PAY_ICONS}</span></div>
   <div class="footer-bottom"><span>© 2026 MrGolfbal.nl · KVK 27326866</span><span class="pay-badges"><span>${u.badge1}</span><span>${u.badge2}</span></span></div>
 </div></footer>
-<a class="wa-float" href="https://wa.me/31627411925" aria-label="WhatsApp"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2Zm5.3 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.5-4-4.7-4.2-.1-.2-1-1.4-1-2.6s.6-1.8.9-2.1c.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5c-.2.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.2.1.4.1.6-.1l.7-.9c.2-.2.4-.2.6-.1l2 .9c.2.1.4.2.4.3.1.2.1.9-.1 1.5Z"/></svg></a>
-<script src="/assets/js/site.js?v=5" defer></script>
+<script src="https://elfsightcdn.com/platform.js" async></script>
+<script src="/assets/js/site.js?v=9" defer></script>
 </body></html>`;
 };
 
@@ -308,7 +435,9 @@ const page = (o, lang='nl') => HEAD(o.title, o.desc, o.canon, lang,
   breadcrumbLD([{name:UI[lang].home,url:'/'},{name:o.crumb,url:o.canon}], lang) + (o.extra||'')
 ) + HEADER(lang, o.canon) + crumbs(o.crumb, lang) + localize(o.hero, lang) + localize(o.main, lang)
   + extraSections(o.slug, lang)
-  + (o.noBlocks ? '' : howItWorks(lang) + whyUs(lang) + printingFaq(lang))
+  + ballGallery(seedOf(o.canon || o.slug || ''), lang)
+  + (o.noBlocks ? '' : howItWorks(lang) + whyUs(lang) + reviewsBlock(lang) + printingFaq(lang))
+  + socialsBlock(lang)
   + ctaBlock(lang) + FOOTER(lang);
 
 // ---- modelvergelijkingstabel (herbruikbaar, per taal) ----
@@ -514,6 +643,95 @@ PAGES.push({
   <p class="lead">Voor het scherpste resultaat lever je je logo aan als vectorbestand (EPS, AI of PDF). Heb je alleen een JPEG of PNG? Vaak kunnen we daar iets mee — Mark laat het je weten en helpt met de opmaak. <span class="confirm-tag">bestandstypen bevestigen</span></p></div></section>`
 });
 
+/* ---------------- GOLFLES ---------------- */
+PAGES.push({
+  slug:'golfles',
+  title:'Golfles Badhoevedorp bij PGA-pro Mark | MrGolfbal.nl',
+  desc:'Golfles bij PGA-golfprofessional Mark Reynolds op The International in Badhoevedorp. Voor beginners, gevorderden, junioren en clinics bij Amsterdam. Boek je les.',
+  canon:'/golfles/', crumb:'Golfles', noBlocks:true,
+  hero:heroBlock('Golfles','Golfles bij een <span>echte PGA-professional</span>','Leer golfen of verbeter je swing bij Mark Reynolds op The International in Badhoevedorp, op een steenworp van Amsterdam en Schiphol. Voor elk niveau, van eerste swing tot lage handicap.','Plan je golfles','/contact/'),
+  main:`
+<section class="section"><div class="container"><div class="prose">
+<h2>Golfles op The International in Badhoevedorp</h2>
+<p>Wil je leren golfen, of speel je al jaren maar wil je die frustrerende slice er eindelijk uit? Bij MrGolfbal.nl krijg je golfles van Mark Reynolds, PGA-golfprofessional sinds 1995. Sinds 2014 geeft hij les op The International golfclub in Badhoevedorp, ideaal gelegen tussen Amsterdam, Amstelveen, Haarlem en Schiphol. Of je nu voor het eerst een club vastpakt of je spel flink wilt aanscherpen: hier vind je een gecertificeerde professional die precies weet hoe hij jou vooruit helpt.</p>
+<p>Golf is een prachtig spel, maar het kan ook onnodig ingewikkeld voelen. Verkeerde tips van medespelers, een grip die niet klopt, of een houding die je swing in de weg zit. Tijdens een golfles kijkt Mark met een geoefend oog naar jouw beweging en vertaalt hij vakkennis naar begrijpelijke, praktische aanwijzingen. Geen ingewikkeld jargon, maar duidelijke stappen waarmee je meteen betere ballen slaat en meer plezier op de baan hebt.</p>
+<h2>Voor wie is de golfles bedoeld?</h2>
+<p>Iedereen is welkom, ongeacht leeftijd of niveau. Ben je absolute beginner en wil je golfles voor beginners in de buurt van Amsterdam? Dan begin je bij de basis: de juiste grip, houding en een swing die je vertrouwen geeft. Speel je al een tijdje en wil je van je handicap af? Dan werk je gericht aan die onderdelen die je scores echt verbeteren, van je korte spel rond de green tot je consistentie op de driving range.</p>
+<p>Mark begeleidt onder andere:</p>
+<ul>
+<li>Beginners die willen leren golfen of hun GVB (Golfvaardigheidsbewijs) willen halen</li>
+<li>Gevorderde spelers en lage handicappers die scherper willen worden</li>
+<li>Junioren die het spel op een speelse manier onder de knie krijgen</li>
+<li>Bedrijven en groepen die een clinic of teamuitje zoeken</li>
+</ul>
+<p>Voor de zakelijke markt organiseert Mark regelmatig golfclinics: een leuke, laagdrempelige manier om collega's of relaties kennis te laten maken met golf. Wil je iets memorabels toevoegen aan zo'n dag? Bekijk dan ook zijn spectaculaire <a href="/golfshows/">golfshows</a>, waarin hij als trickshot-artiest laat zien wat er allemaal met een golfbal mogelijk is.</p>
+</div></div></section>
+<section class="section section--sky"><div class="container"><div class="prose">
+<h2>Privéles golf of samen leren</h2>
+<p>Een privéles golf is de snelste manier om vooruitgang te boeken. Alle aandacht gaat naar jou, je swing en jouw persoonlijke leerdoelen. Mark stemt elke les af op waar jij staat, zodat je nooit tijd verliest aan dingen die je al beheerst. Liever samen leren? Golfles met z'n tweeën of in een klein groepje is gezellig én leerzaam, en vaak een fijne manier om met je partner, vriend of collega hetzelfde tempo te houden.</p>
+<p>Omdat de lessen op The International in Badhoevedorp worden gegeven, heb je alle faciliteiten binnen handbereik: een uitstekende driving range, oefengreens en een prachtige baan waar je het geleerde meteen in de praktijk brengt. De ligging vlak bij Amsterdam en Schiphol maakt golfles hier goed bereikbaar, of je nu uit de stad komt of uit de regio Haarlemmermeer.</p>
+<h2>Waarom golfles bij Mark Reynolds?</h2>
+<p>Ervaring maakt het verschil, en die heeft Mark ruimschoots. Hij groeide op in Maltby bij Rotherham in Engeland en begon op zijn zestiende met zijn PGA-opleiding onder Simon Thornhill op Rotherham Golf Club. In 2000 verhuisde hij naar Nederland om les te geven, en in 2001 startte hij zijn eigen golfschool. Sindsdien heeft hij honderden golfers van elk niveau beter zien worden.</p>
+<p>Naast lesgeven speelt Mark zelf op hoog niveau. Hij won de Nederlandse PGA Order of Merit in 2005, 2009 en 2018, pakte in 2019 het European PGA Team Championship, won de PGA Cup in 2005 en speelde meerdere KLM Opens, waarin hij in 2018 de best geklasseerde Nederlandse speler was. Met meer dan tien professionele overwinningen op zijn naam weet hij als geen ander wat er nodig is om onder druk goed te spelen, en dat vertaalt hij naar zijn lessen. Meer weten over zijn verhaal? Lees dan de pagina <a href="/over-mark/">over Mark</a>.</p>
+<p>Belangrijker nog dan zijn palmares is zijn manier van lesgeven: warm, geduldig en helder. Mark gelooft dat golf leuk hoort te zijn, en dat je het snelst leert wanneer je met vertrouwen en plezier op de baan staat.</p>
+</div></div></section>
+<section class="section"><div class="container"><div class="prose">
+<h2>Meer dan golfles alleen</h2>
+<p>MrGolfbal.nl draait om meer dan lesgeven. De hoofdactiviteit van het merk is het <a href="/golfballen-bedrukken/">bedrukken van golfballen</a>, ideaal als relatiegeschenk, voor een toernooi of gewoon om je eigen ballen herkenbaar te maken op de baan. Weet je niet welke bal bij jouw spel past? Doe dan de handige <a href="/golfbalkiezer/">golfbalkiezer</a> en ontdek welke golfbal het beste bij jouw swing en niveau hoort. Dat sluit mooi aan op je lessen: de juiste techniek én het juiste materiaal maken samen het verschil.</p>
+<p>Speelt je materiaal je parten? Mark kan je clubs ook <a href="/golf-repairs/">repareren en fitten</a>, zodat techniek en uitrusting perfect op elkaar aansluiten. Wil je golf combineren met een onvergetelijke reis? Mark begeleidt ook <a href="/golftrips/">golftrips</a> naar prachtige bestemmingen, waar les, spel en ontspanning samenkomen. Een geweldige manier om je spel in korte tijd een flinke boost te geven onder professionele begeleiding.</p>
+<h2>Plan jouw golfles in Badhoevedorp</h2>
+<p>Klaar om te beginnen of om die volgende stap in je spel te zetten? Golfles bij Mark Reynolds op The International in Badhoevedorp is geschikt voor elk niveau en elke leeftijd. Neem gerust contact op om je mogelijkheden te bespreken en een moment in te plannen dat jou uitkomt.</p>
+<p>Je bereikt Mark telefonisch op <a href="tel:+31627411925">+31 6 27 41 19 25</a>, via <a href="https://wa.me/31627411925">WhatsApp</a> of per e-mail op <a href="mailto:info@mrgolfbal.nl">info@mrgolfbal.nl</a>. Alle gegevens vind je ook op de <a href="/contact/">contactpagina</a>. Tot snel op de baan, dan zorgen we samen dat golfen weer een feestje wordt.</p>
+</div></div></section>`
+});
+
+/* ---------------- GOLF REPAIRS ---------------- */
+PAGES.push({
+  slug:'golf-repairs',
+  title:'Golfclubs repareren &amp; fitting | MrGolfbal.nl',
+  desc:'Golfclubs laten repareren bij PGA-pro Mark Reynolds op The International: grips vervangen, reshaften, loft en lie aanpassen en custom fitting. Vraag naar de mogelijkheden.',
+  canon:'/golf-repairs/', crumb:'Golf repairs', noBlocks:true,
+  hero:heroBlock('Golf repairs','Golfclubs repareren door een <span>PGA-professional</span>','Van nieuwe grips tot een compleet nieuwe shaft: laat je golfclubs vakkundig repareren en fitten door Mark Reynolds op The International in Badhoevedorp. Persoonlijk advies, degelijk werk.','Vraag naar de mogelijkheden','/contact/'),
+  main:`
+<section class="section"><div class="container"><div class="prose">
+<h2>Golfclubs repareren: vakwerk dat je in je swing voelt</h2>
+<p>Een golfclub is een precisie-instrument. Een versleten grip, een verkeerd afgestelde lie-hoek of een shaft die net niet bij jouw swing past, kost je zomaar meters en zuiverheid. Goede golfclubs hoeven daarom niet meteen te worden vervangen; heel vaak zijn ze prima te repareren en opnieuw op maat te maken. Bij MrGolfbal.nl kun je je golfclubs laten repareren door Mark Reynolds, PGA Golf Professional sinds 1995 en vaste kracht op golfclub The International in Badhoevedorp, vlakbij Amsterdam en Schiphol.</p>
+<p>Omdat Mark zowel lesgeeft als clubs repareert, kijkt hij verder dan alleen de reparatie. Hij ziet hoe jij de bal raakt en weet daardoor precies wat jouw materiaal nodig heeft. Repareren en fitten lopen bij hem naadloos in elkaar over, zodat je clubs niet alleen weer heel zijn, maar ook echt bij je passen. Wil je meteen weten wat er mogelijk is voor jouw set? <a href="/contact/">Neem contact op</a> en vraag naar de mogelijkheden.</p>
+</div></div></section>
+<section class="section section--sky"><div class="container"><div class="prose">
+<h2>Grips vervangen op je golfclub</h2>
+<p>De grip is het enige contactpunt tussen jou en de club, en tegelijk het onderdeel dat het snelst slijt. Een gladde, verharde of gedraaide grip zorgt ongemerkt voor een te sterke greep en spanning in je onderarmen; precies wat je niet wilt in een vloeiende swing. Regripping, oftewel het vervangen van grips op je golfclub, is dan ook een van de meest waardevolle en betaalbare ingrepen die je kunt laten doen.</p>
+<p>Mark helpt je bij het kiezen van de juiste maat en dikte, want een grip die te dun of te dik is, beïnvloedt direct de stand van je clubface bij impact. Of je nu je hele set opnieuw wilt laten gripen of alleen je meest gebruikte ijzers, het kan allemaal. Grips vervangen is bovendien een mooi moment om te kijken of de rest van je club nog in topconditie is. Vraag gerust naar de mogelijkheden en de opties in grips die bij jouw spel passen.</p>
+</div></div></section>
+<section class="section"><div class="container"><div class="prose">
+<h2>Reshaften: een nieuwe shaft in je golfclub</h2>
+<p>De shaft is de motor van je club. Is je shaft gebroken, verbogen of past de stijfheid (flex) simpelweg niet meer bij je swingsnelheid, dan is reshaften de oplossing. Bij het vervangen van een shaft kijkt Mark naar meer dan alleen het vervangen van een kapot onderdeel: de juiste flex, het gewicht en het kickpoint kunnen je balvlucht, je afstand en je gevoel merkbaar verbeteren.</p>
+<p>Ook het inkorten of verlengen van shafts hoort hierbij. Ben je langer of korter dan gemiddeld, of sta je gebogen over de bal, dan zorgt de juiste clublengte voor een betere houding en consistenter contact. Een verkeerde lengte werkt namelijk door in je hele swingopbouw. Twijfel je of jouw shafts nog bij je passen? Dat is precies iets om samen met een pro te bekijken, bijvoorbeeld in combinatie met een <a href="/golfles/">golfles</a> waarin je swing én je materiaal onder de loep gaan.</p>
+</div></div></section>
+<section class="section section--sky"><div class="container"><div class="prose">
+<h2>Loft en lie aanpassen</h2>
+<p>Twee clubs die er identiek uitzien, kunnen totaal anders spelen door kleine verschillen in loft en lie. De lie-hoek bepaalt of je clubface bij impact netjes vlak op de grond staat; staat de teen of de hiel te veel omhoog, dan trek of duw je de bal onbewust weg van je doel. Het aanpassen van loft en lie is daarom een van de meest onderschatte manieren om zuiverder te leren richten.</p>
+<p>Mark meet en past loft en lie aan op basis van hoe jij daadwerkelijk zwaait, niet op basis van standaardwaarden uit de fabriek. Zo krijgen je ijzers een consistente afstandsverdeling en verdwijnt dat ene rare gat tussen twee clubs. Merk je dat je met bepaalde ijzers structureel naar links of rechts mist? Dan is een loft- en lie-controle vaak het eerste wat je zou moeten laten doen.</p>
+</div></div></section>
+<section class="section"><div class="container"><div class="prose">
+<h2>Ferrule vervangen en swingweight afstellen</h2>
+<p>Het zijn de details die het verschil maken. Een gebarsten of ontbrekende ferrule, het zwarte ringetje tussen de clubkop en de shaft, ziet er niet alleen onverzorgd uit, maar kan op termijn ook vocht doorlaten. Het vervangen van een ferrule is een klein maar netjes klusje dat je clubs er weer als nieuw uit laat zien.</p>
+<p>Belangrijker voor je spel is de swingweight: de gevoelsmatige balans van je club tijdens de swing. Twee clubs met exact hetzelfde totale gewicht kunnen compleet anders aanvoelen als de gewichtsverdeling verschilt. Door het afstellen van de swingweight voelen al je clubs consistent aan, wat rust en ritme in je swing brengt. Zeker als je grips, shafts of tape hebt laten vervangen, is het slim om de swingweight opnieuw te laten controleren.</p>
+</div></div></section>
+<section class="section section--sky"><div class="container"><div class="prose">
+<h2>Golfclub fitting: reparatie en maatwerk in één</h2>
+<p>Repareren is het herstellen van wat kapot is; fitten is het afstemmen van je clubs op wie jij bent als speler. Bij MrGolfbal.nl lopen die twee bewust in elkaar over. Tijdens een custom fitting kijkt Mark naar je lengte, je houding, je swingsnelheid en je balcontact, en vertaalt hij dat naar concreet advies over grips, shafts, lengte, loft en lie. Zo haal je uit je bestaande set vaak veel meer dan je denkt, zonder meteen een compleet nieuwe uitrusting te kopen.</p>
+<p>Als PGA-professional met meer dan tien professionele overwinningen en meerdere titels in de Nederlandse PGA Order of Merit (2005, 2009 en 2018) weet Mark uit eigen ervaring hoeveel het juiste materiaal uitmaakt. Wil je meer weten over zijn achtergrond en aanpak? Lees dan zijn verhaal op de pagina <a href="/over-mark/">over Mark</a>.</p>
+</div></div></section>
+<section class="section"><div class="container"><div class="prose">
+<h2>Meer dan alleen reparaties</h2>
+<p>MrGolfbal.nl draait om het complete plezier van het spel, niet alleen om je clubs. Wil je weten welke bal het beste bij jouw spel past? Doe dan de <a href="/golfbalkiezer/">golfbalkiezer</a> en ontdek in een paar stappen jouw ideale golfbal. En zoek je een origineel cadeau voor een golfvriend, een bedrijfsuitje of je eigen club? Bekijk dan de mogelijkheden voor <a href="/golfballen-bedrukken/">golfballen bedrukken</a> met je eigen naam, logo of tekst. Of boek een <a href="/golfles/">golfles</a> om techniek en materiaal samen te verbeteren.</p>
+<p>Zo vind je bij MrGolfbal.nl alles onder één dak: deskundige reparatie en fitting van je clubs, persoonlijke golfles en leuke extra's die het golfen nog mooier maken. Altijd met de kennis en ervaring van een echte PGA-professional erachter.</p>
+<h2>Je golfclubs laten repareren? Zo werkt het</h2>
+<p>Wil je je golfclubs laten repareren of eens goed laten fitten? Neem dan contact op met Mark, dan bespreken we samen wat jouw set nodig heeft en wat er mogelijk is. Omdat elke reparatie maatwerk is, kijken we eerst naar jouw clubs en jouw wensen voordat we iets afspreken. Bel of app naar <a href="tel:+31627411925">+31 6 27 41 19 25</a>, mail naar <a href="mailto:info@mrgolfbal.nl">info@mrgolfbal.nl</a> of kijk op de <a href="/contact/">contactpagina</a>. Je vindt Mark op golfclub The International in Badhoevedorp, tussen Amsterdam en Schiphol.</p>
+</div></div></section>`
+});
+
 /* ---------------- OVER MARK ---------------- */
 PAGES.push({
   slug:'over-mark',
@@ -717,7 +935,9 @@ const productPage = (p, lang='nl') => {
     <article class="card"><div class="card__body"><span class="card__brand">${x.brand}</span><h3 class="card__title">${x.name}</h3><p class="card__meta">${pf(x,lang,'feel')} · ${pf(x,lang,'flight')}</p><a class="btn btn--primary btn--block" href="${pre}/products/${x.handle}/">${t.viewModel}</a></div></article>`).join('')}
   </div></div></section>`
   + extraSections(p.handle, lang, EXTRA_PRODUCTS)
-  + howItWorks(lang) + whyUs(lang) + printingFaq(lang)
+  + ballGallery(seedOf(p.handle), lang)
+  + howItWorks(lang) + whyUs(lang) + reviewsBlock(lang) + printingFaq(lang)
+  + socialsBlock(lang)
   + ctaBlock(lang) + FOOTER(lang);
 };
 
@@ -979,7 +1199,7 @@ function kbArticlePage(a, lang='nl'){
     <h1>${h1}</h1>
     <div class="kb-body">${localize(body, lang)}</div>
   </div></article>
-  ${kbRelated(lang)}` + ctaBlock(lang) + FOOTER(lang);
+  ${kbRelated(lang)}` + ballGallery(seedOf('kb-'+a.slug), lang) + socialsBlock(lang) + ctaBlock(lang) + FOOTER(lang);
 }
 
 function kbHubPage(lang='nl'){
@@ -1007,7 +1227,7 @@ function kbHubPage(lang='nl'){
     <p>${hubSub}</p></div>
     <div class="hero-visual"><div class="ballshot"><div class="ball"><span class="logo-print">${u.jouw}<br><span>${u.logo}</span></span></div></div></div>
   </div></section>
-  ${byCat}` + ctaBlock(lang) + FOOTER(lang);
+  ${byCat}` + ballGallery(seedOf('kennisbank-hub'), lang) + socialsBlock(lang) + ctaBlock(lang) + FOOTER(lang);
 }
 
 for (const lang of LANGS) {
@@ -1059,7 +1279,7 @@ const toepassingPage = (t, lang='nl') => {
   ${howItWorks(lang)}
   ${whyUs(lang)}
   ${faqBlock((c.faq||[]).map(([q,a])=>[q, localize(a, lang)]), lang)}
-  ${toepRelated(t.related, lang)}` + ctaBlock(lang) + FOOTER(lang);
+  ${toepRelated(t.related, lang)}` + ballGallery(seedOf('toep-'+t.slug), lang) + reviewsBlock(lang) + socialsBlock(lang) + ctaBlock(lang) + FOOTER(lang);
 };
 const toepHubPage = (lang='nl') => {
   const u = UI[lang], p = pfx(lang), en = lang==='en';
@@ -1076,7 +1296,7 @@ const toepHubPage = (lang='nl') => {
   <section class="pillar-hero"><div class="container" style="padding-block:clamp(2.4rem,5vw,4rem)">
     <p class="eyebrow">${eyebrow}</p><h1>${h1}</h1><p>${lead}</p></div></section>
   <section class="section"><div class="container"><div class="toep-grid">${cards}</div></div></section>
-  ${whyUs(lang)}${howItWorks(lang)}` + ctaBlock(lang) + FOOTER(lang);
+  ${whyUs(lang)}${howItWorks(lang)}` + ballGallery(seedOf('toepassingen-hub'), lang) + reviewsBlock(lang) + socialsBlock(lang) + ctaBlock(lang) + FOOTER(lang);
 };
 for (const lang of LANGS) {
   const base = lang==='en' ? join(root,'en','toepassingen') : join(root,'toepassingen');
@@ -1088,6 +1308,22 @@ console.log('TOTAL', TOEPASSINGEN.length, 'toepassingen + hub (NL+EN)');
 
 /* =================== PILLARS (golfshows, golftrips — Mark Reynolds diensten) =================== */
 // t = { slug, ico, related:[slug], nl:{metaTitle,metaDesc,eyebrow,h1,lead,intro,sections:[{h,html}],faq,bookH,bookP}, en:{...} }
+// Donkere trickshow-hero met YouTube-video in het midden en feature-bullets.
+const tsHero = (t, c, lang='nl') => {
+  const p = pfx(lang); const v = c.video || {};
+  const feats = (v.feats||[]).map(f=>`<li><span class="ts-ico">${ico(f.ico,'')}</span><div><b>${f.t}</b>${f.s?`<span>${f.s}</span>`:''}</div></li>`).join('');
+  return `<section class="ts-hero"><div class="container">
+    <p class="eyebrow">${c.eyebrow}</p>
+    <h1>${c.h1}</h1>
+    <p class="ts-sub">${v.sub||c.lead}</p>
+    <div class="ts-grid">
+      <div class="ts-video"><iframe src="https://www.youtube-nocookie.com/embed/${t.videoId}?rel=0" title="${v.videoTitle||(lang==='en'?'Golf Trick Show — Mark Reynolds':'Golf trickshow — Mark Reynolds')}" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+      <ul class="ts-feats">${feats}</ul>
+    </div>
+    <div class="hero-cta" style="margin-top:1.6rem"><a class="btn btn--primary btn--lg" href="${p}/contact/">${ico('chat','btn__ico')}${lang==='en'?'Book the trick show':'Boek de trickshow'} <span class="btn__arrow">→</span></a><a class="btn btn--light btn--lg" href="https://wa.me/31627411925">WhatsApp Mark</a></div>
+  </div></section>`;
+};
+
 const pillarPage = (t, lang='nl') => {
   const c = t[lang], u = UI[lang], p = pfx(lang);
   const sectionsHtml = (c.sections||[]).map(s=>`<h2>${s.h}</h2>${s.html}`).join('');
@@ -1099,11 +1335,11 @@ const pillarPage = (t, lang='nl') => {
     breadcrumbLD([{name:u.home,url:'/'},{name:c.crumb||c.name,url:`/${t.slug}/`}], lang)
   ) + HEADER(lang, `/${t.slug}/`) +
   `<div class="container"><nav class="crumbs"><a href="${p}/">${u.home}</a> › <span>${c.crumb||c.name}</span></nav></div>
-  <section class="pillar-hero"><div class="container" style="padding-block:clamp(2.6rem,6vw,4.5rem)">
+  ${t.videoId ? tsHero(t, c, lang) : `<section class="pillar-hero"><div class="container" style="padding-block:clamp(2.6rem,6vw,4.5rem)">
     <p class="eyebrow">${c.eyebrow}</p><h1>${c.h1}</h1><p>${c.lead}</p>
     <div class="hero-cta" style="margin-top:1.4rem"><a class="btn btn--primary btn--lg" href="${p}/contact/">${ico('chat','btn__ico')}${lang==='en'?'Request availability':'Vraag beschikbaarheid aan'} <span class="btn__arrow">→</span></a>
     <a class="btn btn--light btn--lg" href="https://wa.me/31627411925">${lang==='en'?'WhatsApp Mark':'WhatsApp Mark'}</a></div>
-  </div></section>
+  </div></section>`}
   <section class="section"><div class="container"><div class="prose">${localize(c.intro||'', lang)}${localize(sectionsHtml, lang)}</div></div></section>
   ${extraSections(t.slug, lang)}
   ${faqBlock((c.faq||[]).map(([q,a])=>[q, localize(a, lang)]), lang)}
@@ -1113,6 +1349,7 @@ const pillarPage = (t, lang='nl') => {
   </div></div></section>
   ${relItems.length ? `<section class="section section--sky"><div class="container"><div class="section-head accent-line"><p class="eyebrow">${lang==='en'?'Also interesting':'Ook interessant'}</p><h2>${lang==='en'?'Explore more':'Ontdek meer'}</h2></div>
     <div class="linkchips" style="margin-top:1rem">${relItems.map(x=>`<a href="${p}${relBase(x)}${x.slug}${relBase(x)==='/'?'/':'/'}">${ico(x.ico,'ico-svg')} ${x[lang].name}</a>`).join('')}</div></div></section>` : ''}`
+  + ballGallery(seedOf('pillar-'+t.slug), lang) + reviewsBlock(lang) + socialsBlock(lang)
   + FOOTER(lang);
 };
 for (const lang of LANGS) {
@@ -1232,7 +1469,7 @@ const quizPage = (lang='nl') => {
     ['Is het advies bindend?','Nee, het is indicatief. De kiezer wijst je de goede richting; voor maatwerk kun je altijd Mark vragen, een PGA-professional.'],
     ['Kan ik de aanbevolen bal laten bedrukken?','Ja. Elk aanbevolen model kun je met je logo of tekst laten bedrukken. Open de configurator om te starten.'],
     ['Wat als ik twijfel bij een antwoord?','Kies wat het beste past. Je kunt altijd een stap terug, of aan het eind opnieuw beginnen.'],
-  ], lang)}` + ctaBlock(lang) + FOOTER(lang);
+  ], lang)}` + ballGallery(seedOf('golfbalkiezer'), lang) + socialsBlock(lang) + ctaBlock(lang) + FOOTER(lang);
 };
 for (const lang of LANGS) {
   const out = lang==='en' ? join(root,'en','golfbalkiezer','index.html') : join(root,'golfbalkiezer','index.html');

@@ -38,5 +38,41 @@
     druk.addEventListener('change', apply); apply();
   }
 
-  /* Golf-scrollanimatie is verwijderd — normale, rustige header. */
+  /* ---- 5) tekstrotator in de hero (.rot met data-words="a,b,c") ---- */
+  document.querySelectorAll('.rot[data-words]').forEach(function (el) {
+    var words = (el.getAttribute('data-words') || '').split(',').map(function (w) { return w.trim(); }).filter(Boolean);
+    if (words.length < 2) return;
+    var i = 0;
+    el.textContent = words[0];
+    if (reduce) return;
+    setInterval(function () {
+      el.classList.add('out');
+      setTimeout(function () {
+        i = (i + 1) % words.length;
+        el.textContent = words[i];
+        el.classList.remove('out');
+      }, 300);
+    }, 2400);
+  });
+
+  /* ---- 6) WhatsApp: op desktop een scanbare QR tonen i.p.v. openen ---- */
+  var isDesktop = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  var openQr = null;
+  function closeQr() { if (openQr) { openQr.hidden = true; openQr = null; } }
+  document.querySelectorAll('.wa-wrap').forEach(function (wrap) {
+    var link = wrap.querySelector('[data-wa]');
+    var qr = wrap.querySelector('.wa-qr');
+    if (!link || !qr) return;
+    link.addEventListener('click', function (e) {
+      if (!isDesktop) return;              // mobiel: gewoon WhatsApp openen
+      e.preventDefault();
+      var show = qr.hidden;
+      closeQr();
+      if (show) { qr.hidden = false; openQr = qr; }
+    });
+  });
+  document.addEventListener('click', function (e) {
+    if (openQr && !e.target.closest('.wa-wrap')) closeQr();
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeQr(); });
 })();
