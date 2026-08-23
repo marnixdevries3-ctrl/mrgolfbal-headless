@@ -3,8 +3,8 @@ export const TRIPS = [
   {
     slug: "algarve-monte-rei",
     name: "Algarve — Monte Rei",
-    photo: "algarve-kustbaan.jpg",
-    alt: "Golfbaan aan de kust van de Algarve met uitzicht op de Atlantische Oceaan",
+    photo: "luchtfoto-green.jpg",
+    alt: "Luchtfoto van een green met bunkers op een golfbaan in de Algarve",
     title: "Golfreis Algarve: Monte Rei | MrGolfbal.nl",
     desc: "Golfreis Algarve naar Monte Rei, de nummer 1 baan van Portugal. Volledig georganiseerde golftrip in groep met PGA-pro Mark Reynolds als reisbegeleider.",
     h1: "Golfreis Algarve naar <span>Monte Rei</span>",

@@ -1197,3 +1197,211 @@ body:has(.sticky-cta) .site-footer { padding-bottom: 84px; }
   .siderail__btn span { display: none; }
   .siderail__btn { padding: .7rem .75rem; }
 }
+
+/* de belknop is gestyled voor de donkere topbar; op een lichte paginakop
+   (contact, 404) was hij wit-op-wit en dus onzichtbaar */
+.pagehead .cbtn--call { background: var(--color-navy); color: #fff; border-color: transparent; }
+.pagehead .cbtn--call:hover { background: var(--navy-700, #123); color: #fff; }
+
+/* =============================================================================
+   V16 — mobiele header, schuivende USP-balk, hero met echte foto, kleinere
+         meebewegende CTA met gouden rand, productfoto's
+   ========================================================================== */
+
+/* ---------- topbar + header blijven altijd in beeld ---------- */
+.site-top { position: sticky; top: 0; z-index: 80; }
+@media (max-width: 1080px) {
+  .site-top { position: fixed; top: 0; left: 0; right: 0; }
+  body { padding-top: var(--site-top-h, 104px); }
+}
+
+/* ---------- USP's schuiven door, zodat je ze allemaal ziet ---------- */
+.topbar-marquee { overflow: hidden; flex: 1 1 auto; min-width: 0;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent); }
+.topbar-marquee .topbar-usps { display: flex; flex-wrap: nowrap; width: max-content; gap: 0; }
+.topbar-marquee .topbar-usps li { flex: none; padding-right: 2.2rem; white-space: nowrap; }
+.topbar-marquee[data-running] .topbar-usps { animation: usp-slide var(--usp-dur, 32s) linear infinite; }
+.topbar-marquee[data-running]:hover .topbar-usps { animation-play-state: paused; }
+@keyframes usp-slide { from { transform: translateX(0); } to { transform: translateX(calc(-1 * var(--usp-half, 50%))); } }
+@media (prefers-reduced-motion: reduce) {
+  .topbar-marquee[data-running] .topbar-usps { animation: none; }
+  .topbar-marquee { overflow-x: auto; scrollbar-width: none; }
+  .topbar-marquee::-webkit-scrollbar { display: none; }
+}
+.topbar-proof--alt { white-space: nowrap; }
+@media (max-width: 900px) { .topbar-proof--alt { display: none; } }
+
+/* ---------- mobiel: taalswitcher en menuknop netjes rechts ---------- */
+@media (max-width: 1080px) {
+  .header-bar { display: flex; align-items: center; gap: .6rem; }
+  .header-bar > .logo { margin-right: auto; }
+  .header-actions { margin-left: auto; display: flex; align-items: center; gap: .5rem; justify-content: flex-end; }
+}
+/* de zwevende knoppen onderaan zijn weg: de topbar heeft ze al */
+@media (max-width: 900px) {
+  .siderail { display: none; }
+  body:has(.siderail) { padding-bottom: 0; }
+  body:has(.siderail) .sticky-cta { bottom: 0; }
+}
+
+/* ---------- hero met echte foto als achtergrond ---------- */
+.hero { position: relative; background-image:
+    linear-gradient(115deg, rgba(4,26,44,.94) 0%, rgba(7,41,67,.86) 45%, rgba(7,41,67,.62) 100%),
+    url('/assets/img/hero-bg.jpg');
+  background-size: cover; background-position: center 58%; }
+@media (max-width: 900px) {
+  .hero { background-image:
+    linear-gradient(180deg, rgba(4,26,44,.93) 0%, rgba(7,41,67,.9) 60%, rgba(7,41,67,.86) 100%),
+    url('/assets/img/hero-bg.jpg'); }
+}
+
+/* ---------- meebewegende CTA: kleiner, met gouden bovenrand ---------- */
+.sticky-cta { border-top: 3px solid var(--gold); box-shadow: 0 -6px 22px rgba(4,26,44,.18); }
+.sticky-cta__in { padding-block: .5rem; gap: .8rem; }
+.sticky-cta__txt { font-size: .92rem; }
+.sticky-cta .btn, .sticky-cta .cbtn { padding: .48rem .9rem; font-size: .86rem; }
+.sticky-cta .btn__ico, .sticky-cta .cbtn svg { width: 15px; height: 15px; }
+@media (max-width: 640px) {
+  .sticky-cta__txt { font-size: .84rem; }
+  .sticky-cta .sticky-cta__wa span { display: none; }
+}
+
+/* ---------- echte productfoto's ---------- */
+.ballphoto { width: 100%; height: auto; aspect-ratio: 1/1; object-fit: contain;
+  background: radial-gradient(circle at 50% 45%, #fff, #f2f6f9 62%, #e4edf4);
+  display: block; }
+.card__media .ballphoto { aspect-ratio: 4/3; padding: .4rem; }
+.ballphoto-main { margin: 0; border-radius: var(--radius); overflow: hidden;
+  border: 1px solid rgba(255,255,255,.16); background: #fff; box-shadow: var(--shadow-sm); }
+.ballvariants { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 1rem; margin-top: 1.6rem; }
+.ballvariants figure { margin: 0; border: 1px solid var(--color-border); border-radius: var(--radius);
+  overflow: hidden; background: #fff; }
+.ballvariants figcaption { padding: .7rem .85rem; font-size: .84rem; color: var(--muted); line-height: 1.4; }
+
+/* ---------- hoofd-CTA: witte letters ---------- */
+.btn--primary, .btn--primary:hover, .btn--primary:visited { color: #fff; }
+.btn--primary .btn__arrow, .btn--primary svg { color: #fff; }
+
+/* =============================================================================
+   V17 — sponsorvak, gelijke knoppen, geen zwevende knoppen meer
+   ========================================================================== */
+
+/* alle knoppen naast elkaar krijgen dezelfde maat, ook de WhatsApp-knop */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; }
+.btn svg, .btn .btn__ico { width: 18px; height: 18px; flex: none; }
+.btn--lg svg, .btn--lg .btn__ico { width: 19px; height: 19px; }
+.btn--light { background: #fff; color: var(--navy-800); border: 1px solid var(--color-border); }
+.btn--light:hover { background: var(--paper, #f7f4ec); color: var(--navy-900); }
+.btn--light svg { color: var(--color-blue); }
+.hero .btn--light, .ts-hero .btn--light, .loc-hero .btn--light,
+.pillar-hero .btn--light, .amam .btn--light { background: #fff; color: var(--navy-800); }
+
+/* de zwevende bel-/appknoppen zijn overal weg */
+.siderail { display: none !important; }
+
+/* "jouw logo hier?" in dezelfde vorm als de andere logo-vakjes */
+.logowall__cta a { display: grid; place-items: center; gap: .25rem; text-align: center;
+  padding: .4rem; color: var(--navy-700); line-height: 1.3; }
+.logowall__cta a:hover { text-decoration: none; color: var(--blue-600); }
+.logowall__cta svg { width: 22px; height: 22px; color: var(--gold); }
+.logowall__cta b { font-size: .9rem; }
+.logowall__cta span { font-size: .78rem; color: var(--muted); }
+.logowall li:has(.logowall__cta), .logowall__cta { border-style: dashed; }
+
+/* =============================================================================
+   V18 — mobiele kop compacter: de hamburger moet altijd bereikbaar zijn
+   ========================================================================== */
+@media (max-width: 1080px) {
+  /* de hoofd-CTA staat al in het uitklapmenu; in de balk duwde hij de
+     hamburger buiten beeld */
+  .header-actions .btn--primary { display: none; }
+  .header-actions { flex: none; gap: .45rem; }
+  .nav-toggle { flex: none; }
+}
+@media (max-width: 720px) {
+  .topbar-in { gap: .35rem; padding-block: .4rem; }
+  .topbar-right { order: 2; display: flex; align-items: center; gap: .5rem; flex-wrap: nowrap; }
+  .topbar-marquee { order: 1; }
+  .topbar-proof { flex: none; font-size: .72rem; }
+  .topbar .contact-btns { width: auto; margin-left: auto; gap: .35rem; }
+  .topbar .contact-btns .cbtn { flex: none; padding: .3rem .6rem; font-size: .74rem; }
+  .topbar .contact-btns .cbtn svg { width: 13px; height: 13px; }
+  .topbar .wa-wrap { flex: none; }
+  .logo b { font-size: 1.15rem; }
+}
+@media (max-width: 420px) {
+  .topbar-proof strong { font-size: .7rem; }
+  .topbar .contact-btns .cbtn span { display: inline; }
+}
+
+/* bel- en appknop blijven op mobiel naast elkaar staan */
+@media (max-width: 720px) {
+  .topbar .contact-btns { flex-wrap: nowrap; }
+  .topbar-right { flex-wrap: nowrap; min-width: 0; }
+  .topbar-proof { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+}
+@media (max-width: 400px) {
+  .topbar .contact-btns .cbtn { padding: .3rem .5rem; font-size: .7rem; }
+  .topbar-proof { font-size: .68rem; }
+}
+
+/* op de smalste telefoons gaat de social proof eraf; de bel- en appknop
+   met hun tekst zijn daar belangrijker */
+@media (max-width: 400px) {
+  .topbar-right .topbar-proof { display: none; }
+  .topbar .contact-btns { margin-left: 0; width: 100%; }
+  .topbar .contact-btns .cbtn { flex: 1; justify-content: center; font-size: .76rem; }
+}
+
+/* =============================================================================
+   V19 — meebewegende CTA op mobiel compact: één regel, kleine knoppen
+   ========================================================================== */
+@media (max-width: 700px) {
+  .sticky-cta__in { flex-wrap: nowrap; justify-content: space-between; text-align: left;
+    gap: .6rem; padding-block: .45rem; }
+  .sticky-cta__txt { flex: 1 1 auto; font-size: .82rem; line-height: 1.25;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .sticky-cta__btns { width: auto; flex: none; gap: .4rem; flex-wrap: nowrap; }
+  .sticky-cta .btn { flex: none; padding: .42rem .7rem; font-size: .8rem; }
+  .sticky-cta .btn span:not(.btn__arrow) { display: inline; }
+  .sticky-cta .sticky-cta__wa { padding: .42rem .6rem; }
+  .sticky-cta .btn__arrow { display: none; }
+}
+@media (max-width: 600px) {
+  /* de tekst wordt hier zo smal dat er niets leesbaars overblijft; de knoppen
+     zeggen zelf al waar ze heen gaan */
+  .sticky-cta__txt { display: none; }
+  .sticky-cta__btns { width: 100%; }
+  .sticky-cta .btn { flex: 1; justify-content: center; font-size: .84rem; padding: .5rem .6rem; }
+}
+
+/* de knoptekst mag niet over twee regels vallen; dan wordt de balk te hoog */
+@media (max-width: 600px) {
+  .sticky-cta .btn { white-space: nowrap; font-size: .78rem; padding: .5rem .5rem; }
+  .sticky-cta .btn svg { width: 15px; height: 15px; }
+}
+
+/* balfoto boven een tekstblok (merkpagina's) */
+.ballphoto--feature { max-width: 190px; margin: 0 auto .6rem; aspect-ratio: 1/1; border-radius: var(--radius); }
+
+/* balfoto in de hero: op een lichte kaart, zodat de witte bal zichtbaar blijft */
+.hero-photo--ball { background: #fff; border-radius: var(--radius); padding: .4rem;
+  border: 1px solid rgba(255,255,255,.18); max-width: 460px; margin-inline: auto; }
+.hero-photo--ball img { aspect-ratio: 1/1; object-fit: contain; }
+
+/* =============================================================================
+   V20 — balfoto's zijn uitgeknipt: geen witte vlakken meer eromheen
+   ========================================================================== */
+.ballphoto { background: none; }
+.card__media:has(.ballphoto) { background: none; border: 0; padding: .6rem .6rem 0; }
+.card__media .ballphoto { aspect-ratio: 1/1; padding: 0; }
+.ballphoto-main { background: none; border: 0; box-shadow: none; }
+.ballvariants figure { background: none; border-color: transparent; }
+.ballvariants figure:hover { border-color: var(--color-border); }
+.hero-photo--ball { background: none; border: 0; padding: 0; }
+.ballphoto--feature { max-width: 170px; }
+
+/* de kleurvarianten hoeven niet beeldvullend te zijn */
+.ballvariants { grid-template-columns: repeat(auto-fit, minmax(160px, 200px)); justify-content: center; }
+.ballvariants figcaption { text-align: center; }

@@ -168,3 +168,38 @@
   var year = d.getFullYear() + (d.getMonth() >= 7 ? 1 : 0);   // vanaf augustus: volgend jaar
   els.forEach(function (el) { el.textContent = String(year); });
 })();
+
+/* ---- 12) topbar: hoogte doorgeven en de USP-balk laten schuiven ----
+   De header staat op mobiel vast bovenaan; de body krijgt dezelfde hoogte als
+   padding zodat er niets onder verdwijnt. De USP's schuiven door zodat je ze
+   allemaal ziet, ook als ze niet naast elkaar passen. */
+(function () {
+  var top = document.querySelector('.site-top');
+  if (top) {
+    var setH = function () {
+      document.documentElement.style.setProperty('--site-top-h', top.offsetHeight + 'px');
+    };
+    setH();
+    window.addEventListener('resize', setH);
+    if (window.ResizeObserver) new ResizeObserver(setH).observe(top);
+  }
+
+  var m = document.querySelector('[data-marquee]');
+  if (!m) return;
+  var list = m.querySelector('.topbar-usps');
+  if (!list) return;
+  var start = function () {
+    if (m.hasAttribute('data-running')) return;
+    if (list.scrollWidth <= m.clientWidth + 4) return;   // past gewoon: niet animeren
+    var items = Array.prototype.slice.call(list.children);
+    items.forEach(function (li) { list.appendChild(li.cloneNode(true)); });  // tweede set voor een naadloze lus
+    var half = list.scrollWidth / 2;
+    m.style.setProperty('--usp-half', half + 'px');
+    m.style.setProperty('--usp-dur', Math.max(18, Math.round(half / 28)) + 's');
+    m.setAttribute('data-running', '');
+  };
+  start();
+  window.addEventListener('resize', function () {
+    if (!m.hasAttribute('data-running')) start();
+  });
+})();

@@ -74,7 +74,10 @@ for (const [route] of ALL) {
 }
 if (missing.length) console.warn('ontbreekt:', missing.join(', '));
 
+const heroBg = 'data:image/jpeg;base64,' + readFileSync(join(root,'assets/img/hero-bg.jpg')).toString('base64');
 const css = R('assets/css/styles.css')
+  // de hero-achtergrond moet ook in de zelfstandige preview zichtbaar zijn
+  .replace(/url\('\/assets\/img\/hero-bg\.jpg'\)/g, () => "url('" + heroBg + "')")
   // niet-ASCII in CSS content-waarden als CSS-escape (\2013 e.d.), zodat de
   // pijltjes en streepjes ook zonder expliciete charset goed renderen
   .replace(/content:\s*'([^']*)'/g, (m, v) =>
@@ -87,13 +90,16 @@ const qr  = 'data:image/png;base64,' + readFileSync(join(root,'assets/img/wa-qr.
    self-contained en kan geen losse bestanden van de server halen. */
 const tmp = mkdtempSync(join(tmpdir(), 'mrg-'));
 const dataUri = {};
-for (const sub of ['balls', 'mark', 'show', 'trips', 'partners']) {
+for (const sub of ['balls', 'mark', 'show', 'trips', 'partners', 'products']) {
   const dir = join(root, 'assets', 'img', sub);
   let files = []; try { files = readdirSync(dir); } catch { continue; }
   for (const f of files.filter(x => /\.(jpe?g|png|webp)$/i.test(x))) {
-    const out = join(tmp, sub + '-' + f.replace(/\.[^.]+$/, '') + '.jpg');
-    execFileSync('convert', [join(dir, f), '-background', 'white', '-alpha', 'remove', '-alpha', 'off', '-resize', '720x720>', '-quality', '70', '-strip', out]);
-    dataUri[`/assets/img/${sub}/${f}`] = 'data:image/jpeg;base64,' + readFileSync(out).toString('base64');
+    const keepAlpha = /\.(png|webp)$/i.test(f) && (sub === 'products' || sub === 'partners');
+    const out = join(tmp, sub + '-' + f.replace(/\.[^.]+$/, '') + (keepAlpha ? '.webp' : '.jpg'));
+    execFileSync('convert', keepAlpha
+      ? [join(dir, f), '-background', 'none', '-resize', '520x520>', '-quality', '80', '-strip', out]
+      : [join(dir, f), '-background', 'white', '-alpha', 'remove', '-alpha', 'off', '-resize', '720x720>', '-quality', '70', '-strip', out]);
+    dataUri[`/assets/img/${sub}/${f}`] = (keepAlpha ? 'data:image/webp;base64,' : 'data:image/jpeg;base64,') + readFileSync(out).toString('base64');
   }
 }
 console.log(`foto's ingebakken: ${Object.keys(dataUri).length}`);
