@@ -1,6 +1,0 @@
-node_modules/
-preview/
-*.log
-.DS_Store
-.netlify/
-.env
