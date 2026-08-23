@@ -1,0 +1,9 @@
+node_modules/
+preview/
+*.log
+.DS_Store
+.netlify/
+.env
+
+# lokale klikbare preview (bouwbestand, geen sitepagina)
+preview.html
