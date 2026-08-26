@@ -20,6 +20,11 @@ export const PAGES_D = {
   <p>Printing starts at 144 balls, which is twelve dozen. Larger runs are shipped in multiple boxes. Delivery within the Netherlands and Belgium is standard; for other destinations the shipping cost is quoted with your <a href="/golfballen-bedrukken-voor-bedrijven/">business quote</a>.</p>
   <h2>Something wrong with your delivery?</h2>
   <p>Get in touch as soon as you notice it. Because every order is printed to your own approved proof, issues are handled case by case rather than by a standard return procedure. You can reach Mark by phone, by email or on WhatsApp via the <a href="/contact/">contact page</a>.</p>
+  <h2>Storing and unpacking</h2>
+  <p>Printed balls arrive in their original packaging and keep perfectly well dry and at room temperature. Damp is the only real enemy: a cardboard box standing for months in a humid cellar or a cold garage will swell, and you see that on the packaging even when nothing is wrong with the ball itself. Keep the boxes indoors rather than in a shed.</p>
+  <p>On arrival, open a box at random rather than only the top one. That way you know the whole run looks the way you approved it. Keep your proof as well; for a repeat order it is the fastest starting point and saves a round of back and forth about colours and placement.</p>
+  <h2>Ordering a second run</h2>
+  <p>For a repeat order we use the file we hold for you, unless you want something changed. The minimum of 144 balls applies again, because every production is its own run. You also receive a fresh proof for approval — that may look unnecessary, but it stops an outdated version of your logo quietly going back into production. More on that process under <a href="/kennisbank/digitale-drukproef-golfballen/">the digital proof</a> and under <a href="/zo-werkt-het/">how it works</a>.</p>
 </div></div></section>`
   },
   privacy: {
@@ -44,8 +49,13 @@ export const PAGES_D = {
   <p>Details are shared only where an order requires it — for example with the printer or the carrier. Your data is not sold and not used for advertising profiles.</p>
   <h2>Your rights</h2>
   <p>You can ask to see the data held about you, to have it corrected, or to have it deleted. A message via the <a href="/contact/">contact page</a> is enough; the artwork and correspondence are then removed.</p>
-  <h2>Cookies</h2>
-  <p>This website sets no tracking cookies of its own. Pages that embed a YouTube video load it through youtube-nocookie.com, which limits what YouTube stores until you actually press play.</p>
+  <h2>Cookies and external services</h2>
+  <p>This website sets no tracking cookies of its own. Pages that embed a YouTube video load it through youtube-nocookie.com, which limits what YouTube stores until you actually press play. The typeface is loaded through Google Fonts, which means that service sees your IP address, as happens with any external file your browser fetches.</p>
+  <p>The website runs on Netlify. Like any web server it keeps technical log files containing, among other things, IP address, time and the page requested. Those records exist to keep the site working and to counter abuse, not to follow visitors around.</p>
+  <h2>Security</h2>
+  <p>The site is reachable only over a secure connection (https), so what you type into a form cannot be read by others in transit. Email is inherently less protected: do not send anything you would not also put in ordinary post. If you have something confidential to raise, a phone call is the better route.</p>
+  <h2>Questions or a complaint</h2>
+  <p>If we cannot resolve something together, you can lodge a complaint with the Dutch Data Protection Authority (Autoriteit Persoonsgegevens). We would rather hear it first ourselves: a message through the <a href="/contact/">contact page</a> or a phone call is usually enough to sort it out. This statement describes the situation as it currently stands; if the way the site works changes, the text here is updated to match.</p>
 </div></div></section>`
   },
 };

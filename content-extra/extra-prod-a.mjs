@@ -9,7 +9,7 @@ export const EXTRA_PROD_A = {
     nl: [
       {
         h: 'Voor wie de bedrukte Pro V1 de juiste keuze is',
-        html: `<p>De Pro V1 is de bal die je geeft wanneer de indruk telt. Denk aan een select gezelschap van vaste relaties, een raad van bestuur, een klein directieteam of de hoofdgasten van een jubileum — mensen bij wie een gemiddeld cadeau te weinig zegt. Juist omdat de Pro V1 al jaren de meest gespeelde bal op tour is, herkent een golfende ontvanger het model meteen, en die herkenning doet het werk: je logo landt op een bal die staat voor het hoogste niveau van de sport.</p>
+        html: `<p>De Pro V1 is de bal die je geeft wanneer de indruk telt. Een select gezelschap van vaste relaties bijvoorbeeld, een raad van bestuur, een klein directieteam of de hoofdgasten van een jubileum — mensen bij wie een gemiddeld cadeau te weinig zegt. Juist omdat de Pro V1 al jaren de meest gespeelde bal op tour is, herkent een golfende ontvanger het model meteen, en die herkenning doet het werk: je logo landt op een bal die staat voor het hoogste niveau van de sport.</p>
 <p>Voor de ontvanger is de Pro V1 bovendien geen bal die in de kast verdwijnt. Serieuze spelers met een lage tot midden handicap spelen hem echt, en elke ronde die ze ermee lopen brengt jouw logo opnieuw op de baan. Zoek je een breder overzicht van geschikte momenten en doelgroepen, kijk dan bij <a href="/toepassingen/golfballen-relatiegeschenk/">golfballen als relatiegeschenk</a> of gebruik de <a href="/golfbalkiezer/">golfbalkiezer</a> om je keuze af te stemmen op wie je voor je hebt.</p>`
       },
       {
@@ -86,7 +86,7 @@ export const EXTRA_PROD_A = {
       },
       {
         h: 'Corporate en clubgebruik dat bij de Pro V1x past',
-        html: `<p>De Pro V1x komt het sterkst tot zijn recht bij toepassingen met een golfend publiek van niveau. Denk aan de prijzentafel van een clubkampioenschap, een sponsorflight op een invitational, memberkits voor een ambitieuze club of een cadeau voor het betere zakelijke golfteam. Op een bedrijfsgolfdag met veel ervaren spelers voelt de Pro V1x als de logische premium-keuze die past bij hun spel.</p>
+        html: `<p>De Pro V1x komt het sterkst tot zijn recht bij toepassingen met een golfend publiek van niveau. De prijzentafel van een clubkampioenschap bijvoorbeeld, een sponsorflight op een invitational, memberkits voor een ambitieuze club of een cadeau voor het betere zakelijke golfteam. Op een bedrijfsgolfdag met veel ervaren spelers voelt de Pro V1x als de logische premium-keuze die past bij hun spel.</p>
 <p>Voor grotere gemengde velden combineren organisatoren de Pro V1x vaak met een toegankelijker model, zodat elke deelnemer een bal krijgt die bij zijn niveau past. Wil je die verdeling uitdenken voor je <a href="/toepassingen/golfballen-bedrijfsgolfdag/">bedrijfsgolfdag</a>, dan denkt Mark als PGA-professional graag mee. Vanaf 144 stuks, met een offerte op maat en levering binnen 5–15 werkdagen na goedkeuring van de drukproef.</p>`
       }
     ],

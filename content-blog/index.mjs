@@ -170,12 +170,12 @@ export const POSTS = [
 
 <h2>Hoe de act is opgebouwd</h2>
 <p>De opbouw is bewust rustig. Het begint met een slag die iedereen kan volgen, zodat de zaal een ijkpunt heeft. Daarna verschuift dat ijkpunt stap voor stap: clubs die niet lijken te kunnen werken, twee ballen tegelijk, slagen van een tee die ergens balanceert waar geen tee hoort te staan.</p>
-<p>Tussendoor wordt er gepraat. Dat is geen bijzaak maar de helft van de act. Droge humor, korte vragen aan het publiek, en het opbouwen van spanning voor de slag die daarna komt. Wie alleen kunstjes doet, verliest een zaal binnen vijf minuten. Wie er een verhaal omheen bouwt, houdt hem de hele act vast.</p>
+<p>Tussendoor wordt er gepraat. Het gaat hier niet om bijzaak maar de helft van de act. Droge humor, korte vragen aan het publiek, en het opbouwen van spanning voor de slag die daarna komt. Wie alleen kunstjes doet, verliest een zaal binnen vijf minuten. Wie er een verhaal omheen bouwt, houdt hem de hele act vast.</p>
 <p>Het slot is bijna altijd een slag waar de zaal even stil van wordt. Dat is het moment dat mensen dezelfde avond navertellen, en het is de reden dat een act beter aan het einde van een programma past dan ertussenin.</p>
 
 <h2>Waarom het publiek meedoet</h2>
 <p>Er wordt altijd iemand uit de zaal gehaald. Dat lijkt spannend voor de organisator, maar het is precies waar de act zijn kracht vandaan haalt. Zodra een collega, klant of directielid naar voren stapt, kijkt de rest anders. Het wordt persoonlijk.</p>
-<p>Cruciaal is hoe dat gebeurt. Niemand wordt te kijk gezet. De vrijwilliger krijgt een rol waarin hij of zij er goed uitkomt, met applaus tot gevolg. Dat is geen toevallige uitkomst maar een keuze in de opzet, en het is de reden dat het ook werkt bij een gezelschap dat elkaar niet kent.</p>
+<p>Cruciaal is hoe dat gebeurt. Niemand wordt te kijk gezet. De vrijwilliger krijgt een rol waarin hij of zij er goed uitkomt, met applaus tot gevolg. Dat is niet zozeer toevallige uitkomst maar een keuze in de opzet, en het is de reden dat het ook werkt bij een gezelschap dat elkaar niet kent.</p>
 <p>Voor bedrijfsevenementen is dat waardevoller dan een act die alleen bekeken wordt. Iemand die zelf een bal heeft geslagen onder begeleiding, praat er twee weken later nog over. Meer over de toepassing op zo'n dag lees je op <a href="/golfshows/toepassingen/bedrijfsevent/">golfshow op een bedrijfsevent</a>.</p>
 
 <h2>Wat je als organisator moet regelen</h2>
@@ -244,7 +244,7 @@ export const POSTS = [
 <p>De uitvoering is eenvoudig, maar er zijn een paar keuzes die het verschil maken tussen een geschenk dat af is en een geschenk dat er net naast zit.</p>
 <p>Kies om te beginnen het aantal per ontvanger. Een sleeve van drie ballen is een prettig geschenk: genoeg om te gebruiken, klein genoeg om mee te geven. Een dozijn van twaalf is een cadeau met gewicht, geschikt voor je belangrijkste relaties. Reken in dozijnen en dozen van 144 als je je totale oplage bepaalt.</p>
 <p>Kies daarna je bedrukking. Er wordt gedrukt in spotkleuren, van één tot vijf. Voor een relatiegeschenk is een rustige uitvoering meestal sterker dan een volle: je logo in één of twee huisstijlkleuren, eventueel met een korte tekst. Lever je logo aan als vectorbestand met PMS- of Pantone-nummers, dan klopt de kleur precies. Waarom dat uitmaakt, staat in <a href="/blog/logo-aanleveren-vector-of-jpeg/">logo aanleveren: vector of JPEG</a>.</p>
-<p>Vóór productie krijg je een digitale drukproef. Controleer daarop niet alleen de vormgeving maar ook de tekst. Een verkeerd gespelde bedrijfsnaam op een geschenk is pijnlijker dan op vrijwel elk ander drukwerk.</p>
+<p>Vóór productie krijg je een digitale drukproef. Controleer daarop de vormgeving en de tekst allebei. Een verkeerd gespelde bedrijfsnaam op een geschenk is pijnlijker dan op vrijwel elk ander drukwerk.</p>
 
 <h2>Timing en aantallen</h2>
 <p>De levertijd ligt tussen de vijf en vijftien werkdagen, afhankelijk van oplage, aantal kleuren en balkeuze. Wie zijn geschenken rond de feestdagen of bij een jubileum wil uitreiken, plant dus ruim terug en houdt rekening met de eigen goedkeuringsronde.</p>
@@ -351,7 +351,7 @@ export const POSTS = [
 <p>Zoek in deze volgorde: het originele bestand bij je huisstijl, het bestand bij je briefpapier of visitekaartje, het bestand dat je drukker ooit heeft gebruikt, en pas daarna de afbeelding van je website. Ergens in die reeks ligt in de meeste gevallen alsnog een vectorbestand.</p>
 
 <h2>Logo's die op een bal niet werken</h2>
-<p>Los van het bestandsformaat zijn er logo's die op klein formaat gewoon niet tot hun recht komen. Dat is geen kwestie van techniek maar van ontwerp.</p>
+<p>Los van het bestandsformaat zijn er logo's die op klein formaat gewoon niet tot hun recht komen. Het gaat hier niet om kwestie van techniek maar van ontwerp.</p>
 <p>Wat op een golfbal sneuvelt: heel dunne lijnen, tekst in een klein corps onder een beeldmerk, verlopen, schaduwen, en beeldmerken met veel losse elementen die dicht op elkaar zitten. Op papier blijft dat leesbaar. Op een oppervlak van ruim vier centimeter dat ook nog eens rond is, loopt het dicht.</p>
 <p>De oplossing is meestal eenvoudig: gebruik een vereenvoudigde variant. Alleen het beeldmerk, of alleen het woordmerk, of een versie met dikkere lijnen. Veel huisstijlen hebben zo'n variant al voor kleine toepassingen. Zo niet, dan is het de moeite waard om er een te laten maken, want je hebt hem vaker nodig dan alleen hier.</p>
 

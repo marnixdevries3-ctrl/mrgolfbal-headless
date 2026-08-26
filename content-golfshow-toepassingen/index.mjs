@@ -29,14 +29,14 @@ export const GS_TOEPASSINGEN = [
 <h2>Van losse act naar merkverhaal</h2>
 <p>Een trickshot show is dankbaar materiaal voor een merk, omdat de act meebeweegt met wat je wilt vertellen. Duur en inhoud worden vooraf afgestemd. Korte blokken van tien tot vijftien minuten die zich door de dag heen herhalen, zodat elke nieuwe stroom bezoekers hetzelfde hoogtepunt krijgt. Of één aaneengesloten act als vast moment in het programma, aangekondigd en aangekleed.</p>
 <p>Rond die act laat zich eenvoudig een merklaag leggen. Doelen in je huisstijl. Een woordkeuze die aansluit bij je campagne. Een moment waarop de gastheer van het merk naar voren komt en onder begeleiding een slag doet die er verrassend goed uitziet — met applaus als gevolg, wat op camera aanzienlijk sympathieker oogt dan een woordje vooraf.</p>
-<p>En denk aan wat mensen meenemen. Een <a href="/golfballen-bedrukken/">bedrukte golfbal</a> die iemand net zelf heeft geslagen, met jouw logo erop, verdwijnt niet in een goodiebag maar blijft maanden op een bureau liggen. Voor grotere oplages en strakke huisstijlcontrole loopt dat via <a href="/golfballen-bedrukken-voor-bedrijven/">golfballen bedrukken voor bedrijven</a>. De combinatie van live act en tastbaar restant geeft een vluchtige ontmoeting een staart.</p>
+<p>En dan is er nog wat mensen meenemen. Een <a href="/golfballen-bedrukken/">bedrukte golfbal</a> die iemand net zelf heeft geslagen, met jouw logo erop, verdwijnt niet in een goodiebag maar blijft maanden op een bureau liggen. Voor grotere oplages en strakke huisstijlcontrole loopt dat via <a href="/golfballen-bedrukken-voor-bedrijven/">golfballen bedrukken voor bedrijven</a>. De combinatie van live act en tastbaar restant geeft een vluchtige ontmoeting een staart.</p>
 <p>Belangrijk is wat je juist niet doet. Een act die te dik in de merkboodschap wordt gedrukt, verliest zijn geloofwaardigheid en daarmee zijn kracht. De show mag een merk dragen, maar hij moet eerst een show blijven. In de praktijk betekent dat: de branding zit in de omgeving, de aankondiging en het aandenken, terwijl de act zelf een act blijft. Publiek voelt dat onderscheid feilloos aan.</p>
 </div></div></section>
 
 <section class="section section--sky"><div class="container"><div class="prose">
 <h2>Waarom Mark Reynolds</h2>
 <p>Trick shots overtuigen alleen wanneer ze echt zijn. Het verschil tussen een aardig kunstje en een act waar mensen over napraten, zit in de vraag of degene die daar staat die bal ook onder druk kan raken. Mark Reynolds is PGA Golf Professional sinds 1995 en heeft zijn hele loopbaan op scherp niveau gespeeld.</p>
-<p>Hij won de Nederlandse PGA Order of Merit in 2005, 2009 en 2018. In 2019 werd hij Europees kampioen bij het European PGA Team Championship. In 2005 speelde hij de PGA Cup voor Groot-Brittannië en Ierland tegen de Verenigde Staten. Hij stond meerdere keren in het KLM Open en was daar in 2018 de best geklasseerde Nederlandse speler. Zijn teller staat op meer dan tien professionele overwinningen.</p>
+
 <p>Zijn opleiding kreeg hij in Engeland, waar hij in 1978 werd geboren in Maltby bij Rotherham en zijn PGA-opleiding volgde onder Simon Thornhill op Rotherham Golf Club. In 2000 verhuisde hij naar Nederland, vanaf 2001 met een eigen golfschool. Sinds 2014 is hij verbonden aan golfclub The International in Badhoevedorp, op een steenworp van Amsterdam en Schiphol.</p>
 <p>Daar komt een praktisch voordeel bij: Engels is zijn moedertaal en Nederlands spreekt hij vloeiend. Internationale gasten of een gemengde zaal leveren geen enkel probleem op; hij schakelt binnen de act zonder dat het tempo eruit gaat. Meer over zijn achtergrond staat op de pagina <a href="/over-mark/">over Mark</a>.</p>
 </div></div></section>
@@ -109,7 +109,7 @@ export const GS_TOEPASSINGEN = [
 <section class="section section--sky"><div class="container"><div class="prose">
 <h2>Waarom Mark Reynolds</h2>
 <p>Er is een reden dat de trick shots landen: ze komen van iemand die de bal ook op een toernooibaan onder druk raakt. Mark Reynolds is PGA Golf Professional sinds 1995. Die achtergrond is niet decoratief, hij is de voorwaarde. Wie de techniek niet in de vingers heeft, kan de act niet elke keer opnieuw laten kloppen.</p>
-<p>Zijn palmares is concreet. Winnaar van de Nederlandse PGA Order of Merit in 2005, 2009 en 2018. Europees kampioen met het team bij het European PGA Team Championship in 2019. Speler in de PGA Cup van 2005, voor Groot-Brittannië en Ierland tegen de Verenigde Staten. Meerdere deelnames aan het KLM Open, met in 2018 de positie van best geklasseerde Nederlandse speler. In totaal meer dan tien professionele overwinningen.</p>
+
 <p>Geboren in 1978 in Maltby bij Rotherham, opgeleid tot PGA-professional onder Simon Thornhill op Rotherham Golf Club, in 2000 naar Nederland verhuisd en vanaf 2001 met een eigen golfschool. Sinds 2014 is hij verbonden aan golfclub The International in Badhoevedorp, vlak bij Amsterdam en Schiphol. De volledige achtergrond staat <a href="/over-mark/">op deze pagina</a>.</p>
 <p>Voor lanceringen met internationale gasten is nog iets relevant: Engels is zijn moedertaal en zijn Nederlands is vloeiend. Een gemengd publiek vraagt geen aparte oplossing en geen tolk.</p>
 </div></div></section>
@@ -177,7 +177,7 @@ export const GS_TOEPASSINGEN = [
 <section class="section section--sky"><div class="container"><div class="prose">
 <h2>Waarom Mark Reynolds</h2>
 <p>Achter de humor zit een speler. Mark Reynolds is PGA Golf Professional sinds 1995 en heeft zijn hele loopbaan op wedstrijdniveau gespeeld. Dat is de reden dat de trickshots kloppen: hij raakt die ballen niet omdat het toevallig lukt, maar omdat hij ze duizenden keren heeft geraakt terwijl er iets van afhing.</p>
-<p>Drie keer won hij de Nederlandse PGA Order of Merit: in 2005, 2009 en 2018. In 2019 werd hij met het team Europees kampioen bij het European PGA Team Championship. In 2005 speelde hij de PGA Cup, waarin Groot-Brittannië en Ierland het opnemen tegen de Verenigde Staten. Hij deed meerdere keren mee aan het KLM Open en was daar in 2018 de best geklasseerde Nederlandse speler. Meer dan tien professionele overwinningen staan op zijn naam.</p>
+
 <p>Hij werd geboren in 1978 in Maltby, vlak bij Rotherham in Engeland, en volgde zijn PGA-opleiding onder Simon Thornhill op Rotherham Golf Club. In 2000 kwam hij naar Nederland, waar hij vanaf 2001 een eigen golfschool runt. Sinds 2014 is hij verbonden aan golfclub The International in Badhoevedorp. Zijn verhaal staat uitgebreider <a href="/over-mark/">op de pagina over Mark</a>.</p>
 <p>Voor een bedrijfsevent met buitenlandse collega's of gasten is het handig te weten dat Engels zijn moedertaal is en hij daarnaast vloeiend Nederlands spreekt. De act werkt in beide talen en desnoods door elkaar heen.</p>
 </div></div></section>
@@ -247,7 +247,7 @@ export const GS_TOEPASSINGEN = [
 <section class="section section--sky"><div class="container"><div class="prose">
 <h2>Waarom Mark Reynolds</h2>
 <p>Er lopen genoeg mensen rond die een aardig kunstje met een golfclub kunnen doen. Wat deze show anders maakt, is dat degene die er staat een echte toernooispeler is. Mark Reynolds is PGA Golf Professional sinds 1995, en dat merk je aan elke slag die eruit komt.</p>
-<p>Hij won de Nederlandse PGA Order of Merit in 2005, 2009 en 2018 — drie keer in dertien jaar, wat aangeeft dat het niet bij één goed seizoen bleef. In 2019 werd hij Europees kampioen met het team bij het European PGA Team Championship. In 2005 speelde hij de PGA Cup voor Groot-Brittannië en Ierland tegen de Verenigde Staten. Hij deed meerdere keren mee aan het KLM Open en eindigde daar in 2018 als best geklasseerde Nederlandse speler. Meer dan tien professionele overwinningen staan achter zijn naam.</p>
+
 <p>Geboren in 1978 in Maltby bij Rotherham, opgeleid onder Simon Thornhill op Rotherham Golf Club, sinds 2000 in Nederland en vanaf 2001 met een eigen golfschool. Sinds 2014 is hij verbonden aan golfclub The International in Badhoevedorp, bij Amsterdam en Schiphol. Meer daarover lees je <a href="/over-mark/">op de pagina over Mark</a>.</p>
 <p>Werkt je organisatie met veel internationale collega's, dan is het praktisch dat Engels zijn moedertaal is en zijn Nederlands vloeiend. Een gemengde groep vraagt geen aparte regeling.</p>
 </div></div></section>
@@ -328,7 +328,7 @@ export const GS_TOEPASSINGEN = [
 <section class="section section--sky"><div class="container"><div class="prose">
 <h2>Waarom Mark Reynolds</h2>
 <p>Voor een publiek van relaties telt geloofwaardigheid zwaarder dan bij welk ander gezelschap ook. Uw gasten zijn vaak zelf ondernemers of bestuurders en prikken door een act heen die op effectbejag draait. Daarom is het relevant wie er staat.</p>
-<p>Mark Reynolds is PGA Golf Professional sinds 1995. Hij won de Nederlandse PGA Order of Merit in 2005, 2009 en 2018, werd in 2019 met het team Europees kampioen bij het European PGA Team Championship en speelde in 2005 de PGA Cup voor Groot-Brittannië en Ierland tegen de Verenigde Staten. Hij nam meerdere keren deel aan het KLM Open en was daar in 2018 de best geklasseerde Nederlandse speler. Meer dan tien professionele overwinningen staan op zijn naam.</p>
+
 <p>Zijn achtergrond is Engels: geboren in 1978 in Maltby bij Rotherham, opgeleid tot PGA-professional onder Simon Thornhill op Rotherham Golf Club. In 2000 verhuisde hij naar Nederland en vanaf 2001 heeft hij een eigen golfschool. Sinds 2014 is hij verbonden aan golfclub The International in Badhoevedorp, bij Amsterdam en Schiphol. Wie meer wil weten, vindt dat <a href="/over-mark/">op de pagina over Mark</a>.</p>
 <p>De golfers onder uw gasten herkennen die staat van dienst meteen, en dat verandert hoe ze naar de act kijken. Voor de niet-golfers geldt iets simpelers: wat ze zien, kan alleen iemand die het echt kan.</p>
 </div></div></section>
@@ -397,7 +397,7 @@ export const GS_TOEPASSINGEN = [
 <section class="section section--sky"><div class="container"><div class="prose">
 <h2>Waarom Mark Reynolds</h2>
 <p>Op een beursvloer heb je twintig seconden om iemand te overtuigen dat wat er gebeurt echt is. Een halfbakken act krijgt die twintig seconden niet. Mark Reynolds is PGA Golf Professional sinds 1995 en speelt zijn hele loopbaan op wedstrijdniveau, en dat is precies waarom de slagen kloppen — ook op de tiende herhaling van de dag.</p>
-<p>Hij won de Nederlandse PGA Order of Merit in 2005, 2009 en 2018. In 2019 werd hij Europees kampioen met het team bij het European PGA Team Championship. In 2005 speelde hij de PGA Cup voor Groot-Brittannië en Ierland tegen de Verenigde Staten. Hij deed meerdere keren mee aan het KLM Open en was daar in 2018 de best geklasseerde Nederlandse speler. Zijn totaal staat op meer dan tien professionele overwinningen.</p>
+
 <p>Hij werd in 1978 geboren in Maltby bij Rotherham en volgde zijn PGA-opleiding onder Simon Thornhill op Rotherham Golf Club. In 2000 verhuisde hij naar Nederland, waar hij vanaf 2001 een eigen golfschool heeft. Sinds 2014 is hij verbonden aan golfclub The International in Badhoevedorp, vlak bij Amsterdam en Schiphol. De volledige achtergrond staat <a href="/over-mark/">op de pagina over Mark</a>.</p>
 <p>Voor internationale beurzen is er nog een praktisch punt: Engels is zijn moedertaal en zijn Nederlands is vloeiend. Op een vloer met bezoekers uit meerdere landen is dat geen kleinigheid.</p>
 </div></div></section>
@@ -477,7 +477,7 @@ export const GS_TOEPASSINGEN = [
     <div class="prose">
       <h2>Waarom Mark Reynolds</h2>
       <p>Trick shots vallen of staan bij de speler erachter. Mark Reynolds is PGA Golf Professional sinds 1995, opgeleid in Engeland onder Simon Thornhill op Rotherham Golf Club. Hij werd geboren in 1978 in Maltby, Rotherham, kwam in 2000 naar Nederland en begon in 2001 zijn eigen golfschool. Sinds 2014 is hij verbonden aan golfclub The International in Badhoevedorp, vlak bij Amsterdam en Schiphol.</p>
-      <p>Zijn palmares laat zien dat het niet bij showwerk blijft. Hij won de Dutch PGA Order of Merit in 2005, 2009 en 2018, pakte in 2019 het European PGA Team Championship en speelde in 2005 de PGA Cup voor Groot-Brittannië en Ierland tegen de Verenigde Staten. Hij kwam meerdere keren uit in het KLM Open en was daar in 2018 de best geklasseerde Nederlandse speler. In totaal staan er meer dan tien professionele overwinningen op zijn naam.</p>
+      
       <p>Dat wedstrijdverleden is precies wat de show draagt. Iemand die onder druk op een tourbaan een bal binnen een paar meter van de vlag legt, hoeft op een jubileumdag niet te bluffen. De slagen zijn echt, de balvlucht klopt en de leden met een lage handicap zien dat meteen. Meer achtergrond leest u bij <a href="/over-mark/">over Mark</a>.</p>
     </div>
   </div>
@@ -586,7 +586,7 @@ export const GS_TOEPASSINGEN = [
     <div class="prose">
       <h2>Waarom Mark Reynolds</h2>
       <p>Een golfact wordt geloofwaardig door wie hem uitvoert. Mark Reynolds is sinds 1995 PGA Golf Professional. Hij groeide op in Maltby bij Rotherham, waar hij in 1978 werd geboren, en volgde zijn PGA-opleiding onder Simon Thornhill op Rotherham Golf Club. In 2000 verhuisde hij naar Nederland en vanaf 2001 runde hij zijn eigen golfschool. Sinds 2014 is hij verbonden aan The International in Badhoevedorp.</p>
-      <p>Op wedstrijdniveau won hij de Dutch PGA Order of Merit in 2005, 2009 en 2018. In 2019 stond hij in het winnende team van het European PGA Team Championship, en in 2005 speelde hij de PGA Cup namens Groot-Brittannië en Ierland tegen de Verenigde Staten. Hij deed meerdere keren mee aan het KLM Open en eindigde daar in 2018 als best geklasseerde Nederlandse speler. Tien of meer professionele overwinningen staan op zijn naam.</p>
+      
       <p>Voor een baanopening telt dat dubbel. U opent een baan waar serieus gegolfd gaat worden, en de speler die daar als eerste een show geeft, hoort daarbij te passen. Iemand met dit wedstrijdverleden slaat een bal die er ook op een tourbaan uit zou zien. Zijn achtergrond leest u uitgebreider op <a href="/over-mark/">over Mark</a>.</p>
     </div>
   </div>
@@ -689,7 +689,7 @@ export const GS_TOEPASSINGEN = [
     <div class="prose">
       <h2>Waarom Mark Reynolds</h2>
       <p>De trick shots landen omdat er een wedstrijdspeler achter staat. Mark Reynolds is PGA Golf Professional sinds 1995. Geboren in 1978 in Maltby, Rotherham, opgeleid onder Simon Thornhill op Rotherham Golf Club, in 2000 naar Nederland verhuisd en vanaf 2001 met een eigen golfschool. Sinds 2014 is hij verbonden aan golfclub The International in Badhoevedorp bij Amsterdam.</p>
-      <p>Hij won de Dutch PGA Order of Merit in 2005, 2009 en 2018 en het European PGA Team Championship in 2019. In 2005 speelde hij de PGA Cup voor Groot-Brittannië en Ierland tegen de Verenigde Staten. Meerdere deelnames aan het KLM Open staan op zijn naam, met in 2018 de positie van best geklasseerde Nederlandse speler. In totaal meer dan tien professionele overwinningen.</p>
+      
       <p>Op een charitydag betekent dat twee dingen. Ten eerste: de slagen zijn echt, ook voor de spelers in de zaal die het meteen doorhebben. Ten tweede: er is inhoud achter het entertainment. Wie na afloop een vraag stelt over zijn ijzers of zijn puttinggrip, krijgt een serieus antwoord. Lees meer op <a href="/over-mark/">over Mark</a>.</p>
     </div>
   </div>
@@ -798,7 +798,7 @@ export const GS_TOEPASSINGEN = [
     <div class="prose">
       <h2>Waarom Mark Reynolds</h2>
       <p>Een golfartiest zonder wedstrijdverleden komt er niet mee weg bij een groep die goed kijkt. Mark Reynolds is sinds 1995 PGA Golf Professional. Hij werd in 1978 geboren in Maltby, Rotherham, deed zijn PGA-opleiding onder Simon Thornhill op Rotherham Golf Club, kwam in 2000 naar Nederland en startte in 2001 zijn eigen golfschool. Sinds 2014 is hij verbonden aan The International in Badhoevedorp.</p>
-      <p>Zijn resultaten: winnaar van de Dutch PGA Order of Merit in 2005, 2009 en 2018, winnaar van het European PGA Team Championship in 2019 en deelnemer aan de PGA Cup 2005 voor Groot-Brittannië en Ierland tegen de Verenigde Staten. Hij speelde meerdere KLM Opens en was daar in 2018 de best geklasseerde Nederlandse speler, met in totaal meer dan tien professionele overwinningen.</p>
+      
       <p>Voor een teamuitje betekent dat vooral geloofwaardigheid. De collega's die zelf spelen zien binnen dertig seconden dat dit geen entertainer met een truc is, en dat oordeel bepaalt hoe de rest van de groep de show beleeft. Achtergrond en loopbaan staan op <a href="/over-mark/">over Mark</a>.</p>
     </div>
   </div>
@@ -902,7 +902,7 @@ export const GS_TOEPASSINGEN = [
     <div class="prose">
       <h2>Waarom Mark Reynolds</h2>
       <p>Als u een act aan uw partners verbindt, moet die act kloppen. Mark Reynolds is PGA Golf Professional sinds 1995. Geboren in 1978 in Maltby, Rotherham, opgeleid onder Simon Thornhill op Rotherham Golf Club, sinds 2000 in Nederland, vanaf 2001 met een eigen golfschool en sinds 2014 verbonden aan golfclub The International in Badhoevedorp bij Amsterdam en Schiphol.</p>
-      <p>Hij won de Dutch PGA Order of Merit in 2005, 2009 en 2018, was in 2019 onderdeel van het winnende team bij het European PGA Team Championship en speelde in 2005 de PGA Cup voor Groot-Brittannië en Ierland tegen de Verenigde Staten. Hij nam meerdere keren deel aan het KLM Open en eindigde daar in 2018 als best geklasseerde Nederlandse speler. Meer dan tien professionele overwinningen staan op zijn naam.</p>
+      
       <p>Voor sponsors is dat een prettig verhaal om aan te verbinden. Er staat geen entertainer met een trucdoos, maar een speler die op tourniveau heeft gepresteerd. De genodigden met een lage handicap zien dat aan de eerste slag. Zijn loopbaan staat uitgebreider beschreven op <a href="/over-mark/">over Mark</a>.</p>
     </div>
   </div>
@@ -1010,7 +1010,7 @@ export const GS_TOEPASSINGEN = [
     <div class="prose">
       <h2>Waarom Mark Reynolds</h2>
       <p>Voor een select gezelschap is de reputatie van de uitvoerder onderdeel van het aanbod. Mark Reynolds is PGA Golf Professional sinds 1995. Hij werd in 1978 geboren in Maltby, Rotherham, en volgde zijn PGA-opleiding onder Simon Thornhill op Rotherham Golf Club. In 2000 kwam hij naar Nederland, in 2001 begon hij zijn eigen golfschool en sinds 2014 is hij verbonden aan The International in Badhoevedorp, dicht bij Amsterdam en Schiphol.</p>
-      <p>Hij won de Dutch PGA Order of Merit in 2005, 2009 en 2018 en het European PGA Team Championship in 2019. In 2005 speelde hij de PGA Cup namens Groot-Brittannië en Ierland tegen de Verenigde Staten. Meerdere deelnames aan het KLM Open staan op zijn naam, waarbij hij in 2018 de best geklasseerde Nederlandse speler was, naast meer dan tien professionele overwinningen.</p>
+      
       <p>Bij gasten die zelf spelen betekent dat vaak dat de dag na de show pas echt begint. Vragen over materiaal, over de swing, over hoe het op een tourbaan werkelijk toegaat: die gesprekken zijn voor golfende relaties minstens zo waardevol als de act zelf. Zijn loopbaan leest u op <a href="/over-mark/">over Mark</a>.</p>
     </div>
   </div>

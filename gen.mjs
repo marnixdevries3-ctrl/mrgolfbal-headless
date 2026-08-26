@@ -11,11 +11,16 @@ import { GS_TOEPASSINGEN } from './content-golfshow-toepassingen/index.mjs';
 import { TRIPS } from './content-trips/index.mjs';
 import { POSTS } from './content-blog/index.mjs';
 import { EXTRA, EXTRA_PRODUCTS } from './content-extra/index.mjs';
+import { KB_EXTRA, KB_EXTRA_EN } from './content-kb-extra/index.mjs';
+import { PRODUCT_COPY, PRODUCT_FAQ_COPY } from './content-products/index.mjs';
 const root = new URL('.', import.meta.url).pathname.replace(/\/$/, '');
 // Elke productkaart op de hele site krijgt de echte balfoto in plaats van de
 // getekende mockup. Eén centrale plek, zodat er nergens één wordt vergeten.
 const withBallPhotos = (out, html) => {
   if (!out.endsWith('.html')) return html;
+  // interne werknotities horen niet op de site; vangnet voor het geval er
+  // ooit weer een confirm-tag in de content sluipt
+  html = html.replace(/\s*<span class="confirm-tag">[^<]*<\/span>/g, '');
   const lang = /\/en\//.test(out) ? 'en' : 'nl';
   return html.replace(/(<a href="(?:\/en)?\/products\/([a-z0-9-]+)\/?"><div class="card__media">)[\s\S]*?(<\/div><\/a>)/g,
       (m, open_, handle, close) => PRODUCT_PHOTOS[handle] ? open_ + ballPhoto(handle, lang, 0) + close : m)
@@ -203,7 +208,7 @@ ${noEn ? '' : `<link rel="alternate" hreflang="en" href="${SITE}${enHref(nlCanon
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon-16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png">
-<link rel="stylesheet" href="/assets/css/styles.css?v=28">
+<link rel="stylesheet" href="/assets/css/styles.css?v=29">
 ${siteLD(lang)}${extra}</head><body>`;
 };
 
@@ -354,7 +359,7 @@ const whyUs = (lang='nl') => {
   </div></section>`;
 };
 // FAQ-blok met FAQPage-schema. items = [[vraag, antwoord], ...]
-const faqBlock = (items, lang='nl') => {
+const faqBlock = (items, lang='nl', withSchema=true) => {
   const eye = lang==='en' ? 'FAQ' : 'Veelgestelde vragen';
   const h = lang==='en' ? 'Frequently asked questions' : 'Veelgestelde vragen';
   const ld = `<script type="application/ld+json">${JSON.stringify({
@@ -364,12 +369,13 @@ const faqBlock = (items, lang='nl') => {
   return `<section class="section section--sky"><div class="container" style="max-width:860px"><div class="section-head accent-line"><p class="eyebrow">${eye}</p><h2>${h}</h2></div>
     <div class="faq" style="margin-top:1.4rem">
     ${items.map(([q,a],i)=>`<details${i===0?' open':''}><summary>${q}</summary><div class="faq-body">${a}</div></details>`).join('')}
-    </div>${ld}
+    </div>${withSchema ? ld : ''}
   </div></section>`;
 };
 
 // Gedeelde FAQ over bedrukken (met FAQPage-schema) — voor elke bedruk-pagina.
-const printingFaq = (lang='nl') => faqBlock(lang==='en' ? [
+const FAQ_PAGES = new Set(['zo-werkt-het','golfballen-bedrukken-voor-bedrijven']);
+const printingFaq = (lang='nl', slug='', withSchema=false) => faqBlock(lang==='en' ? [
   ['What is the minimum order?','The minimum order is 144 golf balls, for example 6 boxes of 24 or 12 dozen. Larger quantities earn tiered discounts.'],
   ['Do I get a digital proof first?','Yes, always. You receive a digital proof of your logo on the ball and production only starts after your approval.'],
   ['How long does delivery take?','Allow 5 to 15 working days after you approve the digital proof.'],
@@ -383,7 +389,7 @@ const printingFaq = (lang='nl') => faqBlock(lang==='en' ? [
   ['Hoeveel kleuren kan ik bedrukken?','Golfballen bedrukken we in 1 tot 5 spotkleuren. Geef je huisstijlkleuren door als PMS/Pantone-waarden voor de beste match.'],
   ['Hoe lever ik mijn logo aan?','Bij voorkeur als vectorbestand (EPS, AI of PDF) voor een haarscherp resultaat. Voor eenvoudige logo\\u2019s kan een PNG in hoge resolutie ook.'],
   ['Kan ik met bedrukte golfballen spelen?','Ja. Het zijn originele merkballen met een professionele opdruk, dus ze spelen precies als onbedrukte ballen.'],
-], lang);
+], lang, withSchema);
 
 // Extra SEO-secties per pagina (uit content-extra) — vult pagina's aan richting 2500+ woorden.
 const extraSections = (slug, lang, store=EXTRA) => {
@@ -555,14 +561,15 @@ const heroBlock = (eyebrow, h1, sub, cta1, cta1href='/golfballen-bedrukken/#conf
 </div></section>`;
 };
 
-const ctaBlock = (lang='nl') => {
+const ctaBlock = (lang='nl', canon='/', kind=null) => {
   const u = UI[lang], p = pfx(lang);
+  const c = ctaFor(canon, lang, kind) || ctaFor('/', lang);
   return `
 <section class="section"><div class="container"><div class="divider-cta">
-  <p class="eyebrow" style="color:var(--color-blue)">${u.ctaEye}</p>
-  <h2>${u.ctaH}</h2>
-  <p>${u.ctaP}</p>
-  <div class="row" style="justify-content:center;margin-top:1.4rem"><a class="btn btn--primary btn--lg" href="${p}/golfballen-bedrukken/#configurator">${CTA_ICO}${u.ctaConfig}</a><a class="btn btn--light btn--lg" href="${p}/contact/">${u.heroAdvice}</a></div>
+  <p class="eyebrow" style="color:var(--color-blue)">${c.eye}</p>
+  <h2>${c.h}</h2>
+  <p>${c.p}</p>
+  <div class="row" style="justify-content:center;margin-top:1.4rem"><a class="btn btn--primary btn--lg" href="${p}${c.href}">${CTA_ICO}${c.btn} →</a><a class="btn btn--light btn--lg" href="${p}/contact/">${u.heroAdvice}</a></div>
 </div></div></section>`;
 };
 
@@ -593,21 +600,135 @@ const FOOTER_INNER = (lang='nl') => {
   <div class="footer-bottom"><span>© 2026 MrGolfbal.nl · KVK 27326866</span></div>
 </div></footer>`;
 };
+
+/* =================== CTA PASSEND BIJ DE PAGINA ===================
+   Een bezoeker op een pagina over golfles moet geen trickshow aangeboden
+   krijgen. Daarom leidt één functie de CTA af uit het pad van de pagina;
+   zowel de meebewegende balk als het CTA-blok onderaan gebruiken die. */
+const CTA_KINDS = {
+  print: {
+    nl: { eye:'Klaar om te starten?', h:'Bedruk je golfballen met logo, tekst of ontwerp',
+          p:'Kies je model, upload je logo en ontvang eerst een gratis digitale drukproef. Pas na jouw akkoord gaat het in productie.',
+          btn:'Start de configurator', sticky:'Golfballen bedrukken met jouw logo?', stickyBtn:'Vraag je drukproef aan',
+          href:'/golfballen-bedrukken/#configurator' },
+    en: { eye:'Ready to start?', h:'Print your golf balls with a logo, text or design',
+          p:'Choose your model, upload your logo and receive a free digital proof first. Production starts only once you approve it.',
+          btn:'Open the configurator', sticky:'Printing golf balls with your logo?', stickyBtn:'Request your proof',
+          href:'/golfballen-bedrukken/#configurator' },
+  },
+  show: {
+    nl: { eye:'Boek de show', h:'Een golfshow op jouw event',
+          p:'Vertel kort wat voor gelegenheid het is, waar en wanneer. Je krijgt een voorstel op maat; prijs en beschikbaarheid op aanvraag.',
+          btn:'Vraag beschikbaarheid aan', sticky:'Golfshow boeken voor jouw event?', stickyBtn:'Vraag beschikbaarheid',
+          href:'/contact/' },
+    en: { eye:'Book the show', h:'A golf show at your event',
+          p:'Tell us briefly what the occasion is, where and when. You will get a tailored proposal; price and availability on request.',
+          btn:'Check availability', sticky:'Booking a golf show for your event?', stickyBtn:'Check availability',
+          href:'/contact/' },
+  },
+  trips: {
+    nl: { eye:'Ga mee', h:'Een golfreis met een PGA-pro erbij',
+          p:'Vertel met hoeveel spelers je wilt gaan en in welke periode. Je krijgt de actuele reizen en een voorstel op maat.',
+          btn:'Vraag de reisdata op', sticky:'Interesse in een golfreis?', stickyBtn:'Vraag de reisdata op',
+          href:'/golftrips/' },
+    en: { eye:'Come along', h:'A golf trip with a PGA pro alongside',
+          p:'Tell us how many players you want to travel with and in which period. You will get the current trips and a tailored proposal.',
+          btn:'Ask for the dates', sticky:'Interested in a golf trip?', stickyBtn:'Ask for the dates',
+          href:'/golftrips/' },
+  },
+  les: {
+    nl: { eye:'Plan je les', h:'Golfles bij Mark Reynolds',
+          p:'Van eerste kennismaking tot het bijschaven van je swing. Les op The International in Badhoevedorp, in overleg ingepland.',
+          btn:'Plan een les', sticky:'Golfles bij een PGA-professional?', stickyBtn:'Plan een les',
+          href:'/contact/' },
+    en: { eye:'Book a lesson', h:'Golf lessons with Mark Reynolds',
+          p:'From a first introduction to fine-tuning your swing. Lessons at The International in Badhoevedorp, scheduled in consultation.',
+          btn:'Book a lesson', sticky:'A lesson with a PGA professional?', stickyBtn:'Book a lesson',
+          href:'/contact/' },
+  },
+  repairs: {
+    nl: { eye:'Breng je clubs langs', h:'Je clubs laten nakijken of herstellen',
+          p:'Nieuwe grips, een losse kop of een shaft die vervangen moet worden. Vertel wat er speelt, dan hoor je wat er mogelijk is.',
+          btn:'Vraag het Mark', sticky:'Je clubs laten nakijken?', stickyBtn:'Vraag het Mark',
+          href:'/contact/' },
+    en: { eye:'Bring your clubs', h:'Have your clubs checked or repaired',
+          p:'New grips, a loose head or a shaft that needs replacing. Tell us what is going on and you will hear what is possible.',
+          btn:'Ask Mark', sticky:'Getting your clubs looked at?', stickyBtn:'Ask Mark',
+          href:'/contact/' },
+  },
+  advies: {
+    nl: { eye:'Vraag het Mark', h:'Een vraag over jouw situatie?',
+          p:'Leg je vraag voor aan een PGA-professional die zelf bedrukt, shows geeft en met groepen op reis gaat. Je krijgt een eerlijk antwoord.',
+          btn:'Neem contact op', sticky:'Een vraag aan Mark?', stickyBtn:'Neem contact op',
+          href:'/contact/' },
+    en: { eye:'Ask Mark', h:'A question about your situation?',
+          p:'Put your question to a PGA professional who prints the balls, performs the shows and travels with the groups himself.',
+          btn:'Get in touch', sticky:'A question for Mark?', stickyBtn:'Get in touch',
+          href:'/contact/' },
+  },
+};
+// Welke CTA hoort bij welk pad. Eerste match wint; 'none' betekent geen balk.
+const CTA_ROUTES = [
+  // contact-, bedank- en privacypagina's krijgen geen balk; verzending gaat wel
+  // over een bestelling en houdt dus de bedruk-CTA
+  [/^\/(en\/)?(contact|bedankt|privacy)\//, 'none'],
+  [/^\/404/, 'none'],
+  [/^\/(en\/)?golfshows\//, 'show'],
+  [/^\/(en\/)?golftrips\//, 'trips'],
+  [/^\/(en\/)?golfles\//, 'les'],
+  [/^\/(en\/)?golf-repairs\//, 'repairs'],
+  [/^\/(en\/)?over-mark\//, 'advies'],
+  [/^\/(en\/)?blog\/?$/, 'advies'],
+];
+const BLOG_CTA = { 'Bedrukken':'print', 'Spel & materiaal':'print', 'Events':'show', 'Golfreizen':'trips' };
+const ctaKind = (canon = '/', extra = null) => {
+  if (extra) return extra;
+  const c = canon.startsWith('/') ? canon : '/' + canon;
+  for (const [re, kind] of CTA_ROUTES) if (re.test(c)) return kind;
+  return 'print';
+};
+const ctaFor = (canon = '/', lang = 'nl', kind = null) => {
+  const k = ctaKind(canon, kind);
+  if (k === 'none') return null;
+  return CTA_KINDS[k][lang] || CTA_KINDS[k].nl;
+};
+
+/* Wie is Mark? Eén compacte component in plaats van een erelijst die op
+   veertig pagina's opnieuw werd naverteld. De volledige lijst staat op
+   /over-mark/; hier alleen de kern, met een link erheen. */
+const markCred = (lang='nl') => { const p = pfx(lang), en = lang==='en';
+  return `<section class="section markcred-sec"><div class="container">
+    <aside class="markcred">
+      <figure class="markcred__photo"><img src="/assets/img/mark/mark-trofee-matchplay.jpg" width="1400" height="900" loading="lazy" decoding="async" alt="${en?'Mark Reynolds with the Dutch National Open Matchplay trophy':'Mark Reynolds met de trofee van het Nationaal Open Matchplay'}"></figure>
+      <div class="markcred__txt">
+        <p class="eyebrow">${ico('trophy','ico-inline')} ${en?'Who you are booking':'Wie je boekt'}</p>
+        <h2>Mark Reynolds</h2>
+        <p>${en
+          ? `PGA Golf Professional since 1995, with his own golf school in the Netherlands since 2001. Three-time winner of the Dutch PGA Order of Merit and European champion with the Dutch team in 2019.`
+          : `PGA Golf Professional sinds 1995, met sinds 2001 een eigen golfschool in Nederland. Drievoudig winnaar van de Nederlandse PGA Order of Merit en in 2019 Europees kampioen met het Nederlandse team.`}</p>
+        <p><a class="markcred__link" href="${p}/over-mark/">${en?'The full record and the story behind it':'De volledige erelijst en het verhaal erachter'} →</a></p>
+      </div>
+    </aside>
+  </div></section>`;
+};
+
 // Meebewegende boekingsbalk: verschijnt zodra de hero uit beeld is.
-const stickyCta = (lang='nl', h=null, btn=null) => {
+const stickyCta = (lang='nl', canon='/', h=null, btn=null, kind=null) => {
   const p = pfx(lang), en = lang==='en';
+  const c = ctaFor(canon, lang, kind);
+  if (!c) return '';                       // op contact- en beleidspagina's geen balk
   return `<div class="sticky-cta" data-sticky-cta hidden>
     <div class="container sticky-cta__in">
-      <p class="sticky-cta__txt">${h || (en ? 'Book the golf trick show for your event' : 'Boek de golf trickshow voor jouw event')}</p>
+      <p class="sticky-cta__txt">${h || c.sticky}</p>
       <div class="sticky-cta__btns">
-        <a class="btn btn--primary" href="${p}/contact/">${ico('chat','btn__ico')}${btn || (en ? 'Check availability' : 'Vraag beschikbaarheid')}</a>
+        <a class="btn btn--primary" href="${p}${c.href}">${ico('chat','btn__ico')}${btn || c.stickyBtn}</a>
         <a class="btn btn--light sticky-cta__wa" href="https://wa.me/31627411925">${WA_ICON}<span>${en?'WhatsApp':'App Mark'}</span></a>
       </div>
     </div>
   </div>`;
 };
 
-const FOOTER = (lang='nl', stickyH=null, stickyBtn=null) => stickyCta(lang, stickyH, stickyBtn) + FOOTER_INNER(lang) + `
+const FOOTER = (lang='nl', canon='/', stickyH=null, stickyBtn=null, kind=null) => stickyCta(lang, canon, stickyH, stickyBtn, kind) + FOOTER_INNER(lang) + `
 <script src="https://elfsightcdn.com/platform.js" async></script>
 <script src="/assets/js/site.js?v=14" defer></script>
 </body></html>`;
@@ -644,9 +765,10 @@ const page = (o, lang='nl') => HEAD(o.title, o.desc, o.canon, lang,
   + extraSections(o.slug, lang)
   + (DOEL_PAGES.has(o.slug) ? doelBlock(lang) : '')
   + ballGallery(seedOf(o.canon || o.slug || ''), lang)
-  + (o.noBlocks ? '' : howItWorks(lang) + whyUs(lang) + reviewsBlock(lang) + printingFaq(lang))
+  + (o.noBlocks ? '' : howItWorks(lang) + whyUs(lang) + reviewsBlock(lang)
+      + (FAQ_PAGES.has(o.slug) ? printingFaq(lang, o.slug, o.slug === 'zo-werkt-het') : ''))
   + socialsBlock(lang)
-  + ctaBlock(lang) + FOOTER(lang);
+  + ctaBlock(lang, o.canon) + FOOTER(lang, o.canon);
 
 // ---- modelvergelijkingstabel (herbruikbaar, per taal) ----
 const compareTable = (lang='nl') => lang==='en' ? `
@@ -738,7 +860,7 @@ PAGES.push({
 <section class="section section--sky"><div class="container"><div class="grid grid-3">
   <div class="feature"><h3>Vanaf 144 golfballen</h3><p>Minimale afname 144 stuks; staffelkorting bij grotere aantallen.</p></div>
   <div class="feature"><h3>Digitale drukproef</h3><p>Altijd eerst een proef. Productie start na jouw akkoord.</p></div>
-  <div class="feature"><h3>Levertijd 5–15 werkdagen</h3><p>Na goedkeuring van de drukproef. <span class="confirm-tag">bevestigen</span></p></div>
+  <div class="feature"><h3>Levertijd 5–15 werkdagen</h3><p>Na goedkeuring van de drukproef.</p></div>
 </div></div></section>`
 });
 
@@ -761,6 +883,11 @@ PAGES.push({
   <p>Bedrukken begint bij 144 ballen, oftewel twaalf dozijn. Grotere oplages worden in meerdere dozen verstuurd. Levering binnen Nederland en België is standaard; voor andere bestemmingen worden de verzendkosten meegenomen in je <a href="/golfballen-bedrukken-voor-bedrijven/">offerte</a>.</p>
   <h2>Iets mis met je levering?</h2>
   <p>Meld het zodra je het ziet. Omdat elke bestelling wordt gedrukt naar jouw eigen goedgekeurde drukproef, worden problemen per geval opgelost in plaats van via een standaard retourprocedure. Mark is bereikbaar per telefoon, e-mail en WhatsApp via de <a href="/contact/">contactpagina</a>.</p>
+  <h2>Bewaren en uitpakken</h2>
+  <p>Bedrukte ballen komen in hun originele verpakking en kun je gewoon droog en op kamertemperatuur bewaren. Vocht is de enige echte vijand: een kartonnen doos die maanden in een vochtige kelder of een koude garage staat, gaat zwellen en dat zie je aan de verpakking terug, ook al mankeert de bal zelf niets. Zet de dozen dus liever binnen dan in een schuur.</p>
+  <p>Controleer bij ontvangst een willekeurige doos in plaats van alleen de bovenste. Zo weet je zeker dat de hele oplage eruitziet zoals je hem hebt goedgekeurd. Bewaar ook je drukproef; bij een herhaalorder is dat het snelste vertrekpunt, en het scheelt een ronde heen en weer over kleuren en plaatsing.</p>
+  <h2>Een tweede oplage bestellen</h2>
+  <p>Bij een herhaalorder gebruiken we het bestand dat we van je hebben, tenzij je iets wilt wijzigen. De minimale afname van 144 stuks geldt opnieuw, want elke productie is een eigen run. Ook krijg je opnieuw een drukproef ter goedkeuring — dat lijkt overbodig maar voorkomt dat een oude versie van je logo ongemerkt weer in productie gaat. Meer over dat proces staat bij <a href="/kennisbank/digitale-drukproef-golfballen/">de digitale drukproef</a> en bij <a href="/zo-werkt-het/">zo werkt het</a>.</p>
 </div></div></section>`
 });
 
@@ -784,8 +911,13 @@ PAGES.push({
   <p>Gegevens worden alleen gedeeld waar een bestelling dat vraagt, bijvoorbeeld met de drukkerij of de vervoerder. Je gegevens worden niet verkocht en niet gebruikt voor advertentieprofielen.</p>
   <h2>Jouw rechten</h2>
   <p>Je kunt vragen welke gegevens er van je zijn, ze laten corrigeren of laten verwijderen. Een bericht via de <a href="/contact/">contactpagina</a> is genoeg; het bestand en de correspondentie worden dan verwijderd.</p>
-  <h2>Cookies</h2>
-  <p>Deze website plaatst zelf geen trackingcookies. Pagina's met een YouTube-video laden die via youtube-nocookie.com, wat beperkt wat YouTube opslaat tot je daadwerkelijk op afspelen drukt.</p>
+  <h2>Cookies en externe diensten</h2>
+  <p>Deze website plaatst zelf geen trackingcookies. Pagina's met een YouTube-video laden die via youtube-nocookie.com, wat beperkt wat YouTube opslaat tot je daadwerkelijk op afspelen drukt. Het lettertype wordt geladen via Google Fonts; daarbij wordt je IP-adres gezien door die dienst, zoals bij elk extern bestand dat je browser ophaalt.</p>
+  <p>De website draait op Netlify. Zoals elke webserver houdt die technische logbestanden bij met onder meer IP-adres, tijdstip en opgevraagde pagina. Die gegevens dienen om de site te laten werken en misbruik tegen te gaan, niet om bezoekers te volgen.</p>
+  <h2>Beveiliging</h2>
+  <p>De site is alleen via een beveiligde verbinding (https) bereikbaar, zodat wat je in een formulier invult onderweg niet leesbaar is voor derden. E-mail is van nature minder afgeschermd: stuur daarom geen gegevens die je niet ook per gewone post zou versturen. Heb je iets vertrouwelijks te melden, bel dan liever even.</p>
+  <h2>Vragen of een klacht</h2>
+  <p>Kom je er samen met ons niet uit, dan kun je een klacht indienen bij de Autoriteit Persoonsgegevens. We horen het liever eerst zelf: een bericht via de <a href="/contact/">contactpagina</a> of een telefoontje is meestal genoeg om het op te lossen. Deze verklaring beschrijft de situatie zoals die nu is; verandert er iets aan de manier waarop de site werkt, dan passen we de tekst hier aan.</p>
 </div></div></section>`
 });
 
@@ -826,7 +958,7 @@ PAGES.push({
     <div class="feature"><h3>Sponsoring &amp; promotie</h3><p>Sponsorlogo op de bal bij events, clinics en netwerkbijeenkomsten.</p></div>
     <div class="feature"><h3>Personeelsgeschenk</h3><p>Een sportief bedankje voor medewerkers die golfen.</p></div>
     <div class="feature"><h3>Grote oplage</h3><p>Staffelkorting bij grotere aantallen; herhaalbestellingen eenvoudig geregeld.</p></div>
-    <div class="feature"><h3>Offerte &amp; planning</h3><p>Zakelijke afhandeling met offerte en levering op een afgesproken datum. <span class="confirm-tag">voorwaarden bevestigen</span></p></div>
+    <div class="feature"><h3>Offerte &amp; planning</h3><p>Zakelijke afhandeling met offerte en levering op een afgesproken datum.</p></div>
   </div></div></section>
 <section class="section section--sky" id="offerte"><div class="container" style="max-width:1000px">
   <div class="section-head accent-line"><p class="eyebrow">Offerte op maat</p><h2>Vraag een zakelijke offerte aan</h2><p class="lead">Vul je gegevens in — Mark reageert doorgaans binnen 24 uur met een voorstel, staffelprijs en drukproefplanning. Geen online afrekenen: alles netjes op factuur.</p></div>
@@ -923,7 +1055,7 @@ PAGES.push({
   </div>
 </div></section>
 <section class="section"><div class="container" style="max-width:920px"><div class="section-head accent-line"><p class="eyebrow">Merken &amp; aantallen</p><h2>Originele merken, elk aantal bespreekbaar</h2></div>
-  <p class="lead reveal">We werken met originele <strong>Titleist</strong> en <strong>Pinnacle</strong> golfballen. Vertel ons welk model en welk aantal je zoekt, dan stelt Mark een passende offerte op. <span class="confirm-tag">beschikbare modellen &amp; aantallen bevestigen</span></p>
+  <p class="lead reveal">We werken met originele <strong>Titleist</strong> en <strong>Pinnacle</strong> golfballen. Vertel ons welk model en welk aantal je zoekt, dan stelt Mark een passende offerte op.</p>
   <div class="row" style="margin-top:1rem"><a class="btn btn--primary btn--lg" href="/contact/">Vraag een offerte aan →</a><a class="btn btn--ghost btn--lg" href="https://wa.me/31627411925">Overleg via WhatsApp</a></div>
 </div></section>`
 });
@@ -936,7 +1068,9 @@ PAGES.push({
   canon:'/zo-werkt-het/', crumb:'Zo werkt het',
   hero:heroBlock('Zo werkt het','Golfballen bedrukken in <span>vier heldere stappen</span>','Geen gedoe met bestanden of verrassingen achteraf. Je beslist pas definitief nadat je de digitale drukproef hebt goedgekeurd.',undefined,undefined,'nl',PAGE_PHOTOS['zo-werkt-het']),
   main:`
-<section class="section"><div class="container"><div class="steps grid grid-2" style="gap:1rem">
+<section class="section"><div class="container">
+<div class="section-head"><p class="eyebrow">Het proces</p><h2>De vier stappen van bestelling tot levering</h2></div>
+<div class="steps grid grid-2" style="gap:1rem;margin-top:1.6rem">
   <div class="step"><div class="num"></div><div><h3>Kies je golfbal</h3><p>Selecteer merk en model dat past bij je doelgroep en budget. Twijfel je? Gebruik de golfbalkiezer of vraag Mark.</p></div></div>
   <div class="step"><div class="num"></div><div><h3>Upload je logo of tekst</h3><p>Lever je ontwerp aan, bij voorkeur als vectorbestand (EPS, AI of PDF). Of typ een naam/tekst in de configurator.</p></div></div>
   <div class="step"><div class="num"></div><div><h3>Keur de digitale drukproef goed</h3><p>Je ontvangt een digitale proef van het logo op de bal. Pas na jouw akkoord start de productie.</p></div></div>
@@ -945,7 +1079,7 @@ PAGES.push({
 <div class="mt-2"><a class="btn btn--primary btn--lg" href="/golfballen-bedrukken/#configurator">Start nu →</a></div>
 </div></section>
 <section class="section section--sky"><div class="container" style="max-width:820px"><div class="section-head"><p class="eyebrow">Goed voorbereid</p><h2>Je logo aanleveren</h2></div>
-  <p class="lead">Voor het scherpste resultaat lever je je logo aan als vectorbestand (EPS, AI of PDF). Heb je alleen een JPEG of PNG? Vaak kunnen we daar iets mee — Mark laat het je weten en helpt met de opmaak. <span class="confirm-tag">bestandstypen bevestigen</span></p></div></section>`
+  <p class="lead">Voor het scherpste resultaat lever je je logo aan als vectorbestand (EPS, AI of PDF). Heb je alleen een JPEG of PNG? Vaak kunnen we daar iets mee — Mark laat het je weten en helpt met de opmaak.</p></div></section>`
 });
 
 /* ---------------- GOLFLES ---------------- */
@@ -958,7 +1092,7 @@ PAGES.push({
   main:`
 <section class="section"><div class="container"><div class="prose">
 <h2>Golfles op The International in Badhoevedorp</h2>
-<p>Wil je leren golfen, of speel je al jaren maar wil je die frustrerende slice er eindelijk uit? Bij MrGolfbal.nl krijg je golfles van Mark Reynolds, PGA-golfprofessional sinds 1995. Sinds 2014 geeft hij les op The International golfclub in Badhoevedorp, ideaal gelegen tussen Amsterdam, Amstelveen, Haarlem en Schiphol. Of je nu voor het eerst een club vastpakt of je spel flink wilt aanscherpen: hier vind je een gecertificeerde professional die precies weet hoe hij jou vooruit helpt.</p>
+<p>Wil je leren golfen, of speel je al jaren maar wil je die frustrerende slice er eindelijk uit? Bij MrGolfbal.nl krijg je golfles van Mark Reynolds, PGA-golfprofessional sinds 1995. Sinds 2014 geeft hij les op The International golfclub in Badhoevedorp, ideaal gelegen tussen Amsterdam, Amstelveen, Haarlem en Schiphol. Voor wie voor het eerst een club vastpakt en voor wie zijn spel flink wil aanscherpen: hier vind je een gecertificeerde professional die precies weet hoe hij jou vooruit helpt.</p>
 <p>Golf is een prachtig spel, maar het kan ook onnodig ingewikkeld voelen. Verkeerde tips van medespelers, een grip die niet klopt, of een houding die je swing in de weg zit. Tijdens een golfles kijkt Mark met een geoefend oog naar jouw beweging en vertaalt hij vakkennis naar begrijpelijke, praktische aanwijzingen. Geen ingewikkeld jargon, maar duidelijke stappen waarmee je meteen betere ballen slaat en meer plezier op de baan hebt.</p>
 <h2>Voor wie is de golfles bedoeld?</h2>
 <p>Iedereen is welkom, ongeacht leeftijd of niveau. Ben je absolute beginner en wil je golfles voor beginners in de buurt van Amsterdam? Dan begin je bij de basis: de juiste grip, houding en een swing die je vertrouwen geeft. Speel je al een tijdje en wil je van je handicap af? Dan werk je gericht aan die onderdelen die je scores echt verbeteren, van je korte spel rond de green tot je consistentie op de driving range.</p>
@@ -974,9 +1108,9 @@ PAGES.push({
 <section class="section section--sky"><div class="container"><div class="prose">
 <h2>Privéles golf of samen leren</h2>
 <p>Een privéles golf is de snelste manier om vooruitgang te boeken. Alle aandacht gaat naar jou, je swing en jouw persoonlijke leerdoelen. Mark stemt elke les af op waar jij staat, zodat je nooit tijd verliest aan dingen die je al beheerst. Liever samen leren? Golfles met z'n tweeën of in een klein groepje is gezellig én leerzaam, en vaak een fijne manier om met je partner, vriend of collega hetzelfde tempo te houden.</p>
-<p>Omdat de lessen op The International in Badhoevedorp worden gegeven, heb je alle faciliteiten binnen handbereik: een uitstekende driving range, oefengreens en een prachtige baan waar je het geleerde meteen in de praktijk brengt. De ligging vlak bij Amsterdam en Schiphol maakt golfles hier goed bereikbaar, of je nu uit de stad komt of uit de regio Haarlemmermeer.</p>
+<p>Omdat de lessen op The International in Badhoevedorp worden gegeven, heb je alle faciliteiten binnen handbereik: een uitstekende driving range, oefengreens en een prachtige baan waar je het geleerde meteen in de praktijk brengt. De ligging vlak bij Amsterdam en Schiphol maakt golfles hier goed bereikbaar, vanuit de stad net zo goed bereikbaar als vanuit de regio Haarlemmermeer.</p>
 <h2>Waarom golfles bij Mark Reynolds?</h2>
-<p>Ervaring maakt het verschil, en die heeft Mark ruimschoots. Hij groeide op in Maltby bij Rotherham in Engeland en begon op zijn zestiende met zijn PGA-opleiding onder Simon Thornhill op Rotherham Golf Club. In 2000 verhuisde hij naar Nederland om les te geven, en in 2001 startte hij zijn eigen golfschool. Sindsdien heeft hij honderden golfers van elk niveau beter zien worden.</p>
+<p>Dertig jaar in het vak levert een gevoel op voor wat werkt en wat niet. Hij groeide op in Maltby bij Rotherham in Engeland en begon op zijn zestiende met zijn PGA-opleiding onder Simon Thornhill op Rotherham Golf Club. In 2000 verhuisde hij naar Nederland om les te geven, en in 2001 startte hij zijn eigen golfschool. Sindsdien heeft hij honderden golfers van elk niveau beter zien worden.</p>
 <p>Naast lesgeven speelt Mark zelf op hoog niveau. Hij won de Nederlandse PGA Order of Merit in 2005, 2009 en 2018, pakte in 2019 het European PGA Team Championship, won de PGA Cup in 2005 en speelde meerdere KLM Opens, waarin hij in 2018 de best geklasseerde Nederlandse speler was. Met meer dan tien professionele overwinningen op zijn naam weet hij als geen ander wat er nodig is om onder druk goed te spelen, en dat vertaalt hij naar zijn lessen. Meer weten over zijn verhaal? Lees dan de pagina <a href="/over-mark/">over Mark</a>.</p>
 <p>Belangrijker nog dan zijn palmares is zijn manier van lesgeven: warm, geduldig en helder. Mark gelooft dat golf leuk hoort te zijn, en dat je het snelst leert wanneer je met vertrouwen en plezier op de baan staat.</p>
 </div></div></section>
@@ -1001,12 +1135,12 @@ PAGES.push({
 <section class="section"><div class="container"><div class="prose">
 <h2>Golfclubs repareren: vakwerk dat je in je swing voelt</h2>
 <p>Een golfclub is een precisie-instrument. Een versleten grip, een verkeerd afgestelde lie-hoek of een shaft die net niet bij jouw swing past, kost je zomaar meters en zuiverheid. Goede golfclubs hoeven daarom niet meteen te worden vervangen; heel vaak zijn ze prima te repareren en opnieuw op maat te maken. Bij MrGolfbal.nl kun je je golfclubs laten repareren door Mark Reynolds, PGA Golf Professional sinds 1995 en vaste kracht op golfclub The International in Badhoevedorp, vlakbij Amsterdam en Schiphol.</p>
-<p>Omdat Mark zowel lesgeeft als clubs repareert, kijkt hij verder dan alleen de reparatie. Hij ziet hoe jij de bal raakt en weet daardoor precies wat jouw materiaal nodig heeft. Repareren en fitten lopen bij hem naadloos in elkaar over, zodat je clubs niet alleen weer heel zijn, maar ook echt bij je passen. Wil je meteen weten wat er mogelijk is voor jouw set? <a href="/contact/">Neem contact op</a> en vraag naar de mogelijkheden.</p>
+<p>Omdat Mark zowel lesgeeft als clubs repareert, kijkt hij verder dan alleen de reparatie. Hij ziet hoe jij de bal raakt en weet daardoor precies wat jouw materiaal nodig heeft. Repareren en fitten lopen bij hem naadloos in elkaar over, zodat je clubs weer heel zijn en daarna ook echt bij je passen. Wil je meteen weten wat er mogelijk is voor jouw set? <a href="/contact/">Neem contact op</a> en vraag naar de mogelijkheden.</p>
 </div></div></section>
 <section class="section section--sky"><div class="container"><div class="prose">
 <h2>Grips vervangen op je golfclub</h2>
 <p>De grip is het enige contactpunt tussen jou en de club, en tegelijk het onderdeel dat het snelst slijt. Een gladde, verharde of gedraaide grip zorgt ongemerkt voor een te sterke greep en spanning in je onderarmen; precies wat je niet wilt in een vloeiende swing. Regripping, oftewel het vervangen van grips op je golfclub, is dan ook een van de meest waardevolle en betaalbare ingrepen die je kunt laten doen.</p>
-<p>Mark helpt je bij het kiezen van de juiste maat en dikte, want een grip die te dun of te dik is, beïnvloedt direct de stand van je clubface bij impact. Of je nu je hele set opnieuw wilt laten gripen of alleen je meest gebruikte ijzers, het kan allemaal. Grips vervangen is bovendien een mooi moment om te kijken of de rest van je club nog in topconditie is. Vraag gerust naar de mogelijkheden en de opties in grips die bij jouw spel passen.</p>
+<p>Mark helpt je bij het kiezen van de juiste maat en dikte, want een grip die te dun of te dik is, beïnvloedt direct de stand van je clubface bij impact. Je hele set opnieuw laten gripen kan, en alleen je meest gebruikte ijzers ook. Grips vervangen is bovendien een mooi moment om te kijken of de rest van je club nog in topconditie is. Vraag gerust naar de mogelijkheden en de opties in grips die bij jouw spel passen.</p>
 </div></div></section>
 <section class="section"><div class="container"><div class="prose">
 <h2>Reshaften: een nieuwe shaft in je golfclub</h2>
@@ -1058,9 +1192,9 @@ PAGES.push({
   <h2>Prestaties &amp; erkenning</h2>
   <p>Mark is geen coach die alleen aan de kant staat — hij presteert zelf op hoog niveau. Hij won de <strong>Dutch PGA Order of Merit</strong> in 2005, 2009 én 2018, werd Europees kampioen met het <strong>European PGA Team Championship in 2019</strong> en won in 2005 de <strong>PGA Cup</strong> met Groot-Brittannië &amp; Ierland tegen de Verenigde Staten. Hij speelde meerdere edities van het <strong>KLM Open</strong> en was daar in 2018 de best geklasseerde Nederlander. In totaal boekte hij meer dan tien professionele overwinningen.</p>
   <h2>Waarom een PGA-pro achter je golfballen?</h2>
-  <p>Die achtergrond maakt het verschil. Bij MrGolfbal.nl koop je niet zomaar bedrukte golfballen — je krijgt advies van iemand die het spel door en door kent. Van de keuze tussen een <a href="/products/titleist-pro-v1/">Pro V1</a> en <a href="/products/titleist-pro-v1x/">Pro V1x</a> tot de beste bal voor een gemengd deelnemersveld op een <a href="/toepassingen/golfballen-bedrijfsgolfdag/">bedrijfsgolfdag</a>: Mark denkt met je mee. Twijfel je? Doe de <a href="/golfbalkiezer/">golfbalkiezer</a> of leg je vraag rechtstreeks aan hem voor.</p>
+  <p>Die achtergrond is precies wat je terugziet in het advies. Bij MrGolfbal.nl koop je niet zomaar bedrukte golfballen — je krijgt advies van iemand die het spel door en door kent. Van de keuze tussen een <a href="/products/titleist-pro-v1/">Pro V1</a> en <a href="/products/titleist-pro-v1x/">Pro V1x</a> tot de beste bal voor een gemengd deelnemersveld op een <a href="/toepassingen/golfballen-bedrijfsgolfdag/">bedrijfsgolfdag</a>: Mark denkt met je mee. Twijfel je? Doe de <a href="/golfbalkiezer/">golfbalkiezer</a> of leg je vraag rechtstreeks aan hem voor.</p>
   <h2>Meer dan bedrukken: golfshows &amp; golftrips</h2>
-  <p>Mark is ook een gevierd <a href="/golfshows/">golfshow- en trickshow-artist</a> en begeleidt <a href="/golftrips/">golftrips</a> als PGA-pro. Zo kun je hem niet alleen inschakelen voor bedrukte golfballen, maar ook boeken voor entertainment op je golfdag of een onvergetelijke golfreis — in Nederland, Europa en daarbuiten.</p>
+  <p>Mark is ook een gevierd <a href="/golfshows/">golfshow- en trickshow-artist</a> en begeleidt <a href="/golftrips/">golftrips</a> als PGA-pro. Zo kun je hem inschakelen voor bedrukte golfballen en hem daarnaast boeken voor entertainment op je golfdag of een onvergetelijke golfreis — in Nederland, Europa en daarbuiten.</p>
   <h2>Persoonlijk contact</h2>
   <p>Vragen over balkeuze, je logo of een bestelling? Mark is direct bereikbaar via <a href="/contact/">contact</a>, telefoon (<a href="tel:+31627411925">+31 6 27 41 19 25</a>) en <a href="https://wa.me/31627411925">WhatsApp</a>. Persoonlijk, deskundig en zonder omwegen.</p>
 </div></div></section>`
@@ -1124,6 +1258,19 @@ PAGES.push({
       <button class="btn btn--primary btn--lg" type="submit">${ico('mail','btn__ico')}Verstuur bericht →</button>
     </form>
   </div>
+</div></div></section>
+<section class="section section--sky"><div class="container"><div class="prose">
+  <h2>Wat je het beste meestuurt</h2>
+  <p>Hoe concreter je bericht, hoe sneller je een bruikbaar antwoord terugkrijgt. Voor een aanvraag voor bedrukte golfballen helpen vier dingen: om hoeveel ballen het gaat, welk merk of model je in gedachten hebt, wanneer je ze nodig hebt en welk bestand je van je logo hebt. Weet je dat laatste niet zeker, stuur dan gewoon wat je hebt — Mark laat je weten of het werkt of dat er iets aan moet gebeuren.</p>
+  <p>Gaat het om een golfshow, een clinic of een golfreis, dan zijn de datum, de locatie en het aantal gasten de eerste vragen. Voor een show is ook nuttig om te weten of het buiten op een range gebeurt of binnen in een zaal, want dat bepaalt welke onderdelen mogelijk zijn. Twijfel je over de opzet, beschrijf dan het dagprogramma in een paar zinnen; het advies volgt daarna vanzelf.</p>
+  <h2>Hoe snel je antwoord krijgt</h2>
+  <p>Berichten worden doorgaans binnen 24 uur beantwoord, op werkdagen meestal sneller. Mark staat een groot deel van de week op de baan of op de range, dus het kan gebeuren dat een reactie aan het eind van de dag komt in plaats van meteen. Heb je haast — een event dat al vaststaat, een levering die krap zit — zet dat er dan bij, dan schuift je bericht naar voren.</p>
+  <p>Voor korte vragen is WhatsApp vaak het handigst: een foto van een logo of een verpakking zegt meer dan een lange beschrijving. Bellen kan ook; krijg je geen gehoor, dan wordt er teruggebeld zodra het kan.</p>
+  <h2>Wat er daarna gebeurt</h2>
+  <p>Bij een bestelling van bedrukte ballen volgt eerst een voorstel met model, aantal en prijs. Ga je akkoord, dan maken we een <a href="/kennisbank/digitale-drukproef-golfballen/">digitale drukproef</a> waarop je precies ziet hoe je logo op de bal komt te staan. Pas na jouw akkoord op die proef start de productie, die 5 tot 15 werkdagen duurt. De hele volgorde staat uitgeschreven bij <a href="/zo-werkt-het/">zo werkt het</a>, en de praktische kant van levering vind je bij <a href="/verzending-en-levering/">verzending en levering</a>.</p>
+  <p>Bij een boeking voor een show of reis leggen we eerst datum en opzet vast, daarna volgt de bevestiging met de afspraken die daarbij horen. Prijzen zijn altijd op aanvraag, omdat ze afhangen van aantal, locatie en wat je precies wilt.</p>
+  <h2>Waar Mark te vinden is</h2>
+  <p>Mark Reynolds is PGA Golf Professional en sinds 2014 verbonden aan The International in Badhoevedorp, bij Amsterdam. Daar geeft hij <a href="/golfles/">les</a> en speelt hij zelf. Voor <a href="/golfshows/">golfshows</a> en clinics reist hij door heel Nederland en België, en met <a href="/golftrips/">golfreizen</a> gaat hij verder Europa in. Meer over zijn achtergrond lees je op <a href="/over-mark/">over Mark</a>.</p>
 </div></div></section>`
 });
 
@@ -1135,7 +1282,7 @@ for (const p of PAGES) {
   console.log('generated /' + p.slug + '/');
   const e = EN_PAGES[p.slug];
   if (e) {
-    const eo = { slug:p.slug, noBlocks:p.noBlocks, title:e.title, desc:e.desc, canon:p.canon, crumb:e.crumb,
+    const eo = { slug:p.slug, noBlocks:p.noBlocks, noIndex:p.noIndex, noEn:p.noEn, title:e.title, desc:e.desc, canon:p.canon, crumb:e.crumb,
       hero: e.hero || heroBlock(e.he, e.hh1, e.hsub, e.hcta, e.hhref || '/golfballen-bedrukken/#configurator', 'en', PAGE_PHOTOS[p.slug]),
       main: e.main };
     writeFileSync2(join(root, 'en', p.slug, 'index.html'), page(eo, 'en'));
@@ -1215,6 +1362,13 @@ const PU = {
 // velden per taal ophalen (EN valt terug op NL als een veld ontbreekt)
 const pf = (p, lang, field) => (lang==='en' && EN_PRODUCTS[p.handle] && EN_PRODUCTS[p.handle][field]) || p[field];
 
+// Per model drie vragen die echt over díe bal gaan. De algemene bedrukvragen
+// staan op /zo-werkt-het/ en hoeven niet op elke productpagina te herhalen.
+const PRODUCT_FAQ = (p, lang='nl') => {
+  const set = PRODUCT_FAQ_COPY[p.handle];
+  return set ? (set[lang] || set.nl) : [];
+};
+
 const productPage = (p, lang='nl') => {
   const t = PU[lang], u = UI[lang], pre = pfx(lang);
   const feel=pf(p,lang,'feel'), flight=pf(p,lang,'flight'), spin=pf(p,lang,'spin'), target=pf(p,lang,'target'), blurb=pf(p,lang,'blurb');
@@ -1241,6 +1395,7 @@ const productPage = (p, lang='nl') => {
     <div class="hero-trust">${t.trust(p.brand)}</div>
   </div>
 </div></section>
+${PRODUCT_COPY[p.handle] ? `<section class="section"><div class="container"><div class="prose">${localize(PRODUCT_COPY[p.handle][lang] || PRODUCT_COPY[p.handle].nl, lang)}</div></div></section>` : ''}
 ${ballVariants(p.handle, lang)}
 <section class="section"><div class="container"><div class="grid grid-2" style="gap:2.5rem;align-items:start">
   <div>
@@ -1251,12 +1406,12 @@ ${ballVariants(p.handle, lang)}
       <tr><td>${t.tSpin}</td><td style="text-align:right"><strong>${spin}</strong></td></tr>
       <tr><td>${t.tTarget}</td><td style="text-align:right"><strong>${target}</strong></td></tr>
     </tbody></table>
-    <p class="muted" style="font-size:.82rem;margin-top:.7rem">${t.qualNote} <span class="confirm-tag">${t.confirmSpecs}</span></p>
+    <p class="muted" style="font-size:.82rem;margin-top:.7rem">${t.qualNote}</p>
   </div>
   <div>
     <div class="section-head"><p class="eyebrow">${t.orderEye}</p><h2>${t.orderH(p.name)}</h2></div>
     <div class="stack mt-1">
-      <div class="feature"><h3>${t.printH}</h3><p>${t.printP} <span class="confirm-tag">${t.confirm}</span></p></div>
+      <div class="feature"><h3>${t.printH}</h3><p>${t.printP}</p></div>
       <div class="feature"><h3>${t.minH}</h3><p>${t.minP}</p></div>
       <div class="feature"><h3>${t.proofH}</h3><p>${t.proofP}</p></div>
     </div>
@@ -1273,9 +1428,10 @@ ${ballVariants(p.handle, lang)}
   </div></div></section>`
   + extraSections(p.handle, lang, EXTRA_PRODUCTS)
   + ballGallery(seedOf(p.handle), lang)
-  + howItWorks(lang) + whyUs(lang) + reviewsBlock(lang) + printingFaq(lang)
+  + howItWorks(lang) + whyUs(lang) + reviewsBlock(lang)
+  + faqBlock(PRODUCT_FAQ(p, lang), lang, false)
   + socialsBlock(lang)
-  + ctaBlock(lang) + FOOTER(lang);
+  + ctaBlock(lang, `/products/${p.handle}/`) + FOOTER(lang, `/products/${p.handle}/`);
 };
 
 for (const p of PRODUCTS) {
@@ -1314,7 +1470,7 @@ const KB = [
   <p>Een golfbal is klein en rond, en het bedrukoppervlak is beperkt. Daardoor moet je logo bij elke afmeting scherp blijven. Een <strong>vectorbestand</strong> (EPS, AI of PDF) bestaat uit lijnen en vlakken die oneindig schaalbaar zijn: of we het logo nu groot of klein plaatsen, de randen blijven strak. Een gewone foto of schermafbeelding (JPEG, PNG) bestaat uit pixels en wordt bij vergroten korrelig of wazig.</p>
   <p>Heb je alleen een JPEG of PNG? Vaak kunnen we daar iets mee, zeker bij een eenvoudig logo — maar we laten het je eerlijk weten als de kwaliteit te laag is, en Mark denkt mee over de beste oplossing.</p>
   <h2>Aanbevolen bestandsformaten</h2>
-  <p>Lever bij voorkeur aan als <strong>EPS, AI of PDF</strong> (vector). Zorg dat lettertypes zijn omgezet naar lettercontouren (outlines), zodat de tekst er bij ons exact zo uitziet als bij jou. Een PNG met transparante achtergrond in hoge resolutie is een acceptabel alternatief voor eenvoudige logo's. <span class="confirm-tag">exacte lijst bevestigen</span></p>
+  <p>Lever bij voorkeur aan als <strong>EPS, AI of PDF</strong> (vector). Zorg dat lettertypes zijn omgezet naar lettercontouren (outlines), zodat de tekst er bij ons exact zo uitziet als bij jou. Een PNG met transparante achtergrond in hoge resolutie is een acceptabel alternatief voor eenvoudige logo's.</p>
   <h2>Kleuren en huisstijl</h2>
   <p>Golfballen bedrukken we in <strong>spotkleuren</strong> (1 tot 5 kleuren). Geef je huisstijlkleuren door — bij voorkeur als PMS/Pantone-waarden — dan stemmen we de opdruk daarop af. Hoe minder kleuren en hoe eenvoudiger de vormen, hoe strakker het resultaat op het bolle baloppervlak.</p>
   <h2>Veelgemaakte fouten</h2>
@@ -1330,7 +1486,7 @@ const KB = [
   <h2>Bedrukking in spotkleuren</h2>
   <p>Golfballen bedrukken we standaard in <strong>spotkleuren</strong>: heldere, egale kleuren die per stuk worden aangebracht. Meestal gaat het om <strong>1 tot 5 kleuren</strong>. Elke extra kleur is een aparte stap in het proces, dus een logo met twee of drie heldere kleuren is technisch eenvoudiger — en vaak fraaier — dan een ontwerp met veel kleurovergangen.</p>
   <h2>Spotkleur versus full-colour</h2>
-  <p>Bij spotkleuren kies je concrete, afgebakende kleuren (bijvoorbeeld je twee huisstijlkleuren). Full-colour of fotoprints met verlopen zijn op een bol, klein oppervlak lastiger en niet altijd beschikbaar. <span class="confirm-tag">foto/full-colour bevestigen</span> Wil je een foto of ontwerp met verloop laten bedrukken? Leg het ons voor, dan bekijken we samen wat mogelijk is.</p>
+  <p>Bij spotkleuren kies je concrete, afgebakende kleuren (bijvoorbeeld je twee huisstijlkleuren). Full-colour of fotoprints met verlopen zijn op een bol, klein oppervlak lastiger en niet altijd beschikbaar. Wil je een foto of ontwerp met verloop laten bedrukken? Leg het ons voor, dan bekijken we samen wat mogelijk is.</p>
   <h2>Zo komt je logo het beste uit</h2>
   <p>Op een witte golfbal werken donkere, contrastrijke kleuren het best. Houd lijnen niet te dun en tekst niet te klein. Twijfel je of jouw logo geschikt is? In de <a href="/kennisbank/logo-aanleveren-voor-golfballen-bedrukken/">aanleverpagina</a> lees je hoe je je bestand voorbereidt, en op de <a href="/golfballen-bedrukken/#configurator">configurator</a> kies je direct het aantal kleuren.</p>
   <h2>Altijd eerst een proef</h2>
@@ -1415,7 +1571,7 @@ const KB = [
   h1:'Hoe duurzaam is de opdruk op een bedrukte golfbal?',
   body:`<p class="lead">Een veelgestelde vraag: gaat het logo er niet meteen af als je de bal slaat? Hier lees je hoe de opdruk zich houdt en wat je ervan mag verwachten.</p>
   <h2>Geen sticker, maar een echte opdruk</h2>
-  <p>De bedrukking wordt professioneel op de originele merkbal aangebracht — het is nadrukkelijk géén sticker. Daardoor houdt de opdruk normaal gebruik op de baan goed door. <span class="confirm-tag">exacte slijtvastheid door klant bevestigen</span></p>
+  <p>De bedrukking wordt professioneel op de originele merkbal aangebracht — het is nadrukkelijk géén sticker. Daardoor houdt de opdruk normaal gebruik op de baan goed door.</p>
   <h2>Gewoon mee spelen</h2>
   <p>Je speelt met een bedrukte golfbal precies zoals met een onbedrukte: dezelfde bal, dezelfde eigenschappen, nu met jouw logo, naam of tekst. Voor de speeleigenschappen maakt de opdruk geen verschil.</p>
   <h2>Waar het van afhangt</h2>
@@ -1495,7 +1651,7 @@ const KB = [
   h1:'Golfballen met clublogo voor je golfclub of shop',
   body:`<p class="lead">Golfballen met je eigen clublogo geven je club een verzorgde, herkenbare uitstraling — in de shop, bij ledenacties of als welkomstgeschenk voor nieuwe leden.</p>
   <h2>Waarvoor je ze inzet</h2>
-  <p>Denk aan verkoop in de clubshop, een cadeau bij een nieuw lidmaatschap, prijzen bij wedstrijden of een presentje bij een clubevenement. Een bal met clublogo blijft in omloop en houdt je club zichtbaar.</p>
+  <p>Verkoop in de clubshop, een cadeau bij een nieuw lidmaatschap, prijzen bij wedstrijden of een presentje bij een clubevenement. Een bal met clublogo blijft in omloop en houdt je club zichtbaar.</p>
   <h2>Welke bal kies je?</h2>
   <p>Voor de shop is een herkenbaar merk fijn: een <a href="/titleist-golfballen-bedrukken/">Titleist</a> voor de premium klant, een <a href="/pinnacle-golfballen-bedrukken/">Pinnacle</a> voor het scherpere segment. Zo bedien je verschillende leden.</p>
   <h2>Zo regel je het</h2>
@@ -1534,9 +1690,9 @@ function kbArticlePage(a, lang='nl'){
   <article class="section" style="padding-top:1rem"><div class="container" style="max-width:820px">
     <p class="eyebrow">${cat}</p>
     <h1>${h1}</h1>
-    <div class="kb-body">${localize(body, lang)}</div>
+    <div class="kb-body">${localize(body, lang)}${localize((lang==='en' ? KB_EXTRA_EN[a.slug] : KB_EXTRA[a.slug]) || '', lang)}</div>
   </div></article>
-  ${kbRelated(lang)}` + ballGallery(seedOf('kb-'+a.slug), lang) + socialsBlock(lang) + ctaBlock(lang) + FOOTER(lang);
+  ${kbRelated(lang)}` + ballGallery(seedOf('kb-'+a.slug), lang) + socialsBlock(lang) + ctaBlock(lang, `/kennisbank/${a.slug}/`) + FOOTER(lang, `/kennisbank/${a.slug}/`);
 }
 
 function kbHubPage(lang='nl'){
@@ -1564,7 +1720,7 @@ function kbHubPage(lang='nl'){
     <p>${hubSub}</p></div>
     <div class="hero-visual"><div class="ballshot"><div class="ball"><span class="logo-print">${u.jouw}<br><span>${u.logo}</span></span></div></div></div>
   </div></section>
-  ${byCat}` + ballGallery(seedOf('kennisbank-hub'), lang) + socialsBlock(lang) + ctaBlock(lang) + FOOTER(lang);
+  ${byCat}` + ballGallery(seedOf('kennisbank-hub'), lang) + socialsBlock(lang) + ctaBlock(lang, '/kennisbank/') + FOOTER(lang, '/kennisbank/');
 }
 
 for (const lang of LANGS) {
@@ -1616,7 +1772,7 @@ const toepassingPage = (t, lang='nl') => {
   ${howItWorks(lang)}
   ${whyUs(lang)}
   ${faqBlock((c.faq||[]).map(([q,a])=>[q, localize(a, lang)]), lang)}
-  ${toepRelated(t.related, lang)}` + ballGallery(seedOf('toep-'+t.slug), lang) + reviewsBlock(lang) + socialsBlock(lang) + ctaBlock(lang) + FOOTER(lang);
+  ${toepRelated(t.related, lang)}` + ballGallery(seedOf('toep-'+t.slug), lang) + reviewsBlock(lang) + socialsBlock(lang) + ctaBlock(lang, `/toepassingen/${t.slug}/`) + FOOTER(lang, `/toepassingen/${t.slug}/`);
 };
 const toepHubPage = (lang='nl') => {
   const u = UI[lang], p = pfx(lang), en = lang==='en';
@@ -1632,8 +1788,20 @@ const toepHubPage = (lang='nl') => {
   `<div class="container"><nav class="crumbs"><a href="${p}/">${u.home}</a> › <span>${u.toepHub}</span></nav></div>
   <section class="pillar-hero"><div class="container" style="padding-block:clamp(2.4rem,5vw,4rem)">
     <p class="eyebrow">${eyebrow}</p><h1>${h1}</h1><p>${lead}</p></div></section>
-  <section class="section"><div class="container"><div class="toep-grid">${cards}</div></div></section>
-  ${whyUs(lang)}${howItWorks(lang)}` + ballGallery(seedOf('toepassingen-hub'), lang) + reviewsBlock(lang) + socialsBlock(lang) + ctaBlock(lang) + FOOTER(lang);
+  <section class="section"><div class="container">
+    <div class="section-head center"><p class="eyebrow">${ico('target','ico-inline')} ${lang==='en'?'Pick your use':'Kies je toepassing'}</p><h2>${lang==='en'?'All applications at a glance':'Alle toepassingen op een rij'}</h2></div>
+    <div class="toep-grid">${cards}</div></div></section>
+  <section class="section section--sky"><div class="container"><div class="prose">
+    ${lang==='en' ? `<h2>How to pick the right application</h2>
+    <p>The same printed ball behaves very differently depending on the occasion. A gift handed over one to one may carry a detailed design, because the recipient looks at it from close up and keeps it. A ball that ends up in a goodie bag among two hundred others has to work at a glance, which usually means a simpler mark and stronger contrast.</p>
+    <p>Quantity is the second thing that decides the direction. Printing starts at 144 balls, and every separate print counts as its own run. If several sponsors want their own logo, plan the split before you order rather than afterwards. Larger volumes bring the price per ball down, which is why a club buying stock for the season lands in a different place from a company ordering one box for a single afternoon.</p>
+    <p>The third question is who plays them. A field of mixed handicaps is better served by a soft, keenly priced ball than by a tour model, however flattering the latter looks in the box. If you are unsure, work through the <a href="/golfbalkiezer/">golf ball finder</a> or simply describe your day via <a href="/contact/">contact</a> and you will get a recommendation rather than a catalogue.</p>`
+    : `<h2>Zo kies je de juiste toepassing</h2>
+    <p>Dezelfde bedrukte bal doet iets heel anders, afhankelijk van de gelegenheid. Een cadeau dat je persoonlijk overhandigt, mag een gedetailleerd ontwerp dragen: de ontvanger bekijkt hem van dichtbij en bewaart hem. Een bal die tussen tweehonderd andere in een goodiebag verdwijnt, moet het in één oogopslag doen — en dat betekent meestal een eenvoudiger merkteken en meer contrast.</p>
+    <p>Het aantal bepaalt de tweede helft van de richting. Bedrukken start bij 144 ballen, en elke afzonderlijke opdruk telt als een eigen oplage. Willen meerdere sponsors hun eigen logo, verdeel de oplage dan vóór je bestelt in plaats van erna. Bij grotere aantallen daalt de prijs per bal, waardoor een club die voorraad inkoopt voor het seizoen op een ander punt uitkomt dan een bedrijf dat één doos bestelt voor één middag.</p>
+    <p>De derde vraag is wie ze speelt. Een veld met gemengde handicaps is beter af met een zachte, scherp geprijsde bal dan met een toursmodel, hoe mooi dat laatste in de doos ook oogt. Twijfel je, doorloop dan de <a href="/golfbalkiezer/">golfbalkiezer</a> of beschrijf je dag gewoon via <a href="/contact/">contact</a> — je krijgt een advies terug, geen catalogus.</p>`}
+  </div></div></section>
+  ${whyUs(lang)}${howItWorks(lang)}` + ballGallery(seedOf('toepassingen-hub'), lang) + reviewsBlock(lang) + socialsBlock(lang) + ctaBlock(lang, '/toepassingen/') + FOOTER(lang, '/toepassingen/');
 };
 for (const lang of LANGS) {
   const base = lang==='en' ? join(root,'en','toepassingen') : join(root,'toepassingen');
@@ -1652,7 +1820,6 @@ const MARK_STRIP = [
   { file:'mark-drive.jpg', nl:'Mark Reynolds slaat af met de driver tijdens een toernooi', en:'Mark Reynolds hitting a drive during a tournament' },
   { file:'mark-putt-klm-open.jpg', nl:'Mark Reynolds put op de green tijdens het KLM Open', en:'Mark Reynolds putting on the green at the KLM Open' },
   { file:'mark-golfbag-klm.jpg', nl:'Mark Reynolds bij zijn Titleist-golfbag op het KLM Open', en:'Mark Reynolds beside his Titleist golf bag at the KLM Open' },
-  { file:'mark-trofee-matchplay.jpg', nl:'Mark Reynolds met de trofee van het Nationaal Open Matchplay, kampioen 2005', en:'Mark Reynolds with the Dutch National Open Matchplay trophy, 2005 champion' },
   { dir:'show', file:'trickshow-tee-op-persoon.jpg', nl:'Mark Reynolds slaat tijdens een golf trickshow een bal van een tee die een vrijwilliger vasthoudt', en:'Mark Reynolds hitting a ball off a tee held by a volunteer during a golf trick show' },
   { dir:'show', file:'trickshow-range-publiek.jpg', nl:'Mark Reynolds geeft een golfshow op de driving range voor publiek', en:'Mark Reynolds performing a golf show on the driving range in front of an audience' },
   { dir:'show', file:'trickshow-swing-publiek.jpg', nl:'Mark Reynolds midden in de swing tijdens een trickshow, met toeschouwers vlak achter de afzetting', en:'Mark Reynolds mid-swing during a trick show, with spectators right behind the barrier' },
@@ -1782,7 +1949,7 @@ const gsToepGrid = (currentSlug='', title=true) => `<section class="section"><di
 
 /* =================== LOCATIEPAGINA'S (golfshows per regio) =================== */
 const locGrid = (currentSlug='', title=true) => `<section class="section section--sky"><div class="container">
-  ${title ? `<div class="section-head center"><p class="eyebrow">Heel Nederland</p><h2>Golfshow boeken in jouw regio</h2><p class="lead center">Mark Reynolds is te boeken voor golfshows en clinics door het hele land. Kies je regio voor de mogelijkheden ter plaatse.</p></div>` : ''}
+  ${title ? `<div class="section-head center"><p class="eyebrow">Heel Nederland</p><h2>Golfshow boeken in jouw regio</h2><p class="lead center">Kies je regio voor de mogelijkheden ter plaatse.</p></div>` : ''}
   <div class="locgrid">${LOCATIES.filter(l=>l.slug!==currentSlug).map(l=>
     `<a class="locgrid__item" href="/golfshows/${l.slug}/">${ico('target','ico-svg')}<span>${l.name}</span></a>`).join('')}</div>
 </div></section>`;
@@ -1823,6 +1990,7 @@ const locationPage = (loc) => {
   ${loc.main}
   ${loc.kind === 'provincie' ? clubBlock(loc.slug, loc.name) : ''}
   ${markStrip(seed, 'nl')}
+  ${markCred('nl')}
   ${faqBlock(loc.faq, 'nl')}
   <section class="section"><div class="container"><div class="divider-cta">
     <p class="eyebrow" style="color:var(--color-blue)">Boek nu</p><h2>Golfshow boeken in ${loc.name}</h2>
@@ -1831,7 +1999,7 @@ const locationPage = (loc) => {
   </div></div></section>
   ${locGrid(loc.slug)}
   ${gsToepGrid('', true)}`
-  + testimonialsBlock('nl') + ballGallery(seed, 'nl') + socialsBlock('nl') + FOOTER('nl', `Golfshow boeken in ${loc.name}?`);
+  + testimonialsBlock('nl') + ballGallery(seed, 'nl') + socialsBlock('nl') + FOOTER('nl', `/golfshows/${loc.slug}/`, `Golfshow boeken in ${loc.name}?`);
 };
 for (const loc of LOCATIES) writeFileSync2(join(root, 'golfshows', loc.slug, 'index.html'), locationPage(loc));
 console.log('generated ' + LOCATIES.length + ' golfshow-locatiepaginas: ' + LOCATIES.map(l=>l.slug).join(', '));
@@ -1857,6 +2025,7 @@ const gsToepPage = (t) => {
   </div></section>
   ${t.main}
   ${markStrip(seed, 'nl')}
+  ${markCred('nl')}
   ${faqBlock(t.faq, 'nl')}
   <section class="section"><div class="container"><div class="divider-cta">
     <p class="eyebrow" style="color:var(--color-blue)">Boek nu</p><h2>Golfshow boeken voor je ${t.name.toLowerCase()}</h2>
@@ -1865,7 +2034,7 @@ const gsToepPage = (t) => {
   </div></div></section>
   ${gsToepGrid(t.slug, true)}
   ${locGrid('', true)}`
-  + testimonialsBlock('nl') + ballGallery(seed, 'nl') + socialsBlock('nl') + FOOTER('nl', `Golfshow boeken voor je ${t.name.toLowerCase()}?`);
+  + testimonialsBlock('nl') + ballGallery(seed, 'nl') + socialsBlock('nl') + FOOTER('nl', canon, `Golfshow boeken voor je ${t.name.toLowerCase()}?`);
 };
 
 // Hub met alle gelegenheden.
@@ -1885,10 +2054,12 @@ const gsToepHub = () => {
     <div class="hero-cta"><a class="btn btn--primary btn--lg" href="/contact/">${ico('chat','btn__ico')}Vraag beschikbaarheid aan <span class="btn__arrow">→</span></a>
     <a class="btn btn--light btn--lg" href="/golfshows/">Bekijk de golfshow</a></div>
   </div></section>
-  <section class="section"><div class="container"><div class="toep-cards">${cards}</div></div></section>
+  <section class="section"><div class="container">
+    <div class="section-head center"><p class="eyebrow">${ico('target','ico-inline')} Kies je gelegenheid</p><h2>Alle gelegenheden op een rij</h2></div>
+    <div class="toep-cards">${cards}</div></div></section>
   ${locGrid('', true)}`
   + markStrip(seedOf('gstoe-hub'), 'nl') + ballGallery(seedOf('gstoe-hub'), 'nl') + socialsBlock('nl')
-  + FOOTER('nl', 'Golfshow boeken voor jouw gelegenheid?');
+  + FOOTER('nl', '/golfshows/toepassingen/', 'Golfshow boeken voor jouw gelegenheid?');
 };
 writeFileSync2(join(root, 'golfshows', 'toepassingen', 'index.html'), gsToepHub());
 for (const t of GS_TOEPASSINGEN) writeFileSync2(join(root, 'golfshows', 'toepassingen', t.slug, 'index.html'), gsToepPage(t));
@@ -1976,6 +2147,7 @@ const tripPage = (t) => {
   ${tripStay('nl')}
   ${tripAsk('nl', t.name)}
   ${markStrip(seed, 'nl', 3, TRIP_PHOTO_FILES)}
+  ${markCred('nl')}
   ${faqBlock(t.faq, 'nl')}
   <section class="section"><div class="container"><div class="divider-cta">
     <p class="eyebrow" style="color:var(--color-blue)">Boek nu</p><h2>Golfreis naar ${t.name}</h2>
@@ -1984,7 +2156,7 @@ const tripPage = (t) => {
   </div></div></section>
   ${tripGrid(t.slug, 'nl')}`
   + amamBlock('nl') + testimonialsBlock('nl') + socialsBlock('nl')
-  + FOOTER('nl', `Golfreis naar ${t.name}?`, 'Vraag beschikbaarheid');
+  + FOOTER('nl', canon, `Golfreis naar ${t.name}?`, 'Vraag beschikbaarheid');
 };
 for (const t of TRIPS) writeFileSync2(join(root, 'golftrips', t.slug, 'index.html'), tripPage(t));
 console.log('generated ' + TRIPS.length + ' golfreisbestemmingen: ' + TRIPS.map(t=>t.slug).join(', '));
@@ -2018,14 +2190,10 @@ const blogPost = (a) => {
     <div class="prose">${a.body}</div>
   </div></article>
   ${faqBlock(a.faq, 'nl')}
-  <section class="section"><div class="container"><div class="divider-cta">
-    <p class="eyebrow" style="color:var(--color-blue)">Vraag het Mark</p><h2>Een vraag over jouw situatie?</h2>
-    <p>Leg je vraag voor aan een PGA-professional die zelf bedrukt, shows geeft en met groepen op reis gaat. Je krijgt een eerlijk antwoord, ook als het antwoord "niet doen" is.</p>
-    <div class="row" style="justify-content:center;margin-top:1.4rem"><a class="btn btn--primary btn--lg" href="/contact/">Neem contact op →</a><a class="btn btn--light btn--lg" href="tel:+31627411925">Bel Mark</a></div>
-  </div></div></section>
+  ${ctaBlock('nl', canon, BLOG_CTA[a.cat] || 'advies')}
   ${related.length ? `<section class="section section--sky"><div class="container"><div class="section-head accent-line"><p class="eyebrow">Ook interessant</p><h2>Meer over ${a.cat.toLowerCase()}</h2></div>
     <div class="bloggrid" style="margin-top:1rem">${related.map(blogCard).join('')}</div></div></section>` : ''}`
-  + ballGallery(seed, 'nl') + socialsBlock('nl') + FOOTER('nl');
+  + ballGallery(seed, 'nl') + socialsBlock('nl') + FOOTER('nl', canon, null, null, BLOG_CTA[a.cat] || 'advies');
 };
 
 const blogHub = () => {
@@ -2050,7 +2218,7 @@ const blogHub = () => {
     <div class="section-head accent-line"><p class="eyebrow">${c}</p><h2>${c}</h2></div>
     <div class="bloggrid" style="margin-top:1rem">${POSTS.filter(a=>a.cat===c).map(blogCard).join('')}</div>
   </div></section>`).join('')}`
-  + markStrip(seedOf('blog-hub'), 'nl') + ballGallery(seedOf('blog-hub'), 'nl') + socialsBlock('nl') + FOOTER('nl');
+  + markStrip(seedOf('blog-hub'), 'nl') + ballGallery(seedOf('blog-hub'), 'nl') + socialsBlock('nl') + FOOTER('nl', '/blog/');
 };
 writeFileSync2(join(root, 'blog', 'index.html'), blogHub());
 for (const a of POSTS) writeFileSync2(join(root, 'blog', a.slug, 'index.html'), blogPost(a));
@@ -2102,12 +2270,13 @@ const pillarPage = (t, lang='nl') => {
   ${relItems.length ? `<section class="section section--sky"><div class="container"><div class="section-head accent-line"><p class="eyebrow">${lang==='en'?'Also interesting':'Ook interessant'}</p><h2>${lang==='en'?'Explore more':'Ontdek meer'}</h2></div>
     <div class="linkchips" style="margin-top:1rem">${relItems.map(x=>`<a href="${p}${relBase(x)}${x.slug}${relBase(x)==='/'?'/':'/'}">${ico(x.ico,'ico-svg')} ${x[lang].name}</a>`).join('')}</div></div></section>` : ''}`
   + markStrip(seedOf('pillar-'+t.slug), lang, 3, t.slug==='golftrips' ? TRIP_PHOTO_FILES : [])
+  + markCred(lang)
   + (t.slug==='golfshows' ? servicesBlock(lang) + testimonialsBlock(lang) : '')
   + (t.slug==='golfshows' && lang==='nl' ? gsToepGrid('') + locGrid('') : '')
   + (t.slug==='golftrips' && lang==='nl' ? tripGrid('', lang) + tripIncl(lang) + tripStay(lang) + amamBlock(lang) + tripAsk(lang) : '')
   + (t.slug==='golfshows' ? teamBlock(lang) + partnersBlock(lang) : '')
   + ballGallery(seedOf('pillar-'+t.slug), lang) + reviewsBlock(lang) + socialsBlock(lang)
-  + FOOTER(lang);
+  + FOOTER(lang, `/${t.slug}/`);
 };
 for (const lang of LANGS) {
   const base = lang==='en' ? join(root,'en') : root;
@@ -2226,7 +2395,7 @@ const quizPage = (lang='nl') => {
     ['Is het advies bindend?','Nee, het is indicatief. De kiezer wijst je de goede richting; voor maatwerk kun je altijd Mark vragen, een PGA-professional.'],
     ['Kan ik de aanbevolen bal laten bedrukken?','Ja. Elk aanbevolen model kun je met je logo of tekst laten bedrukken. Open de configurator om te starten.'],
     ['Wat als ik twijfel bij een antwoord?','Kies wat het beste past. Je kunt altijd een stap terug, of aan het eind opnieuw beginnen.'],
-  ], lang)}` + ballGallery(seedOf('golfbalkiezer'), lang) + socialsBlock(lang) + ctaBlock(lang) + FOOTER(lang);
+  ], lang)}` + ballGallery(seedOf('golfbalkiezer'), lang) + socialsBlock(lang) + ctaBlock(lang, '/golfbalkiezer/') + FOOTER(lang, '/golfbalkiezer/');
 };
 for (const lang of LANGS) {
   const out = lang==='en' ? join(root,'en','golfbalkiezer','index.html') : join(root,'golfbalkiezer','index.html');
@@ -2258,10 +2427,11 @@ console.log('generated /golfbalkiezer/ + /en/golfbalkiezer/ (stap-voor-stap quiz
       ${contactBtns('nl', false)}
     </div></section>
     <section class="section"><div class="container">
+      <div class="section-head center"><p class="eyebrow">${ico('home','ico-inline')} Verder op de site</p><h2>Waar wilde je naartoe?</h2></div>
       <div class="svcgrid">${links.map(([i,h,t,s])=>`<a class="svccard" href="${h}"><span class="svccard__ico">${ico(i,'')}</span><h3>${t}</h3><p>${s}</p></a>`).join('')}</div>
       <p class="center" style="margin-top:1.6rem"><a class="btn btn--primary btn--lg" href="/">${ico('home','btn__ico')}Terug naar de homepage <span class="btn__arrow">→</span></a></p>
     </div></section>`
-  + FOOTER('nl');
+  + FOOTER('nl', '/404/');
   writeFileSync2(join(root, '404.html'), html);
   console.log('generated /404.html');
 }
@@ -2333,7 +2503,7 @@ for (const sp of STATIC_PAGES) {
     b === 'amam' ? amamBlock(sp.lang) :
     b === 'partners' ? partnersBlock(sp.lang) :
     b === 'blog' ? blogGrid('', 6) :
-    b === 'sticky' ? stickyCta(sp.lang) : '').join('\n');
+    b === 'sticky' ? stickyCta(sp.lang, sp.canon) : '').join('\n');
   html = between(html, 'HEADER', HEADER(sp.lang, sp.canon));
   html = between(html, 'FOOTER', FOOTER_INNER(sp.lang));
   html = between(html, 'BLOCKS', blocks);

@@ -13,7 +13,7 @@ export default {
     eyebrow: 'Toepassing · Event',
     h1: 'Golfballen bedrukken voor je <span>golfevent</span>',
     lead: 'Een golfevent leeft van sfeer en zichtbaarheid. Bedrukte golfballen brengen je merk het hele event op de baan en gaan als aandenken mee naar huis — van clinic tot opening of demodag.',
-    intro: `<p class="lead">Of je nu een clinic organiseert, een nieuwe locatie opent of een demodag op de baan houdt: een golfevent is bij uitstek het moment om je merk te laten spelen. Deelnemers zijn urenlang actief met een bal in de hand, en juist die bal biedt je de kans om zichtbaar te zijn zonder opdringerig te worden. Op deze pagina lees je hoe je bedrukte golfballen inzet voor een golfevent — tijdens het event én lang daarna.</p>
+    intro: `<p class="lead">Voor een clinic, de opening van een nieuwe locatie of een demodag op de baan geldt hetzelfde: een golfevent is bij uitstek het moment om je merk te laten spelen. Deelnemers zijn urenlang actief met een bal in de hand, en juist die bal biedt je de kans om zichtbaar te zijn zonder opdringerig te worden. Op deze pagina lees je hoe je bedrukte golfballen inzet voor een golfevent — tijdens het event én lang daarna.</p>
     <p>MrGolfbal.nl bedrukt uitsluitend originele <a href="/titleist-golfballen-bedrukken/">Titleist</a>- en <a href="/pinnacle-golfballen-bedrukken/">Pinnacle</a>-golfballen met jouw logo, tekst of ontwerp. Voor elk event ontvang je eerst een digitale drukproef, zodat je precies ziet hoe het resultaat wordt vóór de productie start. Oprichter Mark Reynolds is PGA-professional en denkt mee over de bal die past bij het type event en de deelnemers die je verwacht.</p>`,
     sections: [
       { h: 'Zichtbaarheid tijdens het hele golfevent', html: `<p>Bij een event telt elk contactmoment. Een bedrukte golfbal geeft je een zichtbaarheid die anders dan een banner of beachflag meebeweegt met de deelnemer: van de eerste tee tot de laatste green ligt je logo telkens weer in beeld. Op een clinic of demodag waar mensen elkaar de bal aanwijzen en fotograferen, wordt dat effect nog sterker — je merk speelt letterlijk mee in de actie.</p>
@@ -33,7 +33,7 @@ export default {
       ['Wat is de minimale afname voor een golfevent?', 'De minimale afname is 144 golfballen. Bij grotere aantallen daalt de prijs per bal dankzij staffelkorting.'],
       ['Welke bal is geschikt voor een demodag?', 'De Pinnacle Soft speelt prettig voor alle niveaus en de Pinnacle Rush is een sportieve optie met wat meer lengte. Voor een premium tintje kies je de Titleist TruFeel.'],
       ['Hoe lang van tevoren moet ik bestellen?', 'Na goedkeuring van de digitale drukproef is de levertijd 5 tot 15 werkdagen. Leg je bestelling dus ruim vóór de eventdatum vast.'],
-      ['Krijg ik eerst een drukproef te zien?', 'Altijd. Je ontvangt een digitale drukproef van je logo op de bal en de productie start pas na jouw akkoord.'],
+      ['Zie ik vooraf hoe de bal eruit komt te zien?', 'Ja. Voordat er iets gedrukt wordt, krijg je een digitale weergave van het logo op de bal, inclusief positie en formaat. Klopt er iets niet, dan passen we het aan en zie je een nieuwe versie. Pas met jouw akkoord gaat de oplage in productie.'],
     ],
   },
   en: {
@@ -44,7 +44,7 @@ export default {
     eyebrow: 'Application · Event',
     h1: 'Printed golf balls for your <span>golf event</span>',
     lead: 'A golf event thrives on atmosphere and visibility. Printed golf balls carry your brand across the course throughout the event and go home as a keepsake — from clinic to opening or demo day.',
-    intro: `<p class="lead">Whether you are organising a clinic, opening a new location or holding a demo day on the course, a golf event is the ideal moment to put your brand in play. Participants spend hours active with a ball in hand, and that ball is exactly what lets you be visible without being pushy. This page explains how to use printed golf balls for a golf event — during the event and long afterwards.</p>
+    intro: `<p class="lead">For a clinic, the opening of a new location or a demo day on the course, the same holds: a golf event is the ideal moment to put your brand in play. Participants spend hours active with a ball in hand, and that ball is exactly what lets you be visible without being pushy. This page explains how to use printed golf balls for a golf event — during the event and long afterwards.</p>
     <p>MrGolfbal.nl prints exclusively on original <a href="/titleist-golfballen-bedrukken/">Titleist</a> and <a href="/pinnacle-golfballen-bedrukken/">Pinnacle</a> golf balls with your logo, text or design. For every event you first receive a digital proof, so you see exactly how the result looks before production starts. Founder Mark Reynolds is a PGA professional and helps you choose the ball that suits the type of event and the participants you expect.</p>`,
     sections: [
       { h: 'Visibility throughout the whole golf event', html: `<p>At an event, every point of contact counts. A printed golf ball gives you a visibility that, unlike a banner or beach flag, moves with the participant: from the first tee to the last green, your logo is in view again and again. At a clinic or demo day where people point out the ball and photograph it, that effect grows stronger still — your brand literally plays along in the action.</p>
@@ -64,7 +64,7 @@ export default {
       ['What is the minimum order for a golf event?', 'The minimum order is 144 golf balls. For larger quantities the price per ball falls thanks to tiered pricing.'],
       ['Which ball is suitable for a demo day?', 'The Pinnacle Soft plays pleasantly for all levels and the Pinnacle Rush is a sporty option with a bit more length. For a premium touch, choose the Titleist TruFeel.'],
       ['How far in advance should I order?', 'After approval of the digital proof, delivery takes 5 to 15 working days. So lock in your order well before the event date.'],
-      ['Do I get to see a proof first?', 'Always. You receive a digital proof of your logo on the ball and production only starts after your approval.'],
+      ['Can I see how the ball will look beforehand?', 'Yes. Before anything is printed you receive a digital rendering of the logo on the ball, including position and size. If something is off we adjust it and you see a new version. Only with your approval does the run go into production.'],
     ],
   },
 };

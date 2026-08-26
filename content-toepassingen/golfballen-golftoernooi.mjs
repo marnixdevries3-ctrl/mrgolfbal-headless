@@ -32,7 +32,7 @@ export default {
       ['Wat is de minimale afname voor een golftoernooi?', 'De minimale afname is 144 golfballen. Bij grote deelnemersvelden ligt dat ruim binnen bereik en wordt de prijs per bal gunstiger dankzij staffelkorting.'],
       ['Welke bal past bij een groot, gemengd veld?', 'De Pinnacle Rush biedt veel afstand tegen een scherpe prijs en is ideaal voor grote velden. Voor prestige kies je een Titleist Pro V1.'],
       ['Hoe lang van tevoren moet ik bestellen?', 'Na goedkeuring van de drukproef is de levertijd 5 tot 15 werkdagen. Leg je aantallen en logo\'s het liefst drie tot vier weken voor de toernooidatum vast.'],
-      ['Krijg ik eerst een drukproef te zien?', 'Altijd. Je ontvangt een digitale drukproef van je logo op de bal en de productie start pas na jouw akkoord.'],
+      ['Kan ik de opdruk nog wijzigen nadat ik het bestand heb gestuurd?', 'Tot je akkoord op de drukproef wel. Je krijgt eerst een digitale weergave van het logo op de bal; daarop kun je positie, formaat en kleur nog laten aanpassen. Zodra je die goedkeurt, ligt het ontwerp vast en start de productie.'],
     ],
   },
   en: {
@@ -62,7 +62,7 @@ export default {
       ['What is the minimum order for a golf tournament?', 'The minimum order is 144 golf balls. For large fields that sits comfortably within reach, and the price per ball becomes more favourable thanks to tiered pricing.'],
       ['Which ball suits a large, mixed field?', 'The Pinnacle Rush offers plenty of distance at a keen price and is ideal for large fields. For prestige, choose a Titleist Pro V1.'],
       ['How far in advance should I order?', 'After approval of the proof, delivery takes 5 to 15 working days. Preferably lock in your quantities and logos three to four weeks before the tournament date.'],
-      ['Do I get to see a proof first?', 'Always. You receive a digital proof of your logo on the ball and production only starts after your approval.'],
+      ['Can I still change the print after sending my file?', 'Up to your approval of the proof, yes. You first receive a digital rendering of the logo on the ball, and you can have the position, size and colour adjusted. Once you approve it the design is fixed and production begins.'],
     ],
   },
 };
