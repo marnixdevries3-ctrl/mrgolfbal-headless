@@ -15,10 +15,22 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "geolocation=(), microphone=(), camera=()"
 
+# CSS/JS worden geversioneerd (?v=…) en mogen dus lang gecachet worden.
 [[headers]]
-  for = "/assets/*"
+  for = "/assets/css/*"
   [headers.values]
-    Cache-Control = "public, max-age=0, must-revalidate"
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/assets/js/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Afbeeldingen: 30 dagen cache (sneller laden, betere Core Web Vitals).
+[[headers]]
+  for = "/assets/img/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
 
 # Pretty URLs met trailing slash worden door de mapstructuur (/slug/index.html) afgehandeld.
 # Redirects staan in ./_redirects (Netlify leest dat bestand automatisch).

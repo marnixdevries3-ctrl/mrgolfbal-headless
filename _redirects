@@ -55,3 +55,53 @@
 /policies/terms-of-service      /verzending-en-levering/    301
 /policies/legal-notice          /privacy/                   301
 /policies/*                     /contact/                   301
+
+# =============================================================================
+# Oude Shopify-URL's die nu 404 gaven (Search Console, 25-11-2026).
+# 301 naar de best passende nieuwe pagina, zodat linkwaarde niet verloren gaat.
+# Specifiek vóór algemeen: Netlify gebruikt de eerste regel die past.
+# Golfhandschoen-URL's blijven bewust 404 (product wordt niet meer verkocht).
+# =============================================================================
+
+# --- Oude productpagina's golfballen (varianten, RCT, left dash, kleuren) ---
+/products/titleist-pro-v1x*        /products/titleist-pro-v1x/                 301
+/products/titleist-pro-v1*         /products/titleist-pro-v1/                  301
+/products/titleist-trufeel*        /products/titleist-trufeel/                 301
+/products/titleist-avx*            /products/titleist-avx/                     301
+/products/titleist-velocity*       /products/titleist-velocity/                301
+/products/titleist-tour-soft*      /titleist-golfballen-bedrukken/             301
+/products/pinnacle-soft*           /products/pinnacle-soft-met-bedrukking/     301
+/products/pinnacle-rush*           /products/pinnacle-rush-met-bedrukking/     301
+
+# --- Oude collecties ---
+/collections/titleist-trufeel*     /products/titleist-trufeel/                 301
+/collections/titleist-golfballen*  /titleist-golfballen-bedrukken/             301
+/collections/pinnacle*             /pinnacle-golfballen-bedrukken/             301
+/collections/nieuwe-*              /golfballen-bedrukken/                      301
+/collections/all                   /golfballen-bedrukken/                      301
+/collections                       /golfballen-bedrukken/                      301
+
+# --- Oude pagina's ---
+/pages/golfbal-kiezer              /golfbalkiezer/                             301
+/pages/contact                     /contact/                                   301
+/pages/titleist-golfballen*        /titleist-golfballen-bedrukken/             301
+/pages/nieuwe-titleist-golfballen* /titleist-golfballen-bedrukken/             301
+/pages/golfballen-kopen*           /onbedrukte-golfballen/                     301
+
+# --- Oude blogartikelen: naar het beste nieuwe antwoord ---
+/blogs/nieuws/hoeveel-golfballen-zitten-er-in-een-doos-of-dozijn   /kennisbank/hoeveel-golfballen-in-een-doos-of-dozijn/   301
+/blogs/nieuws/in-hoeveel-kleuren-kan-de-bedrukking-op-golfballen   /kennisbank/hoeveel-kleuren-golfbal-bedrukken/          301
+/blogs/nieuws/zijn-bedrukte-golfballen-geschikt-om-mee-te-spelen   /kennisbank/hoe-duurzaam-is-de-opdruk-op-een-golfbal/   301
+/blogs/nieuws/worden-golfballen-echt-bedrukt-of-is-het-een-sticker*  /kennisbank/hoe-duurzaam-is-de-opdruk-op-een-golfbal/ 301
+/blogs/nieuws/golfballen-met-logo-relatiegeschenk                  /kennisbank/bedrukte-golfballen-als-relatiegeschenk/    301
+/blogs/nieuws/golf-event-organiseren*                              /toepassingen/golfballen-golfevent/                     301
+/blogs/nieuws/gepersonaliseerde-golfballen*                        /golfballen-personaliseren/                             301
+/blogs/nieuws/kan-ik-een-tekst-of-slogan*                          /golfballen-personaliseren/                             301
+/blogs/nieuws/hoe-groot-is-het-drukoppervlak*                      /kennisbank/logo-aanleveren-voor-golfballen-bedrukken/  301
+/blogs/nieuws/golfballen-bedrukken-de-10-meest-gestelde-vragen*    /golfballen-bedrukken/#faq                              301
+/blogs/nieuws/golfhandschoen*      /404.html                                   404
+/blogs/nieuws/veelgestelde-vragen-over-het-kiezen-van-de-perfecte-golfhandschoen  /404.html  404
+# alle overige oude artikelen gingen over golfballen bedrukken met logo
+/blogs/nieuws/*                    /golfballen-bedrukken/                      301
+/blogs/nieuws                      /blog/                                      301
+/blogs/*                           /blog/                                      301
