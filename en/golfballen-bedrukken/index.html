@@ -29,7 +29,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon-16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png">
-<link rel="stylesheet" href="/assets/css/styles.css?v=30">
+<link rel="stylesheet" href="/assets/css/styles.css?v=31">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -40,17 +40,7 @@
   ]
 }
 </script>
-<script type="application/ld+json">
-{
-  "@context":"https://schema.org","@type":"FAQPage",
-  "mainEntity":[
-    {"@type":"Question","name":"What is the minimum order for printing golf balls?","acceptedAnswer":{"@type":"Answer","text":"The minimum order is 144 golf balls (for example 6 boxes of 24 or 12 dozen). Larger quantities earn a tiered discount."}},
-    {"@type":"Question","name":"Will I see a proof first?","acceptedAnswer":{"@type":"Answer","text":"Yes, you always receive a digital proof. Production only starts after your approval."}},
-    {"@type":"Question","name":"How long does printing golf balls take?","acceptedAnswer":{"@type":"Answer","text":"Allow 5 to 15 working days after approval of the proof."}},
-    {"@type":"Question","name":"How do I supply my logo?","acceptedAnswer":{"@type":"Answer","text":"Preferably as a vector file (EPS, AI or PDF) for a crisp result."}}
-  ]
-}
-</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is the minimum order for printed golf balls?","acceptedAnswer":{"@type":"Answer","text":"The minimum order is 144 golf balls, for example 12 dozen. Larger quantities are better value per ball thanks to tiered discounts."}},{"@type":"Question","name":"Can I have one or a few golf balls printed?","acceptedAnswer":{"@type":"Answer","text":"No, printing starts at 144 golf balls. For smaller quantities, the preparation, proof and set-up time outweigh the price. Looking for something for one golfer? Ask Mark about a joint order with club members or colleagues."}},{"@type":"Question","name":"How much does it cost to print golf balls?","acceptedAnswer":{"@type":"Answer","text":"The price depends on the model (Pinnacle is better value, a Titleist Pro V1 is premium), the quantity, the number of print colours and one or two sides. Every request gets a tailored quote with the exact price per ball. Also read how much printing golf balls costs."}},{"@type":"Question","name":"Do I see a print proof first?","acceptedAnswer":{"@type":"Answer","text":"Yes, always and free. You receive a digital proof of your logo or text on the ball. Production only starts once you approve it."}},{"@type":"Question","name":"How long does printing golf balls take?","acceptedAnswer":{"@type":"Answer","text":"Allow 5 to 15 working days after approval of the proof. Got a fixed date, such as a golf day or a Christmas gift moment? Mention it in your request."}},{"@type":"Question","name":"Which golf balls can I have printed?","acceptedAnswer":{"@type":"Answer","text":"Original Titleist balls (Pro V1, Pro V1x, AVX, Tour Soft, TruFeel and Velocity) and Pinnacle balls (Soft and Rush). Not sure? The golf ball finder or Mark will help you choose."}},{"@type":"Question","name":"Which golf ball is best to have printed?","acceptedAnswer":{"@type":"Answer","text":"For a premium corporate gift choose a Titleist Pro V1 or Pro V1x. For large groups and golf days a Pinnacle Soft or Titleist TruFeel is the smart choice: soft, forgiving and keenly priced."}},{"@type":"Question","name":"How do I supply my logo?","acceptedAnswer":{"@type":"Answer","text":"Ideally as a vector file (EPS, AI, PDF or SVG). A PNG or JPG is fine too; Mark will check whether it comes out sharp enough and help with the artwork if needed."}},{"@type":"Question","name":"How many colours can be printed?","acceptedAnswer":{"@type":"Answer","text":"1 to 5 spot colours. Supply your brand colours as Pantone (PMS) values for an exact match."}},{"@type":"Question","name":"Can both sides of the ball be printed?","acceptedAnswer":{"@type":"Answer","text":"Yes. We print one side as standard; a second side, for example a sponsor logo or a name, is available on request."}},{"@type":"Question","name":"Can I play with printed golf balls?","acceptedAnswer":{"@type":"Answer","text":"Yes. They are original brand balls with a professional print that is made to be played."}},{"@type":"Question","name":"Can I return printed golf balls?","acceptedAnswer":{"@type":"Answer","text":"No, printed golf balls are made to order and cannot be returned. That is why you always approve the proof first."}}]}</script>
 </head>
 <body>
 
@@ -358,6 +348,7 @@
     var ok=$('#wz-naam').value.trim() && /.+@.+\..+/.test($('#wz-mail').value);
     if(!ok){ e.preventDefault(); $('#wz-err').hidden=false; return; }
   });
+  try{ var pre=new URLSearchParams(location.search).get('bal'); if(pre){ var m=$$('.wz-ball').filter(function(b){return b.dataset.val===pre;})[0]; if(m){ pick($$('.wz-ball'),m); st.bal=pre; render(); go(1); return; } } }catch(e){}
   go(0); render();
 })();
 </script>
@@ -472,12 +463,18 @@
   <div class="container" style="max-width:820px">
     <div class="section-head section-head--center"><p class="eyebrow">FAQ</p><h2>Frequently asked questions about printing golf balls</h2></div>
     <div class="faq" style="margin-top:1.5rem">
-      <details open><summary>What is the minimum order?</summary><div class="faq-body">144 golf balls (e.g. 6 boxes of 24 or 12 dozen). Larger quantities earn tiered discounts.</div></details>
-      <details><summary>Do I get a proof first?</summary><div class="faq-body">Yes, always. You receive a digital proof and production only starts after your approval.</div></details>
-      <details><summary>How long does it take?</summary><div class="faq-body">5–15 working days after approval of the proof.</div></details>
-      <details><summary>Which files can I supply?</summary><div class="faq-body">Preferably a vector file (EPS, AI or PDF).</div></details>
-      <details><summary>Can I play with printed golf balls?</summary><div class="faq-body">Yes. They are original branded balls with a professional print.</div></details>
-      <details><summary>Can I return printed golf balls?</summary><div class="faq-body">No, printed golf balls are made to order and cannot be returned. Unprinted items: 30 days.</div></details>
+      <details open><summary>What is the minimum order for printed golf balls?</summary><div class="faq-body">The minimum order is 144 golf balls, for example 12 dozen. Larger quantities are better value per ball thanks to tiered discounts.</div></details>
+      <details><summary>Can I have one or a few golf balls printed?</summary><div class="faq-body">No, printing starts at 144 golf balls. For smaller quantities, the preparation, proof and set-up time outweigh the price. Looking for something for one golfer? Ask Mark about a joint order with club members or colleagues.</div></details>
+      <details><summary>How much does it cost to print golf balls?</summary><div class="faq-body">The price depends on the model (Pinnacle is better value, a Titleist Pro V1 is premium), the quantity, the number of print colours and one or two sides. Every request gets a tailored quote with the exact price per ball. Also read <a href="/en/kennisbank/wat-kost-golfballen-bedrukken/">how much printing golf balls costs</a>.</div></details>
+      <details><summary>Do I see a print proof first?</summary><div class="faq-body">Yes, always and free. You receive a digital proof of your logo or text on the ball. Production only starts once you approve it.</div></details>
+      <details><summary>How long does printing golf balls take?</summary><div class="faq-body">Allow 5 to 15 working days after approval of the proof. Got a fixed date, such as a golf day or a Christmas gift moment? Mention it in your request.</div></details>
+      <details><summary>Which golf balls can I have printed?</summary><div class="faq-body">Original Titleist balls (Pro V1, Pro V1x, AVX, Tour Soft, TruFeel and Velocity) and Pinnacle balls (Soft and Rush). Not sure? The <a href="/en/golfbalkiezer/">golf ball finder</a> or Mark will help you choose.</div></details>
+      <details><summary>Which golf ball is best to have printed?</summary><div class="faq-body">For a premium corporate gift choose a Titleist Pro V1 or Pro V1x. For large groups and golf days a Pinnacle Soft or Titleist TruFeel is the smart choice: soft, forgiving and keenly priced.</div></details>
+      <details><summary>How do I supply my logo?</summary><div class="faq-body">Ideally as a vector file (EPS, AI, PDF or SVG). A PNG or JPG is fine too; Mark will check whether it comes out sharp enough and help with the artwork if needed.</div></details>
+      <details><summary>How many colours can be printed?</summary><div class="faq-body">1 to 5 spot colours. Supply your brand colours as Pantone (PMS) values for an exact match.</div></details>
+      <details><summary>Can both sides of the ball be printed?</summary><div class="faq-body">Yes. We print one side as standard; a second side, for example a sponsor logo or a name, is available on request.</div></details>
+      <details><summary>Can I play with printed golf balls?</summary><div class="faq-body">Yes. They are original brand balls with a professional print that is made to be played.</div></details>
+      <details><summary>Can I return printed golf balls?</summary><div class="faq-body">No, printed golf balls are made to order and cannot be returned. That is why you always approve the proof first.</div></details>
     </div>
   </div>
 </section>

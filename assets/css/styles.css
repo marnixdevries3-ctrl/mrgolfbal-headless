@@ -1483,3 +1483,4 @@ body:has(.sticky-cta) .site-footer { padding-bottom: 84px; }
   .wz-ball img,.wz-q{width:72px;height:72px}
   .wz-nav{position:sticky;bottom:0;background:#fff;margin-inline:-1.1rem;padding:.8rem 1.1rem;z-index:5}
 }
+.money-link{margin-top:1.6rem;padding:1rem 1.2rem;background:var(--sky-50);border-left:3px solid var(--gold);border-radius:var(--radius)}

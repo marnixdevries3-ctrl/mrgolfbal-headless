@@ -4,6 +4,7 @@ import { writeFileSync, mkdirSync, readdirSync, readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { EN_PAGES, EN_PRODUCTS, EN_KB, EN_KB_CATS } from './content-en.mjs';
 import { wizardBlock } from './content-extra/wizard.mjs';
+import { KB_NEW } from './content-extra/seo-2026-11b.mjs';
 import { PERSONAL_EXTRA, PERSONAL_FAQ, QUIZ_CONTENT, QUIZ_FAQ } from './content-extra/seo-2026-11.mjs';
 import { TOEPASSINGEN } from './content-toepassingen/index.mjs';
 import { PILLARS } from './content-pillars/index.mjs';
@@ -29,7 +30,12 @@ const withBallPhotos = (out, html) => {
     .replace(/<div class="card__media"><div class="ballshot"[\s\S]*?<\/div><\/div><\/div>(<div class="card__body">[\s\S]{0,600}?data-shopify-handle="([a-z0-9-]+)")/g,
       (m, tail, handle) => PRODUCT_PHOTOS[handle] ? `<div class="card__media">${ballPhoto(handle, lang, 0)}</div>${tail}` : m);
 };
-const writeFileSync2 = (out, html) => { mkdirSync(dirname(out), { recursive: true }); writeFileSync(out, withBallPhotos(out, html)); };
+// Interne ankertekst naar de hoofdpagina: "configurator" zegt Google niets, "golfballen bedrukken" wel.
+const seoAnchors = (html) => {
+  const en = /<html lang="en/.test(html);
+  return html.replace(/(golfballen-bedrukken\/(?:\?[^"#]*)?#configurator">)configurator(<\/a>)/g, `$1${en ? 'golf ball printing wizard' : 'bestelwizard voor golfballen bedrukken'}$2`);
+};
+const writeFileSync2 = (out, html) => { mkdirSync(dirname(out), { recursive: true }); writeFileSync(out, seoAnchors(withBallPhotos(out, html))); };
 
 const SITE = 'https://mrgolfbal.nl';
 const LANGS = ['nl', 'en'];
@@ -210,7 +216,7 @@ ${noEn ? '' : `<link rel="alternate" hreflang="en" href="${SITE}${enHref(nlCanon
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon-16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png">
-<link rel="stylesheet" href="/assets/css/styles.css?v=30">
+<link rel="stylesheet" href="/assets/css/styles.css?v=31">
 ${siteLD(lang)}${extra}</head><body>`;
 };
 
@@ -764,6 +770,23 @@ const doelBlock = (lang='nl') => {
 const PAGE_AFTER = {
   'golfballen-personaliseren': (lang) => localize(PERSONAL_EXTRA[lang], lang) + faqBlock(PERSONAL_FAQ[lang].map(([q,a])=>[q, localize(a, lang)]), lang),
 };
+// Contextuele link naar de hoofdpagina met wisselende ankertekst (interne linkbuilding).
+const MONEY_LINK = {
+  nl: [
+    (h)=>`<p class="money-link">Wil je zelf <a href="${h}">golfballen laten bedrukken</a>? Kies je bal, aantal en ontwerp in een minuut en ontvang eerst een gratis drukproef.</p>`,
+    (h)=>`<p class="money-link">Meer weten over <a href="${h}">golfballen bedrukken met logo</a>? Je ziet altijd eerst een gratis digitale drukproef, vanaf 144 stuks.</p>`,
+    (h)=>`<p class="money-link">Klaar om te bestellen? Lees alles over <a href="${h}">golfballen bedrukken</a> en stel je eigen bedrukte golfballen samen.</p>`,
+    (h)=>`<p class="money-link">Op zoek naar <a href="${h}">bedrukte golfballen met je eigen logo</a>? Originele Titleist en Pinnacle, met advies van een PGA-pro.</p>`,
+  ],
+  en: [
+    (h)=>`<p class="money-link">Want to <a href="${h}">have golf balls printed</a> yourself? Choose your ball, quantity and design in a minute and get a free proof first.</p>`,
+    (h)=>`<p class="money-link">Find out more about <a href="${h}">printing golf balls with your logo</a>. You always see a free digital proof first, from 144 balls.</p>`,
+    (h)=>`<p class="money-link">Ready to order? Read everything about <a href="${h}">golf ball printing</a> and build your own printed golf balls.</p>`,
+    (h)=>`<p class="money-link">Looking for <a href="${h}">custom printed golf balls with your logo</a>? Original Titleist and Pinnacle, with advice from a PGA pro.</p>`,
+  ]
+};
+const moneyLink = (lang, key) => { const arr = MONEY_LINK[lang]; let n=0; for (const c of String(key)) n=(n*31+c.charCodeAt(0))>>>0; return arr[n % arr.length](pfx(lang)+'/golfballen-bedrukken/'); };
+
 const DOEL_PAGES = new Set(['golfballen-bedrukken-voor-bedrijven','golfballen-bedrukken-voor-golfclubs-en-toernooien','golfballen-personaliseren','zo-werkt-het']);
 const page = (o, lang='nl') => HEAD(o.title, o.desc, o.canon, lang,
   breadcrumbLD([{name:UI[lang].home,url:'/'},{name:o.crumb,url:o.canon}], lang) + (o.extra||''), false, !!o.noIndex
@@ -1397,7 +1420,7 @@ const productPage = (p, lang='nl') => {
     <h1>${t.h1(p.name)}</h1>
     <p>${blurb}</p>
     <div class="hero-cta">
-      <a class="btn btn--primary btn--lg" href="${pre}/golfballen-bedrukken/#configurator">${CTA_ICO}${t.ctaProof} <span class="btn__arrow">→</span></a>
+      <a class="btn btn--primary btn--lg" href="${pre}/golfballen-bedrukken/?bal=${encodeURIComponent(p.name)}#configurator">${CTA_ICO}${t.ctaProof} <span class="btn__arrow">→</span></a>
     </div>
     <div class="hero-trust">${t.trust(p.brand)}</div>
   </div>
@@ -1422,7 +1445,7 @@ ${ballVariants(p.handle, lang)}
       <div class="feature"><h3>${t.minH}</h3><p>${t.minP}</p></div>
       <div class="feature"><h3>${t.proofH}</h3><p>${t.proofP}</p></div>
     </div>
-    <a class="btn btn--primary btn--block btn--lg mt-1" href="${pre}/golfballen-bedrukken/#configurator">${CTA_ICO}${t.ctaProof} →</a>
+    <a class="btn btn--primary btn--block btn--lg mt-1" href="${pre}/golfballen-bedrukken/?bal=${encodeURIComponent(p.name)}#configurator">${CTA_ICO}${t.ctaProof} →</a>
   </div>
 </div></div></section>
 <section class="section section--sky"><div class="container"><div class="section-head"><p class="eyebrow">${t.cmpEye}</p><h2>${t.cmpH(p.name)}</h2></div>${compareTable(lang)}
@@ -1436,6 +1459,7 @@ ${ballVariants(p.handle, lang)}
   + extraSections(p.handle, lang, EXTRA_PRODUCTS)
   + ballGallery(seedOf(p.handle), lang)
   + howItWorks(lang) + whyUs(lang) + reviewsBlock(lang)
+  + `<section class="section" style="padding-block:1rem"><div class="container" style="max-width:860px">${moneyLink(lang, p.handle)}</div></section>`
   + faqBlock(PRODUCT_FAQ(p, lang), lang, false)
   + socialsBlock(lang)
   + ctaBlock(lang, `/products/${p.handle}/`) + FOOTER(lang, `/products/${p.handle}/`);
@@ -1677,6 +1701,12 @@ const KB = [
   <p>Houd rekening met de drukproef en een levertijd van 5–15 werkdagen na akkoord. Plan je aanvraag dus ruim vóór het event. Vraag een <a href="/golfballen-bedrukken-voor-bedrijven/#offerte">offerte op maat</a> aan of lees meer op <a href="/golfballen-bedrukken-voor-golfclubs-en-toernooien/">voor clubs &amp; toernooien</a>.</p>` },
 ];
 
+// Nieuwe kennisbankartikelen (SEO-ronde nov 2026), met FAQ + schema.
+for (const k of KB_NEW) {
+  KB.push({ slug:k.slug, cat:k.cat, title:k.nl.title, desc:k.nl.desc, h1:k.nl.h1, body:k.nl.body + faqBlock(k.nl.faq, 'nl') });
+  EN_KB[k.slug] = { title:k.en.title, desc:k.en.desc, h1:k.en.h1, body:k.en.body + faqBlock(k.en.faq, 'en') };
+}
+
 function kbArticlePage(a, lang='nl'){
   const cat = KB_CATS_L[lang][a.cat];
   const u = UI[lang], pre = pfx(lang);
@@ -1697,7 +1727,7 @@ function kbArticlePage(a, lang='nl'){
   <article class="section" style="padding-top:1rem"><div class="container" style="max-width:820px">
     <p class="eyebrow">${cat}</p>
     <h1>${h1}</h1>
-    <div class="kb-body">${localize(body, lang)}${localize((lang==='en' ? KB_EXTRA_EN[a.slug] : KB_EXTRA[a.slug]) || '', lang)}</div>
+    <div class="kb-body">${localize(body, lang)}${localize((lang==='en' ? KB_EXTRA_EN[a.slug] : KB_EXTRA[a.slug]) || '', lang)}${moneyLink(lang, a.slug)}</div>
   </div></article>
   ${kbRelated(lang)}` + ballGallery(seedOf('kb-'+a.slug), lang) + socialsBlock(lang) + ctaBlock(lang, `/kennisbank/${a.slug}/`) + FOOTER(lang, `/kennisbank/${a.slug}/`);
 }
@@ -2194,7 +2224,7 @@ const blogPost = (a) => {
   + `<div class="container"><nav class="crumbs"><a href="/">${u.home}</a> › <a href="/blog/">Blog</a> › <span>${a.cat}</span></nav></div>
   <article class="section blogpost"><div class="container">
     <header class="blogpost__head"><p class="eyebrow">${ico('pencil','ico-inline')} ${a.cat}</p><h1>${a.h1}</h1><p class="lead">${a.lead}</p></header>
-    <div class="prose">${a.body}</div>
+    <div class="prose">${a.body}${moneyLink('nl', a.slug)}</div>
   </div></article>
   ${faqBlock(a.faq, 'nl')}
   ${ctaBlock('nl', canon, BLOG_CTA[a.cat] || 'advies')}

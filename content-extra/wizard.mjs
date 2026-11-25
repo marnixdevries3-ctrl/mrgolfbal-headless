@@ -196,6 +196,7 @@ export const wizardBlock = (lang = 'nl') => {
     var ok=$('#wz-naam').value.trim() && /.+@.+\\..+/.test($('#wz-mail').value);
     if(!ok){ e.preventDefault(); $('#wz-err').hidden=false; return; }
   });
+  try{ var pre=new URLSearchParams(location.search).get('bal'); if(pre){ var m=$$('.wz-ball').filter(function(b){return b.dataset.val===pre;})[0]; if(m){ pick($$('.wz-ball'),m); st.bal=pre; render(); go(1); return; } } }catch(e){}
   go(0); render();
 })();
 </script>`;

@@ -29,7 +29,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon-16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png">
-<link rel="stylesheet" href="/assets/css/styles.css?v=30">
+<link rel="stylesheet" href="/assets/css/styles.css?v=31">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -40,17 +40,7 @@
   ]
 }
 </script>
-<script type="application/ld+json">
-{
-  "@context":"https://schema.org","@type":"FAQPage",
-  "mainEntity":[
-    {"@type":"Question","name":"Wat is de minimale afname bij het bedrukken van golfballen?","acceptedAnswer":{"@type":"Answer","text":"De minimale afname is 144 golfballen (bijvoorbeeld 6 dozen van 24 of 12 dozijn). Grotere aantallen leveren staffelkorting op."}},
-    {"@type":"Question","name":"Krijg ik eerst een drukproef te zien?","acceptedAnswer":{"@type":"Answer","text":"Ja, je ontvangt altijd een digitale drukproef. Productie start pas na jouw goedkeuring."}},
-    {"@type":"Question","name":"Hoe lang duurt het bedrukken van golfballen?","acceptedAnswer":{"@type":"Answer","text":"Reken op 5 tot 15 werkdagen na goedkeuring van de drukproef."}},
-    {"@type":"Question","name":"Hoe lever ik mijn logo aan?","acceptedAnswer":{"@type":"Answer","text":"Bij voorkeur als vectorbestand (EPS, AI of PDF) voor een scherp resultaat."}}
-  ]
-}
-</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Wat is de minimale afname bij het bedrukken van golfballen?","acceptedAnswer":{"@type":"Answer","text":"De minimale afname is 144 golfballen, bijvoorbeeld 12 dozijn. Grotere aantallen zijn voordeliger per bal dankzij de staffelkorting."}},{"@type":"Question","name":"Kan ik één golfbal of een paar golfballen laten bedrukken?","acceptedAnswer":{"@type":"Answer","text":"Nee, bedrukken start bij 144 golfballen. Bij kleinere aantallen wegen de voorbereiding, drukproef en insteltijd niet op tegen de prijs. Zoek je iets voor één golfer, vraag Mark dan naar een gezamenlijke bestelling met clubgenoten of collega's."}},{"@type":"Question","name":"Wat kost golfballen bedrukken?","acceptedAnswer":{"@type":"Answer","text":"De prijs hangt af van het model (Pinnacle is voordeliger, een Titleist Pro V1 is premium), het aantal, het aantal drukkleuren en één of twee zijden. Je ontvangt bij elke aanvraag een offerte op maat met de exacte prijs per bal. Lees ook wat kost golfballen bedrukken."}},{"@type":"Question","name":"Krijg ik eerst een drukproef te zien?","acceptedAnswer":{"@type":"Answer","text":"Ja, altijd en gratis. Je ontvangt een digitale drukproef van je logo of tekst op de bal. Productie start pas na jouw akkoord."}},{"@type":"Question","name":"Hoe lang duurt het bedrukken van golfballen?","acceptedAnswer":{"@type":"Answer","text":"Reken op 5 tot 15 werkdagen na goedkeuring van de drukproef. Heb je een vaste datum, zoals een golfdag of kerstmoment? Vermeld die bij je aanvraag."}},{"@type":"Question","name":"Welke golfballen kan ik laten bedrukken?","acceptedAnswer":{"@type":"Answer","text":"Originele Titleist-ballen (Pro V1, Pro V1x, AVX, Tour Soft, TruFeel en Velocity) en Pinnacle-ballen (Soft en Rush). Twijfel je? De golfbalkiezer of Mark helpt je kiezen."}},{"@type":"Question","name":"Welke golfbal is het beste om te laten bedrukken?","acceptedAnswer":{"@type":"Answer","text":"Voor een premium relatiegeschenk kies je een Titleist Pro V1 of Pro V1x. Voor grote groepen en golfdagen is een Pinnacle Soft of Titleist TruFeel de slimme keuze: zacht, vergevingsgezind en scherp geprijsd."}},{"@type":"Question","name":"Hoe lever ik mijn logo aan?","acceptedAnswer":{"@type":"Answer","text":"Bij voorkeur als vectorbestand (EPS, AI, PDF of SVG). Een PNG of JPG kan ook; Mark kijkt dan of het scherp genoeg wordt en helpt zo nodig met de opmaak."}},{"@type":"Question","name":"In hoeveel kleuren kan ik laten drukken?","acceptedAnswer":{"@type":"Answer","text":"In 1 tot 5 spotkleuren. Geef je huisstijlkleuren door als Pantone (PMS) voor een exacte match."}},{"@type":"Question","name":"Kan ik aan twee kanten van de golfbal laten drukken?","acceptedAnswer":{"@type":"Answer","text":"Ja. Standaard drukken we één zijde; een tweede zijde, bijvoorbeeld een sponsorlogo of naam, is op aanvraag mogelijk."}},{"@type":"Question","name":"Kan ik gewoon spelen met bedrukte golfballen?","acceptedAnswer":{"@type":"Answer","text":"Ja. Het zijn originele merkballen met een professionele opdruk die gemaakt is om gespeeld te worden."}},{"@type":"Question","name":"Kan ik bedrukte golfballen retourneren?","acceptedAnswer":{"@type":"Answer","text":"Nee, bedrukte golfballen zijn maatwerk en kunnen niet retour. Daarom keur je altijd eerst de drukproef goed."}}]}</script>
 </head>
 <body>
 
@@ -358,6 +348,7 @@
     var ok=$('#wz-naam').value.trim() && /.+@.+\..+/.test($('#wz-mail').value);
     if(!ok){ e.preventDefault(); $('#wz-err').hidden=false; return; }
   });
+  try{ var pre=new URLSearchParams(location.search).get('bal'); if(pre){ var m=$$('.wz-ball').filter(function(b){return b.dataset.val===pre;})[0]; if(m){ pick($$('.wz-ball'),m); st.bal=pre; render(); go(1); return; } } }catch(e){}
   go(0); render();
 })();
 </script>
@@ -472,12 +463,18 @@
   <div class="container" style="max-width:820px">
     <div class="section-head section-head--center"><p class="eyebrow">FAQ</p><h2>Veelgestelde vragen over golfballen bedrukken</h2></div>
     <div class="faq" style="margin-top:1.5rem">
-      <details open><summary>Wat is de minimale afname?</summary><div class="faq-body">144 golfballen (bijv. 6 dozen van 24 of 12 dozijn). Grotere aantallen geven staffelkorting.</div></details>
-      <details><summary>Krijg ik eerst een drukproef?</summary><div class="faq-body">Ja, altijd. Je ontvangt een digitale drukproef en productie start pas na jouw akkoord.</div></details>
-      <details><summary>Hoe lang duurt het?</summary><div class="faq-body">5–15 werkdagen na goedkeuring van de drukproef.</div></details>
-      <details><summary>Welke bestanden kan ik aanleveren?</summary><div class="faq-body">Bij voorkeur een vectorbestand (EPS, AI of PDF).</div></details>
-      <details><summary>Kan ik met bedrukte golfballen spelen?</summary><div class="faq-body">Ja. Het zijn originele merkballen met een professionele opdruk.</div></details>
-      <details><summary>Kan ik bedrukte golfballen retourneren?</summary><div class="faq-body">Nee, bedrukte golfballen zijn maatwerk en kunnen niet retour. Niet-bedrukte artikelen: 30 dagen.</div></details>
+      <details open><summary>Wat is de minimale afname bij het bedrukken van golfballen?</summary><div class="faq-body">De minimale afname is 144 golfballen, bijvoorbeeld 12 dozijn. Grotere aantallen zijn voordeliger per bal dankzij de staffelkorting.</div></details>
+      <details><summary>Kan ik één golfbal of een paar golfballen laten bedrukken?</summary><div class="faq-body">Nee, bedrukken start bij 144 golfballen. Bij kleinere aantallen wegen de voorbereiding, drukproef en insteltijd niet op tegen de prijs. Zoek je iets voor één golfer, vraag Mark dan naar een gezamenlijke bestelling met clubgenoten of collega's.</div></details>
+      <details><summary>Wat kost golfballen bedrukken?</summary><div class="faq-body">De prijs hangt af van het model (Pinnacle is voordeliger, een Titleist Pro V1 is premium), het aantal, het aantal drukkleuren en één of twee zijden. Je ontvangt bij elke aanvraag een offerte op maat met de exacte prijs per bal. Lees ook <a href="/kennisbank/wat-kost-golfballen-bedrukken/">wat kost golfballen bedrukken</a>.</div></details>
+      <details><summary>Krijg ik eerst een drukproef te zien?</summary><div class="faq-body">Ja, altijd en gratis. Je ontvangt een digitale drukproef van je logo of tekst op de bal. Productie start pas na jouw akkoord.</div></details>
+      <details><summary>Hoe lang duurt het bedrukken van golfballen?</summary><div class="faq-body">Reken op 5 tot 15 werkdagen na goedkeuring van de drukproef. Heb je een vaste datum, zoals een golfdag of kerstmoment? Vermeld die bij je aanvraag.</div></details>
+      <details><summary>Welke golfballen kan ik laten bedrukken?</summary><div class="faq-body">Originele Titleist-ballen (Pro V1, Pro V1x, AVX, Tour Soft, TruFeel en Velocity) en Pinnacle-ballen (Soft en Rush). Twijfel je? De <a href="/golfbalkiezer/">golfbalkiezer</a> of Mark helpt je kiezen.</div></details>
+      <details><summary>Welke golfbal is het beste om te laten bedrukken?</summary><div class="faq-body">Voor een premium relatiegeschenk kies je een Titleist Pro V1 of Pro V1x. Voor grote groepen en golfdagen is een Pinnacle Soft of Titleist TruFeel de slimme keuze: zacht, vergevingsgezind en scherp geprijsd.</div></details>
+      <details><summary>Hoe lever ik mijn logo aan?</summary><div class="faq-body">Bij voorkeur als vectorbestand (EPS, AI, PDF of SVG). Een PNG of JPG kan ook; Mark kijkt dan of het scherp genoeg wordt en helpt zo nodig met de opmaak.</div></details>
+      <details><summary>In hoeveel kleuren kan ik laten drukken?</summary><div class="faq-body">In 1 tot 5 spotkleuren. Geef je huisstijlkleuren door als Pantone (PMS) voor een exacte match.</div></details>
+      <details><summary>Kan ik aan twee kanten van de golfbal laten drukken?</summary><div class="faq-body">Ja. Standaard drukken we één zijde; een tweede zijde, bijvoorbeeld een sponsorlogo of naam, is op aanvraag mogelijk.</div></details>
+      <details><summary>Kan ik gewoon spelen met bedrukte golfballen?</summary><div class="faq-body">Ja. Het zijn originele merkballen met een professionele opdruk die gemaakt is om gespeeld te worden.</div></details>
+      <details><summary>Kan ik bedrukte golfballen retourneren?</summary><div class="faq-body">Nee, bedrukte golfballen zijn maatwerk en kunnen niet retour. Daarom keur je altijd eerst de drukproef goed.</div></details>
     </div>
   </div>
 </section>
