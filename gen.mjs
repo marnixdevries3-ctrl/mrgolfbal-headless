@@ -5,6 +5,7 @@ import { join, dirname } from 'node:path';
 import { EN_PAGES, EN_PRODUCTS, EN_KB, EN_KB_CATS } from './content-en.mjs';
 import { wizardBlock } from './content-extra/wizard.mjs';
 import { KB_NEW } from './content-extra/seo-2026-11b.mjs';
+import { HUB_DEEP, TOEP_DEEP, PAGE_FAQS } from './content-extra/seo-2026-11c.mjs';
 import { PERSONAL_EXTRA, PERSONAL_FAQ, QUIZ_CONTENT, QUIZ_FAQ } from './content-extra/seo-2026-11.mjs';
 import { TOEPASSINGEN } from './content-toepassingen/index.mjs';
 import { PILLARS } from './content-pillars/index.mjs';
@@ -382,7 +383,7 @@ const faqBlock = (items, lang='nl', withSchema=true) => {
 };
 
 // Gedeelde FAQ over bedrukken (met FAQPage-schema) — voor elke bedruk-pagina.
-const FAQ_PAGES = new Set(['zo-werkt-het','golfballen-bedrukken-voor-bedrijven']);
+const FAQ_PAGES = new Set(['zo-werkt-het']);
 const printingFaq = (lang='nl', slug='', withSchema=false) => faqBlock(lang==='en' ? [
   ['What is the minimum order?','The minimum order is 144 golf balls, for example 6 boxes of 24 or 12 dozen. Larger quantities earn tiered discounts.'],
   ['Do I get a digital proof first?','Yes, always. You receive a digital proof of your logo on the ball and production only starts after your approval.'],
@@ -767,7 +768,14 @@ const doelBlock = (lang='nl') => {
 
 
 // Extra blokken ná de bestaande secties (SEO-ronde nov 2026).
+const pageFaq = (slug) => (lang) => faqBlock(PAGE_FAQS[slug][lang].map(([q,a])=>[q, localize(a, lang)]), lang);
 const PAGE_AFTER = {
+  'golfballen-bedrukken-voor-bedrijven': pageFaq('golfballen-bedrukken-voor-bedrijven'),
+  'golfballen-bedrukken-voor-golfclubs-en-toernooien': pageFaq('golfballen-bedrukken-voor-golfclubs-en-toernooien'),
+  'onbedrukte-golfballen': pageFaq('onbedrukte-golfballen'),
+  'titleist-golfballen-bedrukken': pageFaq('titleist-golfballen-bedrukken'),
+  'pinnacle-golfballen-bedrukken': pageFaq('pinnacle-golfballen-bedrukken'),
+  'verzending-en-levering': pageFaq('verzending-en-levering'),
   'golfballen-personaliseren': (lang) => localize(PERSONAL_EXTRA[lang], lang) + faqBlock(PERSONAL_FAQ[lang].map(([q,a])=>[q, localize(a, lang)]), lang),
 };
 // Contextuele link naar de hoofdpagina met wisselende ankertekst (interne linkbuilding).
@@ -1837,7 +1845,9 @@ const toepHubPage = (lang='nl') => {
     <p>Dezelfde bedrukte bal doet iets heel anders, afhankelijk van de gelegenheid. Een cadeau dat je persoonlijk overhandigt, mag een gedetailleerd ontwerp dragen: de ontvanger bekijkt hem van dichtbij en bewaart hem. Een bal die tussen tweehonderd andere in een goodiebag verdwijnt, moet het in één oogopslag doen — en dat betekent meestal een eenvoudiger merkteken en meer contrast.</p>
     <p>Het aantal bepaalt de tweede helft van de richting. Bedrukken start bij 144 ballen, en elke afzonderlijke opdruk telt als een eigen oplage. Willen meerdere sponsors hun eigen logo, verdeel de oplage dan vóór je bestelt in plaats van erna. Bij grotere aantallen daalt de prijs per bal, waardoor een club die voorraad inkoopt voor het seizoen op een ander punt uitkomt dan een bedrijf dat één doos bestelt voor één middag.</p>
     <p>De derde vraag is wie ze speelt. Een veld met gemengde handicaps is beter af met een zachte, scherp geprijsde bal dan met een toursmodel, hoe mooi dat laatste in de doos ook oogt. Twijfel je, doorloop dan de <a href="/golfbalkiezer/">golfbalkiezer</a> of beschrijf je dag gewoon via <a href="/contact/">contact</a> — je krijgt een advies terug, geen catalogus.</p>`}
+    ${localize(TOEP_DEEP[lang], lang)}
   </div></div></section>
+  ${faqBlock(PAGE_FAQS.toepassingen[lang], lang)}
   ${whyUs(lang)}${howItWorks(lang)}` + ballGallery(seedOf('toepassingen-hub'), lang) + reviewsBlock(lang) + socialsBlock(lang) + ctaBlock(lang, '/toepassingen/') + FOOTER(lang, '/toepassingen/');
 };
 for (const lang of LANGS) {
@@ -2535,7 +2545,7 @@ for (const sp of STATIC_PAGES) {
   html = between(html, 'HEADER', HEADER(sp.lang, sp.canon));
   html = between(html, 'FOOTER', FOOTER_INNER(sp.lang));
   html = between(html, 'BLOCKS', blocks);
-  if (sp.canon === '/golfballen-bedrukken/') html = between(html, 'CONFIG', wizardBlock(sp.lang));
+  if (sp.canon === '/golfballen-bedrukken/') { html = between(html, 'CONFIG', wizardBlock(sp.lang)); html = between(html, 'HUBDEEP', localize(HUB_DEEP[sp.lang], sp.lang)); }
   // Productkaarten in de handgebouwde pagina's krijgen de echte balfoto.
   html = html.replace(/(<a href="(?:\/en)?\/products\/([a-z0-9-]+)\/?"><div class="card__media">)[\s\S]*?(<\/div><\/a>)/g,
     (m, open_, handle, close) => PRODUCT_PHOTOS[handle] ? open_ + ballPhoto(handle, sp.lang, 0) + close : m);
