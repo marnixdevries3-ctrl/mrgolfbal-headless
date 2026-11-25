@@ -29,7 +29,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon-16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png">
-<link rel="stylesheet" href="/assets/css/styles.css?v=29">
+<link rel="stylesheet" href="/assets/css/styles.css?v=30">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -186,80 +186,182 @@
 </section>
 
 <!-- CONFIGURATOR -->
+<!--CONFIG:START-->
+
 <section class="section" id="configurator">
   <div class="container">
-    <div class="section-head"><p class="eyebrow">Step by step</p><h2>Configure your printed golf balls</h2><p class="lead">Choose brand, model and quantity. The configurator instantly shows your tier and summarises your choice. The preview is indicative — we confirm the final position and colours in the digital proof.</p></div>
+    <div class="section-head"><p class="eyebrow">Golf ball printing in 5 steps</p><h2>Build your printed golf balls</h2><p class="lead">Just click your choices — it takes about a minute. Nothing to pay online: you first receive a free digital proof with a quote, and we only print after you approve.</p></div>
+    <form class="wz" id="wz" data-action="https://api.web3forms.com/submit" method="POST" enctype="multipart/form-data" data-thanks="https://mrgolfbal.nl/en/bedankt/" novalidate>
+      <input type="hidden" name="access_key" value="63fb5800-8156-4d0c-9bbb-b1cc16f16dff">
+      <input type="hidden" name="subject" value="New proof request via MrGolfbal.nl (EN)">
+      <input type="hidden" name="from_name" value="MrGolfbal.nl">
+      <input type="hidden" name="redirect" value="https://mrgolfbal.nl/en/bedankt/">
+      <input type="checkbox" name="botcheck" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <input type="text" name="website" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <input type="hidden" name="Golfbal" id="f-bal"><input type="hidden" name="Aantal" id="f-aantal">
+      <input type="hidden" name="Bedrukking" id="f-druk"><input type="hidden" name="Kleuren" id="f-kleur"><input type="hidden" name="Zijden" id="f-zijde">
+      <input type="hidden" name="Ontwerp" id="f-ontwerp"><input type="hidden" name="Taal" value="en">
 
-    <div class="grid grid-2" style="gap:2rem;margin-top:2rem;align-items:start">
-      <!-- LEFT: choices -->
-      <div class="stack">
-        <div class="feature">
-          <h3>1 · Choose brand</h3>
-          <div class="pill-row" id="merken">
-            <button class="btn btn--ghost cfg-merk active" data-merk="Titleist">Titleist</button>
-            <button class="btn btn--ghost cfg-merk" data-merk="Pinnacle">Pinnacle</button>
-          </div>
-        </div>
-        <div class="feature">
-          <h3>2 · Choose model</h3>
-          <div class="field"><select id="model"></select></div>
-        </div>
-        <div class="feature">
-          <h3>3 · Number of golf balls</h3>
-          <div class="field">
-            <input type="range" id="aantal" min="144" max="1440" step="12" value="144">
-            <div class="row" style="justify-content:space-between"><span class="muted">Minimum 144</span><strong id="aantalOut" style="color:var(--color-navy)">144 golf balls</strong></div>
-          </div>
-          <p class="muted" style="font-size:.85rem;margin:0">= <span id="dozijn">12</span> dozen. More balls = better value.</p>
-        </div>
-        <div class="feature">
-          <h3>4 · Printing</h3>
-          <div class="field"><label>What would you like to print?</label>
-            <select id="druktype"><option value="Bedrijfslogo">Company logo</option><option value="Clublogo">Club logo</option><option value="Naam of tekst">Name or text</option><option value="Eigen ontwerp">Own design</option><option value="Foto/afbeelding">Photo/image</option></select></div>
-          <div class="field"><label>Number of colours</label>
-            <select id="kleuren"><option value="1–2 kleuren">1–2 colours</option><option value="3–5 kleuren">3–5 colours</option></select></div>
-          <div class="field"><label>Sides</label>
-            <select id="zijden"><option value="Eén zijde">One side</option><option value="Twee zijden (op aanvraag)">Two sides (on request)</option></select></div>
-        </div>
-        <div class="feature">
-          <h3>5 · Supply a file or text</h3>
-          <div id="uploadRow" class="upload-field">
-            <label class="dropzone" for="logo">
+      <ol class="wz-steps" aria-label="Stappen"><li><button type="button" class="wz-stepbtn is-active" data-go="0"><span>1</span>Golf ball</button></li><li><button type="button" class="wz-stepbtn" data-go="1"><span>2</span>Quantity</button></li><li><button type="button" class="wz-stepbtn" data-go="2"><span>3</span>Print</button></li><li><button type="button" class="wz-stepbtn" data-go="3"><span>4</span>Design</button></li><li><button type="button" class="wz-stepbtn" data-go="4"><span>5</span>Send</button></li></ol>
+
+      <div class="wz-layout">
+        <div class="wz-main">
+          <!-- STAP 1 -->
+          <fieldset class="wz-panel is-active" data-step="0">
+            <legend>Which golf ball do you want printed?</legend>
+            <div class="wz-filter" role="group"><button type="button" class="wz-chip is-on" data-filter="all">All</button><button type="button" class="wz-chip" data-filter="Titleist">Titleist</button><button type="button" class="wz-chip" data-filter="Pinnacle">Pinnacle</button></div>
+            <div class="wz-balls">
+      <button type="button" class="wz-ball" data-brand="Titleist" data-val="Titleist Pro V1" aria-pressed="false">
+        <span class="wz-badge">Premium</span>
+        <img src="/assets/img/products/titleist-pro-v1-wit.webp" width="160" height="160" loading="lazy" decoding="async" alt="Titleist Pro V1 golf ball">
+        <strong>Titleist Pro V1</strong><span>The tour favourite · soft, lots of control</span>
+      </button>
+      <button type="button" class="wz-ball" data-brand="Titleist" data-val="Titleist Pro V1x" aria-pressed="false">
+        <span class="wz-badge">Premium</span>
+        <img src="/assets/img/products/titleist-pro-v1x-wit.webp" width="160" height="160" loading="lazy" decoding="async" alt="Titleist Pro V1x golf ball">
+        <strong>Titleist Pro V1x</strong><span>Higher flight · maximum spin</span>
+      </button>
+      <button type="button" class="wz-ball" data-brand="Titleist" data-val="Titleist AVX" aria-pressed="false">
+        
+        <img src="/assets/img/products/titleist-avx-wit.webp" width="160" height="160" loading="lazy" decoding="async" alt="Titleist AVX golf ball">
+        <strong>Titleist AVX</strong><span>Very soft · low, straight flight</span>
+      </button>
+      <button type="button" class="wz-ball" data-brand="Titleist" data-val="Titleist Tour Soft" aria-pressed="false">
+        
+        <img src="/assets/img/products/titleist-tour-soft-wit.webp" width="160" height="160" loading="lazy" decoding="async" alt="Titleist Tour Soft golf ball">
+        <strong>Titleist Tour Soft</strong><span>Soft feel · great value</span>
+      </button>
+      <button type="button" class="wz-ball" data-brand="Titleist" data-val="Titleist TruFeel" aria-pressed="false">
+        
+        <img src="/assets/img/products/titleist-trufeel-wit.webp" width="160" height="160" loading="lazy" decoding="async" alt="Titleist TruFeel golf ball">
+        <strong>Titleist TruFeel</strong><span>Extra soft · keenly priced Titleist</span>
+      </button>
+      <button type="button" class="wz-ball" data-brand="Titleist" data-val="Titleist Velocity" aria-pressed="false">
+        
+        <img src="/assets/img/products/titleist-velocity-wit.webp" width="160" height="160" loading="lazy" decoding="async" alt="Titleist Velocity golf ball">
+        <strong>Titleist Velocity</strong><span>Distance · also matte green and orange</span>
+      </button>
+      <button type="button" class="wz-ball" data-brand="Pinnacle" data-val="Pinnacle Soft" aria-pressed="false">
+        <span class="wz-badge">Good value</span>
+        <img src="/assets/img/products/pinnacle-soft-wit.webp" width="160" height="160" loading="lazy" decoding="async" alt="Pinnacle Soft golf ball">
+        <strong>Pinnacle Soft</strong><span>Soft · ideal for large quantities</span>
+      </button>
+      <button type="button" class="wz-ball" data-brand="Pinnacle" data-val="Pinnacle Rush" aria-pressed="false">
+        <span class="wz-badge">Good value</span>
+        <img src="/assets/img/products/pinnacle-rush-wit.webp" width="160" height="160" loading="lazy" decoding="async" alt="Pinnacle Rush golf ball">
+        <strong>Pinnacle Rush</strong><span>Firm · extra distance</span>
+      </button>
+              <button type="button" class="wz-ball wz-ball--unsure" data-brand="all" data-val="Not sure yet — Advice from Mark" aria-pressed="false"><span class="wz-q">?</span><strong>Not sure yet</strong><span>Mark (PGA pro) recommends the best ball for your goal and budget</span></button>
+            </div>
+            <p class="wz-note"><a href="/en/golfbalkiezer/">Or take the golf ball finder →</a></p>
+          </fieldset>
+          <!-- STAP 2 -->
+          <fieldset class="wz-panel" data-step="1">
+            <legend>How many golf balls?</legend>
+            <div class="wz-opts wz-opts--4"><button type="button" class="wz-opt" data-qty="144" aria-pressed="false"><strong>144</strong><span>golf balls · 12 dozen</span></button><button type="button" class="wz-opt" data-qty="288" aria-pressed="false"><strong>288</strong><span>golf balls · 24 dozen</span></button><button type="button" class="wz-opt" data-qty="576" aria-pressed="false"><strong>576</strong><span>golf balls · 48 dozen</span></button><button type="button" class="wz-opt" data-qty="1200" aria-pressed="false"><strong>1.200</strong><span>golf balls · 100 dozen</span></button></div>
+            <label class="wz-other">Other quantity: <input type="number" id="wz-qty" min="144" step="12" inputmode="numeric" placeholder="e.g. 432"></label>
+            <p class="wz-note">Minimum 144 golf balls (12 dozen). The more balls, the lower the price per ball.</p>
+          </fieldset>
+          <!-- STAP 3 -->
+          <fieldset class="wz-panel" data-step="2">
+            <legend>What goes on the ball?</legend>
+            <div class="wz-opts wz-opts--4"><button type="button" class="wz-opt" data-type="logo" data-val="Logo" aria-pressed="false"><strong>Logo</strong><span>Company, club or tournament logo</span></button><button type="button" class="wz-opt" data-type="tekst" data-val="Name or text" aria-pressed="false"><strong>Name or text</strong><span>Name, initials, number or short text</span></button><button type="button" class="wz-opt" data-type="ontwerp" data-val="Own design" aria-pressed="false"><strong>Own design</strong><span>You already have a design ready</span></button><button type="button" class="wz-opt" data-type="foto" data-val="Photo or image" aria-pressed="false"><strong>Photo or image</strong><span>We turn it into a crisp print design</span></button></div>
+            <div class="wz-sub"><h3>How many colours?</h3><div class="wz-filter"><button type="button" class="wz-chip" data-color="1 colour">1 colour</button><button type="button" class="wz-chip" data-color="2–3 colours">2–3 colours</button><button type="button" class="wz-chip" data-color="4–5 colours">4–5 colours</button><button type="button" class="wz-chip" data-color="Not sure">Not sure</button></div></div>
+            <div class="wz-sub"><h3>How many sides?</h3><div class="wz-filter"><button type="button" class="wz-chip is-on" data-side="One side">One side</button><button type="button" class="wz-chip" data-side="Two sides">Two sides</button></div></div>
+          </fieldset>
+          <!-- STAP 4 -->
+          <fieldset class="wz-panel" data-step="3">
+            <legend>Send us your design</legend>
+            <div class="wz-textrow field"><label for="wz-tekst">Text or name on the ball</label><input type="text" id="wz-tekst" name="Tekst op bal" maxlength="40" placeholder="E.g. The Smith Family or J. Smith"></div>
+            <label class="dropzone wz-upload" for="wz-file">
               <svg class="dz-ico" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5M5 20h14"/></svg>
-              <strong id="dzText">Drag your file here or click to upload</strong>
-              <span class="muted">EPS, AI or PDF (recommended) · JPEG/PNG possible</span>
-              <input type="file" id="logo" accept=".eps,.ai,.pdf,.svg,.png,.jpg,.jpeg">
+              <strong id="wz-filetxt">Click or drop your file here</strong><span class="muted">EPS, AI, PDF or SVG works best · PNG/JPG also fine</span>
+              <input type="file" id="wz-file" name="attachment" accept=".eps,.ai,.pdf,.svg,.png,.jpg,.jpeg">
             </label>
-          </div>
-          <div class="field" id="tekstRow"><label>Text or name</label><input type="text" id="tekst" placeholder="e.g. company name or name" maxlength="24"></div>
-          <p class="muted" style="font-size:.8rem;margin:.6rem 0 0">Choosing <strong>Photo/image</strong>? Then you only supply a file. Choosing <strong>Name or text</strong>? Then you only enter text.</p>
-        </div>
-      </div>
+            <button type="button" class="wz-chip wz-later" id="wz-later">I will send my design later</button>
+            <p class="wz-note">Email it to info@mrgolfbal.nl or send it via WhatsApp.</p>
+          </fieldset>
+          <!-- STAP 5 -->
+          <fieldset class="wz-panel" data-step="4">
+            <legend>Where should we send the proof?</legend>
+            <div class="form-grid">
+              <div class="field"><label for="wz-naam">Name *</label><input id="wz-naam" name="name" autocomplete="name" required></div>
+              <div class="field"><label for="wz-mail">Email address *</label><input id="wz-mail" type="email" name="email" autocomplete="email" required></div>
+              <div class="field"><label for="wz-tel">Phone</label><input id="wz-tel" type="tel" name="telefoon" autocomplete="tel"></div>
+              <div class="field"><label for="wz-bedrijf">Company or club (optional)</label><input id="wz-bedrijf" name="bedrijf" autocomplete="organization"></div>
+              <div class="field"><label for="wz-datum">Preferred delivery date (optional)</label><input id="wz-datum" type="date" name="leverdatum"></div>
+              <div class="field full"><label for="wz-msg">Comments (optional)</label><textarea id="wz-msg" name="message" rows="3" placeholder="E.g. logo colour, occasion or questions"></textarea></div>
+            </div>
+            <p class="wz-err" id="wz-err" hidden>Please enter your name and a valid email address.</p>
+            <button class="btn btn--primary btn--xl btn--block" type="submit">Request free proof & quote →</button>
+            <p class="wz-note" style="text-align:center">Free, no obligation · reply usually within 24 hours · production only after you approve</p>
+          </fieldset>
 
-      <!-- RIGHT: preview + summary -->
-      <div class="stack" style="position:sticky;top:90px">
-        <div class="feature" style="text-align:center">
-          <h3 style="text-align:left">Indicative preview</h3>
-          <div class="ballshot" style="max-width:320px;margin:0 auto"><div class="ball"><span class="logo-print" id="previewText">YOUR<br><span>LOGO</span></span></div></div>
-          <p class="muted" style="font-size:.82rem;margin:.8rem 0 0">We confirm the final position, colour and size in the digital proof.</p>
+          <div class="wz-nav"><button type="button" class="btn btn--ghost" id="wz-back">← Back</button><button type="button" class="btn btn--primary" id="wz-next">Next →</button></div>
         </div>
-        <div class="feature">
-          <h3>Summary</h3>
-          <table class="staffel" style="border:0">
-            <tbody>
-              <tr><td>Brand &amp; model</td><td style="text-align:right"><strong id="sMerk">Titleist Pro V1</strong></td></tr>
-              <tr><td>Quantity</td><td style="text-align:right"><strong id="sAantal">144 golf balls</strong></td></tr>
-              <tr><td>Printing</td><td style="text-align:right"><strong id="sDruk">Company logo · 1–2 colours · one side</strong></td></tr>
-              <tr><td>Delivery time</td><td style="text-align:right"><strong>5–15 working days</strong></td></tr>
-            </tbody>
-          </table>
-          <a class="btn btn--primary btn--block btn--xl" style="margin-top:1rem" href="/en/golfballen-bedrukken-voor-bedrijven/#offerte" id="toQuote">Get a digital proof &amp; quote →</a>
-          <p class="muted" style="font-size:.82rem;text-align:center;margin:.7rem 0 0">No online payment. You send your request and receive a digital proof with a tailored quote. Production starts after your approval.</p>
-        </div>
+
+        <aside class="wz-side">
+          <div class="ballshot"><div class="ball"><span class="logo-print" id="wz-prev">YOUR<br><span>LOGO</span></span></div></div>
+          <p class="wz-note" style="text-align:center;margin-top:.4rem">Preview (indicative)</p>
+          <h3>Your choice</h3>
+          <dl class="wz-sum">
+            <dt>Golf ball</dt><dd id="s-bal">—</dd>
+            <dt>Quantity</dt><dd id="s-aantal">—</dd>
+            <dt>Print</dt><dd id="s-druk">—</dd>
+            <dt>Lead time</dt><dd>5–15 working days after approval</dd>
+          </dl>
+        </aside>
       </div>
-    </div>
+    </form>
   </div>
 </section>
+<script>
+(function(){
+  var f=document.getElementById('wz'); if(!f) return;
+  var L={"name":"YOUR NAME","your":"YOUR","logo":"LOGO","balls":"golf balls","none":"—","later":"I will send my design later","choose":"Click or drop your file here"};
+  var $=function(s,r){return (r||f).querySelector(s)}, $$=function(s,r){return Array.prototype.slice.call((r||f).querySelectorAll(s))};
+  var panels=$$('.wz-panel'), stepbtns=$$('.wz-stepbtn'), cur=0;
+  var st={bal:'',aantal:0,type:'',typeVal:'',kleur:'',zijde:$('[data-side].is-on').dataset.side,tekst:'',ontwerp:''};
+  function pick(list,el){ list.forEach(function(b){ b.classList.remove('is-on'); b.setAttribute('aria-pressed','false'); }); el.classList.add('is-on'); el.setAttribute('aria-pressed','true'); }
+  function done(i){ return i===0?!!st.bal : i===1?st.aantal>=144 : i===2?!!st.type : i===3?true : false; }
+  function go(i){ cur=Math.max(0,Math.min(panels.length-1,i));
+    panels.forEach(function(p,n){ p.classList.toggle('is-active',n===cur); });
+    stepbtns.forEach(function(b,n){ b.classList.toggle('is-active',n===cur); b.classList.toggle('is-done',n<cur&&done(n)); });
+    $('#wz-back').style.visibility=cur===0?'hidden':'visible'; $('#wz-next').style.display=cur===panels.length-1?'none':'';
+    $('#wz-next').disabled=!done(cur);
+    var tr=$('.wz-textrow'), up=$('.wz-upload'); if(tr&&up){ tr.style.display=(st.type==='tekst'||!st.type)?'':'none'; up.style.display=st.type==='tekst'?'none':''; }
+    var top=f.getBoundingClientRect().top+window.scrollY-90; if(window.scrollY>top) window.scrollTo({top:top,behavior:'smooth'});
+  }
+  function render(){
+    $('#s-bal').textContent=st.bal||L.none;
+    $('#s-aantal').textContent=st.aantal?st.aantal.toLocaleString('nl-NL')+' '+L.balls:L.none;
+    $('#s-druk').textContent=st.typeVal?[st.typeVal,st.kleur,st.zijde].filter(Boolean).join(' · '):L.none;
+    $('#wz-prev').innerHTML=st.tekst?st.tekst.replace(/[<>&]/g,'').toUpperCase():(st.type==='tekst'?L.name:L.your+'<br><span>'+L.logo+'</span>');
+    $('#f-bal').value=st.bal; $('#f-aantal').value=st.aantal||''; $('#f-druk').value=st.typeVal; $('#f-kleur').value=st.kleur; $('#f-zijde').value=st.zijde; $('#f-ontwerp').value=st.ontwerp;
+    $('#wz-next').disabled=!done(cur);
+  }
+  var auto=function(){ setTimeout(function(){ go(cur+1); },260); };
+  $$('.wz-ball').forEach(function(b){ b.addEventListener('click',function(){ pick($$('.wz-ball'),b); st.bal=b.dataset.val; render(); auto(); }); });
+  $$('[data-filter]').forEach(function(b){ b.addEventListener('click',function(){ pick($$('[data-filter]'),b); var v=b.dataset.filter; $$('.wz-ball').forEach(function(c){ c.hidden=!(v==='all'||c.dataset.brand===v||c.dataset.brand==='all'); }); }); });
+  $$('[data-qty]').forEach(function(b){ b.addEventListener('click',function(){ pick($$('[data-qty]'),b); $('#wz-qty').value=''; st.aantal=+b.dataset.qty; render(); auto(); }); });
+  $('#wz-qty').addEventListener('input',function(e){ $$('[data-qty]').forEach(function(x){x.classList.remove('is-on');}); st.aantal=parseInt(e.target.value,10)||0; render(); });
+  $$('[data-type]').forEach(function(b){ b.addEventListener('click',function(){ pick($$('[data-type]'),b); st.type=b.dataset.type; st.typeVal=b.dataset.val; render(); }); });
+  $$('[data-color]').forEach(function(b){ b.addEventListener('click',function(){ pick($$('[data-color]'),b); st.kleur=b.dataset.color; render(); }); });
+  $$('[data-side]').forEach(function(b){ b.addEventListener('click',function(){ pick($$('[data-side]'),b); st.zijde=b.dataset.side; render(); }); });
+  $('#wz-tekst').addEventListener('input',function(e){ st.tekst=e.target.value; render(); });
+  $('#wz-file').addEventListener('change',function(e){ var fl=e.target.files[0]; if(fl){ $('#wz-filetxt').textContent='✓ '+fl.name; st.ontwerp='Bestand geüpload: '+fl.name; $('#wz-later').classList.remove('is-on'); render(); } });
+  $('#wz-later').addEventListener('click',function(){ this.classList.toggle('is-on'); st.ontwerp=this.classList.contains('is-on')?L.later:''; render(); });
+  $('#wz-next').addEventListener('click',function(){ if(done(cur)) go(cur+1); });
+  $('#wz-back').addEventListener('click',function(){ go(cur-1); });
+  stepbtns.forEach(function(b,i){ b.addEventListener('click',function(){ for(var n=0;n<i;n++){ if(!done(n)) return go(n); } go(i); }); });
+  f.addEventListener('submit',function(e){
+    var ok=$('#wz-naam').value.trim() && /.+@.+\..+/.test($('#wz-mail').value);
+    if(!ok){ e.preventDefault(); $('#wz-err').hidden=false; return; }
+  });
+  go(0); render();
+})();
+</script>
+<!--CONFIG:END-->
 
 <!-- STEPS -->
 <section class="section section--sky" id="stappen">
@@ -453,55 +555,8 @@
 </div></footer>
 <!--FOOTER:END-->
 <script src="https://elfsightcdn.com/platform.js" async></script>
-<script src="/assets/js/site.js?v=14" defer></script>
+<script src="/assets/js/site.js?v=15" defer></script>
 
-<!-- CONFIGURATOR JS (vanilla, geen imports zodat het overal werkt; in de repo leest dit uit assets/js/config.js) -->
-<script>
-(function(){
-  var MODELS = {
-    Titleist: ['Titleist Pro V1','Titleist Pro V1x','Titleist TruFeel','Titleist AVX','Titleist Velocity','Titleist Tour Soft'],
-    Pinnacle: ['Pinnacle Soft','Pinnacle Rush']
-  };
-  var state = { merk:'Titleist', model:'Titleist Pro V1', aantal:144, druk:'Bedrijfslogo', kleuren:'1–2 kleuren', zijden:'Eén zijde', tekst:'' };
-  // Dutch option values (kept so the shared site.js foto/tekst-logic works) → English display labels.
-  var DRUK_EN = {'Bedrijfslogo':'Company logo','Clublogo':'Club logo','Naam of tekst':'Name or text','Eigen ontwerp':'Own design','Foto/afbeelding':'Photo/image'};
-  var KLEUR_EN = {'1–2 kleuren':'1–2 colours','3–5 kleuren':'3–5 colours'};
-  var ZIJDE_EN = {'Eén zijde':'one side','Twee zijden (op aanvraag)':'two sides (on request)'};
-  var $ = function(id){ return document.getElementById(id); };
 
-  function fillModels(){
-    var sel = $('model'); sel.innerHTML='';
-    MODELS[state.merk].forEach(function(m){ var o=document.createElement('option'); o.textContent=m; sel.appendChild(o); });
-    state.model = MODELS[state.merk][0];
-  }
-  function render(){
-    $('aantalOut').textContent = state.aantal + ' golf balls';
-    $('dozijn').textContent = Math.round(state.aantal/12);
-    $('sMerk').textContent = state.model;
-    $('sAantal').textContent = state.aantal + ' golf balls';
-    $('sDruk').textContent = (DRUK_EN[state.druk]||state.druk) + ' · ' + (KLEUR_EN[state.kleuren]||state.kleuren) + ' · ' + (ZIJDE_EN[state.zijden]||state.zijden);
-    var pt = state.tekst ? state.tekst.toUpperCase() : (state.druk==='Naam of tekst' ? 'YOUR NAME' : 'YOUR<br><span>LOGO</span>');
-    $('previewText').innerHTML = pt;
-  }
-  document.querySelectorAll('.cfg-merk').forEach(function(btn){
-    btn.addEventListener('click', function(){
-      document.querySelectorAll('.cfg-merk').forEach(function(b){ b.classList.remove('active'); b.style.background=''; b.style.color=''; });
-      btn.classList.add('active'); btn.style.background='var(--color-navy)'; btn.style.color='#fff';
-      state.merk = btn.dataset.merk; fillModels(); render();
-    });
-  });
-  $('model').addEventListener('change', function(e){ state.model=e.target.value; render(); });
-  $('aantal').addEventListener('input', function(e){ state.aantal=parseInt(e.target.value,10); render(); });
-  $('druktype').addEventListener('change', function(e){ state.druk=e.target.value; render(); });
-  $('kleuren').addEventListener('change', function(e){ state.kleuren=e.target.value; render(); });
-  $('zijden').addEventListener('change', function(e){ state.zijden=e.target.value; render(); });
-  $('tekst').addEventListener('input', function(e){ state.tekst=e.target.value; render(); });
-  var lg=$('logo'); if(lg){ lg.addEventListener('change',function(e){ if(e.target.files[0]){ var t=document.getElementById('dzText'); if(t) t.textContent='✓ '+e.target.files[0].name; } }); }
-  // init: activeer eerste merkknop-stijl
-  var first=document.querySelector('.cfg-merk.active'); if(first){ first.style.background='var(--color-navy)'; first.style.color='#fff'; }
-  fillModels(); render();
-  try{ document.getElementById('yr') && (document.getElementById('yr').textContent=new Date().getFullYear()); }catch(e){}
-})();
-</script>
 </body>
 </html>

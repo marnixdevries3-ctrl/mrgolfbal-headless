@@ -45,7 +45,7 @@ export const PAGES_C = {
     <p class="muted mt-1">KVK 27326866</p>
   </div>
   <div><div class="section-head"><p class="eyebrow">Send a message</p><h2>Contact form</h2></div>
-    <form class="mt-1" action="https://api.web3forms.com/submit" method="POST">
+    <form class="mt-1" data-action="https://api.web3forms.com/submit" method="POST">
       <input type="hidden" name="access_key" value="63fb5800-8156-4d0c-9bbb-b1cc16f16dff">
       <input type="hidden" name="subject" value="New message via MrGolfbal.nl (EN)">
       <input type="hidden" name="from_name" value="MrGolfbal.nl">

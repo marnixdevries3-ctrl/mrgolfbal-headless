@@ -1419,3 +1419,67 @@ body:has(.sticky-cta) .site-footer { padding-bottom: 84px; }
 .markcred__link { font-weight: 700; }
 @media (max-width: 700px) { .markcred { grid-template-columns: 1fr; }
   .markcred__photo { max-width: 190px; } }
+
+/* ===== Bestelwizard golfballen bedrukken (nov 2026) ===== */
+.wz{margin-top:1.8rem}
+.wz-steps{list-style:none;margin:0 0 1.4rem;padding:0;display:grid;grid-template-columns:repeat(5,1fr);gap:.4rem;counter-reset:none}
+.wz-stepbtn{width:100%;display:flex;align-items:center;gap:.5rem;justify-content:center;padding:.65rem .4rem;border:1px solid var(--color-border);border-radius:var(--radius-pill);background:#fff;color:var(--muted);font:600 .9rem var(--font-sans);cursor:pointer}
+.wz-stepbtn span{display:inline-grid;place-items:center;width:1.6rem;height:1.6rem;border-radius:50%;background:var(--sky-50);color:var(--color-navy);font-size:.82rem}
+.wz-stepbtn.is-active{border-color:var(--color-navy);color:var(--color-navy);box-shadow:var(--shadow-sm)}
+.wz-stepbtn.is-active span{background:var(--color-navy);color:#fff}
+.wz-stepbtn.is-done span{background:var(--success);color:#fff}
+.wz-layout{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:1.6rem;align-items:start}
+.wz-main{background:#fff;border:1px solid var(--color-border);border-radius:var(--radius-lg);padding:clamp(1.1rem,3vw,1.8rem);box-shadow:var(--shadow-sm)}
+.wz-panel{border:0;margin:0;padding:0;display:none}
+.wz-panel.is-active{display:block;animation:wzIn .25s ease}
+@keyframes wzIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.wz-panel legend{font:700 clamp(1.15rem,2.4vw,1.45rem) var(--font-display);color:var(--color-navy);margin-bottom:1rem;padding:0}
+.wz-filter{display:flex;flex-wrap:wrap;gap:.45rem;margin-bottom:1rem}
+.wz-chip{padding:.5rem 1rem;border:1.5px solid var(--color-border);border-radius:var(--radius-pill);background:#fff;color:var(--color-navy);font:600 .92rem var(--font-sans);cursor:pointer;transition:all .15s}
+.wz-chip:hover{border-color:var(--color-blue)}
+.wz-chip.is-on{background:var(--color-navy);border-color:var(--color-navy);color:#fff}
+.wz-balls{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:.75rem}
+.wz-ball,.wz-opt{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;gap:.25rem;padding:1rem .7rem .9rem;border:2px solid var(--color-border);border-radius:var(--radius-lg);background:#fff;cursor:pointer;font-family:var(--font-sans);transition:border-color .15s,box-shadow .15s,transform .15s}
+.wz-ball:hover,.wz-opt:hover{border-color:var(--color-blue);transform:translateY(-2px);box-shadow:var(--shadow-sm)}
+.wz-ball.is-on,.wz-opt.is-on{border-color:var(--color-navy);box-shadow:0 0 0 3px var(--blue-100)}
+.wz-ball.is-on::after,.wz-opt.is-on::after{content:'✓';position:absolute;top:.45rem;left:.45rem;width:1.4rem;height:1.4rem;border-radius:50%;background:var(--success);color:#fff;font-size:.8rem;display:grid;place-items:center}
+.wz-ball img{width:96px;height:96px;object-fit:contain;margin-bottom:.2rem}
+.wz-ball strong,.wz-opt strong{color:var(--color-navy);font-size:.98rem}
+.wz-ball span,.wz-opt span{color:var(--muted);font-size:.8rem;line-height:1.35}
+.wz-ball[hidden]{display:none}
+.wz-ball--unsure{background:var(--sky-50);border-style:dashed}
+.wz-q{display:grid!important;place-items:center;width:96px;height:96px;border-radius:50%;background:#fff;color:var(--color-navy)!important;font:800 2.4rem var(--font-display)!important;margin-bottom:.2rem}
+.wz-badge{position:absolute;top:.45rem;right:.45rem;background:var(--gold);color:#fff!important;font:700 .68rem var(--font-sans)!important;padding:.18rem .5rem;border-radius:var(--radius-pill);letter-spacing:.02em}
+.wz-opts{display:grid;gap:.75rem}
+.wz-opts--4{grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}
+.wz-opt strong{font-size:1.25rem}
+.wz-opt[data-type] strong{font-size:1.02rem}
+.wz-other{display:flex;align-items:center;gap:.6rem;margin-top:1rem;color:var(--color-navy);font-weight:600}
+.wz-other input{width:9rem;padding:.55rem .7rem;border:1.5px solid var(--color-border);border-radius:var(--radius)}
+.wz-sub{margin-top:1.3rem}.wz-sub h3{font-size:1rem;margin:0 0 .55rem;color:var(--color-navy)}
+.wz-upload{position:relative;margin-bottom:.8rem}
+.wz-later{margin-top:.2rem}
+.wz-note{color:var(--muted);font-size:.86rem;margin:.8rem 0 0}
+.wz-err{color:#b42318;font-weight:600;margin:.4rem 0 .8rem}
+.wz-nav{display:flex;justify-content:space-between;gap:.6rem;margin-top:1.4rem;padding-top:1.1rem;border-top:1px solid var(--color-border)}
+.wz-nav .btn[disabled]{opacity:.45;cursor:not-allowed}
+.wz-side{position:sticky;top:90px;background:#fff;border:1px solid var(--color-border);border-radius:var(--radius-lg);padding:1.1rem;box-shadow:var(--shadow-sm)}
+.wz-side h3{font-size:1rem;margin:1rem 0 .5rem;color:var(--color-navy)}
+.wz-side .ballshot{max-width:240px;margin:0 auto}
+.wz-sum{display:grid;grid-template-columns:auto 1fr;gap:.45rem .8rem;margin:0;font-size:.88rem}
+.wz-sum dt{color:var(--muted)}.wz-sum dd{margin:0;text-align:right;font-weight:600;color:var(--color-navy)}
+@media (max-width:900px){
+  .wz-layout{grid-template-columns:1fr}
+  .wz-side{position:static;order:-1;display:grid;grid-template-columns:110px 1fr;gap:.2rem 1rem;align-items:center;padding:.8rem}
+  .wz-side .ballshot{grid-row:span 3;max-width:110px;aspect-ratio:1}
+  .wz-side>p.wz-note{display:none}.wz-side h3{margin:0}
+  .wz-steps{grid-template-columns:repeat(5,auto);overflow-x:auto;justify-content:start}
+  .wz-stepbtn{padding:.5rem .7rem;font-size:.82rem}
+}
+@media (max-width:520px){
+  .wz-stepbtn{font-size:0;gap:0;padding:.35rem}.wz-stepbtn span{font-size:.82rem}
+  .wz-steps{display:flex;justify-content:space-between}
+  .wz-balls{grid-template-columns:repeat(2,1fr)}
+  .wz-ball img,.wz-q{width:72px;height:72px}
+  .wz-nav{position:sticky;bottom:0;background:#fff;margin-inline:-1.1rem;padding:.8rem 1.1rem;z-index:5}
+}

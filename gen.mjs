@@ -3,6 +3,7 @@
 import { writeFileSync, mkdirSync, readdirSync, readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { EN_PAGES, EN_PRODUCTS, EN_KB, EN_KB_CATS } from './content-en.mjs';
+import { wizardBlock } from './content-extra/wizard.mjs';
 import { PERSONAL_EXTRA, PERSONAL_FAQ, QUIZ_CONTENT, QUIZ_FAQ } from './content-extra/seo-2026-11.mjs';
 import { TOEPASSINGEN } from './content-toepassingen/index.mjs';
 import { PILLARS } from './content-pillars/index.mjs';
@@ -209,7 +210,7 @@ ${noEn ? '' : `<link rel="alternate" hreflang="en" href="${SITE}${enHref(nlCanon
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon-16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png">
-<link rel="stylesheet" href="/assets/css/styles.css?v=29">
+<link rel="stylesheet" href="/assets/css/styles.css?v=30">
 ${siteLD(lang)}${extra}</head><body>`;
 };
 
@@ -731,7 +732,7 @@ const stickyCta = (lang='nl', canon='/', h=null, btn=null, kind=null) => {
 
 const FOOTER = (lang='nl', canon='/', stickyH=null, stickyBtn=null, kind=null) => stickyCta(lang, canon, stickyH, stickyBtn, kind) + FOOTER_INNER(lang) + `
 <script src="https://elfsightcdn.com/platform.js" async></script>
-<script src="/assets/js/site.js?v=14" defer></script>
+<script src="/assets/js/site.js?v=15" defer></script>
 </body></html>`;
 
 // o = { title, desc, canon(NL-pad), crumb, hero(HTML), main(HTML), extra? }
@@ -969,7 +970,7 @@ PAGES.push({
 <section class="section section--sky" id="offerte"><div class="container" style="max-width:1000px">
   <div class="section-head accent-line"><p class="eyebrow">Offerte op maat</p><h2>Vraag een zakelijke offerte aan</h2><p class="lead">Vul je gegevens in — Mark reageert doorgaans binnen 24 uur met een voorstel, staffelprijs en drukproefplanning. Geen online afrekenen: alles netjes op factuur.</p></div>
   <div class="grid grid-2" style="margin-top:1.4rem;align-items:start;gap:1.6rem">
-    <form class="feature" style="padding:1.6rem" action="https://api.web3forms.com/submit" method="POST" enctype="multipart/form-data">
+    <form class="feature" style="padding:1.6rem" data-action="https://api.web3forms.com/submit" method="POST" enctype="multipart/form-data">
       <input type="hidden" name="access_key" value="63fb5800-8156-4d0c-9bbb-b1cc16f16dff">
       <input type="hidden" name="subject" value="Nieuwe offerteaanvraag via MrGolfbal.nl">
       <input type="hidden" name="from_name" value="MrGolfbal.nl">
@@ -1250,7 +1251,7 @@ PAGES.push({
     <p class="muted mt-1">KVK 27326866</p>
   </div>
   <div><div class="section-head"><p class="eyebrow">Stuur een bericht</p><h2>Contactformulier</h2></div>
-    <form class="mt-1" action="https://api.web3forms.com/submit" method="POST">
+    <form class="mt-1" data-action="https://api.web3forms.com/submit" method="POST">
       <input type="hidden" name="access_key" value="63fb5800-8156-4d0c-9bbb-b1cc16f16dff">
       <input type="hidden" name="subject" value="Nieuw bericht via MrGolfbal.nl">
       <input type="hidden" name="from_name" value="MrGolfbal.nl">
@@ -2504,6 +2505,7 @@ for (const sp of STATIC_PAGES) {
   html = between(html, 'HEADER', HEADER(sp.lang, sp.canon));
   html = between(html, 'FOOTER', FOOTER_INNER(sp.lang));
   html = between(html, 'BLOCKS', blocks);
+  if (sp.canon === '/golfballen-bedrukken/') html = between(html, 'CONFIG', wizardBlock(sp.lang));
   // Productkaarten in de handgebouwde pagina's krijgen de echte balfoto.
   html = html.replace(/(<a href="(?:\/en)?\/products\/([a-z0-9-]+)\/?"><div class="card__media">)[\s\S]*?(<\/div><\/a>)/g,
     (m, open_, handle, close) => PRODUCT_PHOTOS[handle] ? open_ + ballPhoto(handle, sp.lang, 0) + close : m);

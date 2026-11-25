@@ -203,3 +203,32 @@
     if (!m.hasAttribute('data-running')) start();
   });
 })();
+
+/* ---- 7) Anti-spam voor alle formulieren (web3forms) ----
+   Bots vullen formulieren direct in en posten meteen. We blokkeren stil:
+   honeypots ingevuld, verstuurd binnen 4 seconden, berichten met meerdere links
+   of in cyrillisch/Chinees schrift. Het echte action-adres zetten we pas bij
+   verzenden (data-action), zodat simpele bots het niet uit de HTML halen. */
+(function () {
+  var forms = document.querySelectorAll('form[data-action], form[action*="web3forms"]');
+  Array.prototype.forEach.call(forms, function (f) {
+    if (!f.dataset.action) { f.dataset.action = f.getAttribute('action'); f.removeAttribute('action'); }
+    if (!f.querySelector('[name="website"]')) {
+      var hp = document.createElement('input'); hp.type = 'text'; hp.name = 'website'; hp.className = 'hp-field';
+      hp.tabIndex = -1; hp.autocomplete = 'off'; hp.setAttribute('aria-hidden', 'true'); f.appendChild(hp);
+    }
+    var t0 = Date.now(), human = false;
+    ['keydown', 'pointerdown', 'touchstart', 'focusin'].forEach(function (ev) { f.addEventListener(ev, function () { human = true; }, { once: true, passive: true }); });
+    f.addEventListener('submit', function (e) {
+      if (e.defaultPrevented) return;
+      var txt = Array.prototype.map.call(f.querySelectorAll('textarea, input[type=text]'), function (x) { return x.value; }).join(' ');
+      var links = (txt.match(/https?:\/\/|www\./gi) || []).length;
+      var bc = f.querySelector('[name="botcheck"]'), web = f.querySelector('[name="website"]');
+      var spam = (bc && bc.checked) || (web && web.value) || !human || (Date.now() - t0 < 4000) || links >= 2 ||
+        /[Ѐ-ӿ一-鿿]/.test(txt) || /\b(seo services?|backlinks?|casino|crypto|bitcoin|viagra|loan offer)\b/i.test(txt);
+      var thanks = (f.querySelector('[name="redirect"]') || {}).value || '/bedankt/';
+      if (spam) { e.preventDefault(); window.location.href = thanks; return; }
+      f.setAttribute('action', f.dataset.action);
+    });
+  });
+})();
