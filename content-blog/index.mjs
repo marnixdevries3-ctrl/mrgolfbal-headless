@@ -63,9 +63,9 @@ export const POSTS = [
   {
     slug: "welke-golfbal-past-bij-jouw-spel",
     cat: "Spel & materiaal",
-    title: "Welke golfbal past bij jouw spel? | MrGolfbal.nl",
-    desc: "Welke golfbal past bij jouw spel? Kies op swingsnelheid, handicap en gevoel in plaats van op merk alleen. Uitleg plus de golfbalkiezer als hulpmiddel.",
-    h1: "Welke golfbal past bij jouw spel?",
+    title: "Wat is de beste golfbal voor jouw spel? Advies van een PGA-pro",
+    desc: "Wat is de beste golfbal en welke gaat het verst? Een PGA-pro legt uit hoe je kiest op swingsnelheid, handicap en gevoel, plus een gratis golfbalkiezer.",
+    h1: "Wat is de beste golfbal voor jouw spel?",
     lead: "De juiste bal kies je op swingsnelheid, spelniveau en gevoel, niet op wat er in de tas van je flightgenoot zit. Dit zijn de punten die echt verschil maken.",
     body: `<p>De bal die bij jouw spel past, is de bal die doet wat jij nodig hebt op de slagen die je het vaakst maakt. Voor de meeste amateurs betekent dat: rechte, lange slagen van de tee en een bal die op de green niet wegrolt. Wie een lagere swingsnelheid heeft, wint meer met een zachtere bal dan met de duurste bal in het schap.</p>
 <p>Balkeuze wordt vaak te ingewikkeld gemaakt. In de praktijk komt het neer op drie vragen: hoe hard sla je, wat wil je voelen bij het putten, en hoeveel ballen raak je per ronde kwijt. Loop ze langs en de keuze wordt overzichtelijk.</p>

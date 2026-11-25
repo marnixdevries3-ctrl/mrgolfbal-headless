@@ -19,11 +19,11 @@ export const PAGES_B = {
 </div></section>`
  },
  'golfballen-personaliseren': {
-  title: "Personalise golf balls with a name or text | MrGolfbal.nl",
-  desc: "Personalise golf balls with a name, initials, your own number or personal text. An original golf gift, always with a digital proof beforehand.",
+  title: "Personalised golf balls with a name or photo | MrGolfbal",
+  desc: "Golf balls with a name, initials, number or photo-based design on Titleist &amp; Pinnacle. Free proof first: the golf gift that actually gets used.",
   crumb: "Personalise",
   he: "Personalise",
-  hh1: "Personalise golf balls with a <span>name or text</span>",
+  hh1: "Personalised golf balls with a <span>name or text</span>",
   hsub: "A personal golf gift: golf balls with a name, initials, your own number or a short message. Original, beautifully finished and always with a proof first.",
   main: `
 <section class="section"><div class="container"><div class="section-head"><p class="eyebrow">Personal</p><h2>What can you personalise?</h2></div>

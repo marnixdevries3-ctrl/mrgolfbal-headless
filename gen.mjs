@@ -3,6 +3,7 @@
 import { writeFileSync, mkdirSync, readdirSync, readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { EN_PAGES, EN_PRODUCTS, EN_KB, EN_KB_CATS } from './content-en.mjs';
+import { PERSONAL_EXTRA, PERSONAL_FAQ, QUIZ_CONTENT, QUIZ_FAQ } from './content-extra/seo-2026-11.mjs';
 import { TOEPASSINGEN } from './content-toepassingen/index.mjs';
 import { PILLARS } from './content-pillars/index.mjs';
 import { LOCATIES } from './content-locaties/index.mjs';
@@ -758,11 +759,16 @@ const doelBlock = (lang='nl') => {
 };
 
 
+// Extra blokken ná de bestaande secties (SEO-ronde nov 2026).
+const PAGE_AFTER = {
+  'golfballen-personaliseren': (lang) => localize(PERSONAL_EXTRA[lang], lang) + faqBlock(PERSONAL_FAQ[lang].map(([q,a])=>[q, localize(a, lang)]), lang),
+};
 const DOEL_PAGES = new Set(['golfballen-bedrukken-voor-bedrijven','golfballen-bedrukken-voor-golfclubs-en-toernooien','golfballen-personaliseren','zo-werkt-het']);
 const page = (o, lang='nl') => HEAD(o.title, o.desc, o.canon, lang,
   breadcrumbLD([{name:UI[lang].home,url:'/'},{name:o.crumb,url:o.canon}], lang) + (o.extra||''), false, !!o.noIndex
 ) + HEADER(lang, o.canon, !!o.noEn) + crumbs(o.crumb, lang) + localize(o.hero, lang) + localize(o.main, lang)
   + extraSections(o.slug, lang)
+  + (PAGE_AFTER[o.slug] ? PAGE_AFTER[o.slug](lang) : '')
   + (DOEL_PAGES.has(o.slug) ? doelBlock(lang) : '')
   + ballGallery(seedOf(o.canon || o.slug || ''), lang)
   + (o.noBlocks ? '' : howItWorks(lang) + whyUs(lang) + reviewsBlock(lang)
@@ -945,7 +951,7 @@ PAGES.push({
 /* ---------------- VOOR BEDRIJVEN ---------------- */
 PAGES.push({
   slug:'golfballen-bedrukken-voor-bedrijven',
-  title:'Golfballen bedrukken voor bedrijven met bedrijfslogo | MrGolfbal.nl',
+  title:'Golfballen met bedrijfslogo als relatiegeschenk | MrGolfbal',
   desc:'Bedrukte golfballen met bedrijfslogo als relatiegeschenk, voor de bedrijfsgolfdag of sponsoring. Originele Titleist &amp; Pinnacle, staffelkorting, offerte op maat.',
   canon:'/golfballen-bedrukken-voor-bedrijven/', crumb:'Voor bedrijven',
   extra:'',
@@ -1015,10 +1021,10 @@ PAGES.push({
 /* ---------------- PERSONALISEREN ---------------- */
 PAGES.push({
   slug:'golfballen-personaliseren',
-  title:'Golfballen personaliseren met naam of tekst | MrGolfbal.nl',
-  desc:'Golfballen personaliseren met naam, initialen, een eigen nummer of persoonlijke tekst. Een origineel golfcadeau, altijd met digitale drukproef vooraf.',
+  title:'Gepersonaliseerde golfballen met naam of foto | MrGolfbal',
+  desc:'Golfballen met naam, initialen, nummer of foto-ontwerp op Titleist &amp; Pinnacle. Gratis drukproef vooraf: het golfcadeau dat écht gebruikt wordt.',
   canon:'/golfballen-personaliseren/', crumb:'Personaliseren',
-  hero:heroBlock('Personaliseren','Golfballen personaliseren met <span>naam of tekst</span>','Een persoonlijk golfcadeau: golfballen met naam, initialen, een eigen nummer of een korte boodschap. Origineel, verzorgd en altijd eerst een drukproef.'),
+  hero:heroBlock('Golfballen personaliseren','Gepersonaliseerde golfballen met <span>naam of tekst</span>','Een persoonlijk golfcadeau: golfballen met naam, initialen, een eigen nummer of een korte boodschap. Origineel, verzorgd en altijd eerst een drukproef.'),
   main:`
 <section class="section"><div class="container"><div class="section-head"><p class="eyebrow">Persoonlijk</p><h2>Wat kun je personaliseren?</h2></div>
   <div class="grid grid-4" style="margin-top:1.5rem">
@@ -1776,7 +1782,7 @@ const toepassingPage = (t, lang='nl') => {
 };
 const toepHubPage = (lang='nl') => {
   const u = UI[lang], p = pfx(lang), en = lang==='en';
-  const metaTitle = en ? 'Applications — printed golf balls for every occasion | MrGolfbal.nl' : 'Toepassingen — bedrukte golfballen voor elke gelegenheid | MrGolfbal.nl';
+  const metaTitle = en ? 'Printed golf balls for corporate gifts &amp; golf days | MrGolfbal' : 'Bedrukte golfballen als relatiegeschenk of voor je golfdag';
   const metaDesc = en ? 'Printed golf balls for company golf days, events, corporate gifts, goodie bags, tournaments and more. Discover the ideal application for your logo golf balls.' : 'Bedrukte golfballen voor bedrijfsgolfdagen, events, relatiegeschenken, goodiebags, toernooien en meer. Ontdek de ideale toepassing voor jouw golfballen met logo.';
   const eyebrow = en ? 'Applications' : 'Toepassingen';
   const h1 = en ? 'Printed golf balls for <span>every occasion</span>' : 'Bedrukte golfballen voor <span>elke gelegenheid</span>';
@@ -2322,8 +2328,8 @@ const quizPage = (lang='nl') => {
   const u = UI[lang], p = pfx(lang), en = lang==='en';
   const qs = QUIZ_Q(lang);
   const prods = QUIZ_PRODUCTS.map(x=>({ name:x.name, brand:x.brand, href:`${p}/products/${x.handle}/`, tags:x.tags, blurb:x.blurb[lang] }));
-  const title = en ? 'Golf ball finder — which golf ball suits you? | MrGolfbal.nl' : 'Golfbalkiezer — welke golfbal past bij jou? | MrGolfbal.nl';
-  const desc = en ? 'Take the golf ball finder quiz: answer 10 quick questions and get up to 3 personal recommendations for the right (printed) golf ball — by goal, level and budget.' : 'Doe de golfbalkiezer-quiz: beantwoord 10 korte vragen en krijg tot 3 persoonlijke aanbevelingen voor de juiste (bedrukte) golfbal — op doel, niveau en budget.';
+  const title = en ? 'Golf Ball Finder Quiz: which ball suits you? | MrGolfbal' : 'Welke golfbal past bij mij? Gratis golfbalkiezer | MrGolfbal';
+  const desc = en ? 'Free golf ball finder quiz: 10 quick questions, up to 3 personal golf ball recommendations by swing, level and budget, explained by a PGA pro.' : 'Welke golfbal past bij mij? Beantwoord 10 korte vragen en krijg gratis tot 3 aanbevelingen op swing, niveau en budget, uitgelegd door een PGA-pro.';
   const steps = qs.map((qq,qi)=>{
     const [q,opts] = qq;
     return `<div class="quiz-step${qi===0?' active':''}" data-step="${qi}">
@@ -2385,17 +2391,8 @@ const quizPage = (lang='nl') => {
     show(0);
   })();
   </script>
-  ${faqBlock(en ? [
-    ['How does the golf ball finder work?','You answer 10 short questions about your goal, level, budget and preferences. Based on your answers we score every ball and show the three best matches.'],
-    ['Is the advice binding?','No, it is indicative. The finder points you in the right direction; for a tailored recommendation you can always ask Mark, a PGA professional.'],
-    ['Can I have the recommended ball printed?','Yes. Every recommended model can be printed with your logo or text. Open the configurator to start.'],
-    ['What if I am not sure about my answers?','Just pick what fits best. You can go back a step at any time, or start again at the end.'],
-  ] : [
-    ['Hoe werkt de golfbalkiezer?','Je beantwoordt 10 korte vragen over je doel, niveau, budget en voorkeuren. Op basis daarvan scoren we elke bal en tonen we de drie beste matches.'],
-    ['Is het advies bindend?','Nee, het is indicatief. De kiezer wijst je de goede richting; voor maatwerk kun je altijd Mark vragen, een PGA-professional.'],
-    ['Kan ik de aanbevolen bal laten bedrukken?','Ja. Elk aanbevolen model kun je met je logo of tekst laten bedrukken. Open de configurator om te starten.'],
-    ['Wat als ik twijfel bij een antwoord?','Kies wat het beste past. Je kunt altijd een stap terug, of aan het eind opnieuw beginnen.'],
-  ], lang)}` + ballGallery(seedOf('golfbalkiezer'), lang) + socialsBlock(lang) + ctaBlock(lang, '/golfbalkiezer/') + FOOTER(lang, '/golfbalkiezer/');
+  ${localize(QUIZ_CONTENT[lang], lang)}
+  ${faqBlock(QUIZ_FAQ[lang].map(([q,a])=>[q, localize(a, lang)]), lang)}` + ballGallery(seedOf('golfbalkiezer'), lang) + socialsBlock(lang) + ctaBlock(lang, '/golfbalkiezer/') + FOOTER(lang, '/golfbalkiezer/');
 };
 for (const lang of LANGS) {
   const out = lang==='en' ? join(root,'en','golfbalkiezer','index.html') : join(root,'golfbalkiezer','index.html');
